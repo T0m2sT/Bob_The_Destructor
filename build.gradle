@@ -1,9 +1,15 @@
 plugins {
     id 'java'
+    id 'application'
+    id 'info.solidsoft.pitest' version '1.15.0'
 }
 
 group = 'com.ldts-feup-25-26.bob-the-destructor'
 version = '1.0-SNAPSHOT'
+
+application {
+    mainClass.set("Application")
+}
 
 repositories {
     mavenCentral()
@@ -13,6 +19,14 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // https://mvnrepository.com/artifact/org.mockito/mockito-core
+    testImplementation 'org.mockito:mockito-core:5.15.2'
+    // https://mvnrepository.com/artifact/com.googlecode.lanterna/lanterna
+    implementation 'com.googlecode.lanterna:lanterna:3.1.3'
+}
+
+pitest {
+    junit5PluginVersion = '1.0.0'
 }
 
 test {
