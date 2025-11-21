@@ -1,4 +1,4 @@
-# LDTS_T04_G04 - BOB, THE DESTRUCTOR  
+# LDTS_T04_G04 - BOB, THE DESTRUCTOR
 
 ## Game Description
 
@@ -7,16 +7,35 @@
 
 This project was developed by Aléxis Ramos, Pedro Tomás Teixeira, Rafael Pinho e Silva for LDTS 2024/25.
 
-For a more detailed version of this description, click [here](./docs/README.md).
+### Total features (to be split in the two below)
 
-## Screenshots
+- **Collision System**
+- **Physics System**
+- **Player Movement**
+- **Sprite Loader**
+- **Terrain Generator**
+- **Destruction System**
+- **Main Menu**
+- Screen Resizer
+- Animation Manager
+- Collectible System
+- Gadget System
+- Upgrade System
+- Shop System
+- Particle System
+- Ore System
+- GUI
+- Top score
+- Tile Visibility System
 
-### Game preview
+### Implemented features
 
-### Menus
+### Planned features
 
-### Levels
+### Design
 
-### Animations
+### Known code smells
 
-### End Game
+### Testing
+
+### Self-Evaluation
