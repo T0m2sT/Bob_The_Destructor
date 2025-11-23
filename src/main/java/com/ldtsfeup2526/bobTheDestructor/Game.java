@@ -3,17 +3,14 @@ package com.ldtsfeup2526.bobTheDestructor;
 import java.io.IOException;
 
 public class Game {
+    private GUI gui;
+
     public Game() throws IOException {
-        try {
-            System.out.println( "Starting GUI... ");
-            GUI gui = new GUI();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        System.out.println( "Starting GUI... ");
+        gui = new GUI();
     }
 
-    public void run() {
-
+    public void run() throws IOException {
+        gui.draw();
     }
 }
