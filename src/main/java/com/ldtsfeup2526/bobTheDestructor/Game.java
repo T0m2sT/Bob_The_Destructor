@@ -7,7 +7,7 @@ public class Game {
 
     public Game() throws IOException {
         System.out.println( "Starting GUI... ");
-        gui = new GUI();
+        gui = new GUILanterna();
     }
 
     public void run() throws IOException {
