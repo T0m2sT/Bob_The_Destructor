@@ -5,12 +5,12 @@ import com.ldtsfeup2526.bobTheDestructor.model.Position;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.screen.Screen;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.awt.*;
-import java.io.IOException;
 
 class LanternaGUITest {
     private Screen screen;
@@ -18,7 +18,7 @@ class LanternaGUITest {
     private TextGraphics tg;
 
     @BeforeEach
-    void setUp() throws IOException {
+    void setUp() {
         screen = Mockito.mock(Screen.class);
         tg = Mockito.mock(TextGraphics.class);
 
