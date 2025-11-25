@@ -41,6 +41,10 @@ public class GUILanterna extends GUI {
         this(200, 60);
     }
 
+    public GUILanterna(Screen screen) {
+        this.screen = screen;
+    }
+
     private void draw(Position position, char c, String color) {
         // Draws the character c with given color to the screen in the provided position
         // (text graphics should be replaced with sprites later)
