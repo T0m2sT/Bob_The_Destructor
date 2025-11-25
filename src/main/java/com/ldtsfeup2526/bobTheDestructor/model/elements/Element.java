@@ -1,0 +1,19 @@
+package com.ldtsfeup2526.bobTheDestructor.model.elements;
+
+import com.ldtsfeup2526.bobTheDestructor.model.Position;
+
+public abstract class Element {
+    private Position position;
+
+    public Element(Position position) {
+        this.position = position;
+    }
+
+    public Position getPosition() {
+        return this.position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+}
