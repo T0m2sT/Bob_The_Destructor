@@ -1,5 +1,6 @@
 package com.ldtsfeup2526.bobTheDestructor.gui;
 
+import com.googlecode.lanterna.graphics.TextGraphics;
 import com.ldtsfeup2526.bobTheDestructor.model.Position;
 
 import com.googlecode.lanterna.TerminalSize;
@@ -46,7 +47,11 @@ public class GUILanterna implements GUI {
 
     @Override
     public void drawPixel(Position position, TextColor color) {
-
+        // Draws the character c with given color to the screen in the provided position
+        // (text graphics should be replaced with sprites later)
+        TextGraphics graphics = screen.newTextGraphics();
+        graphics.setForegroundColor(color);
+        graphics.putString(position.getX(), position.getY(), "X");
     }
 
     @Override

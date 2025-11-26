@@ -18,14 +18,19 @@ public class InputReaderLanterna implements InputReader {
         KeyStroke keyStroke = screen.pollInput();
         if (keyStroke == null) return INPUT.NONE;
 
-        return switch (keyStroke.getKeyType()) {
-            case KeyType.ArrowRight -> INPUT.RIGHT;
-            case KeyType.ArrowUp -> INPUT.UP;
-            case KeyType.ArrowDown -> INPUT.DOWN;
-            case KeyType.ArrowLeft -> INPUT.LEFT;
-            case KeyType.Escape, KeyType.EOF -> INPUT.QUIT;
-            case KeyType.Enter -> INPUT.SELECT;
-            default -> INPUT.NONE;
-        };
+        switch (keyStroke.getKeyType()) {
+            case KeyType.ArrowRight: return INPUT.RIGHT;
+            case KeyType.ArrowUp: return INPUT.UP;
+            case KeyType.ArrowDown: return INPUT.DOWN;
+            case KeyType.ArrowLeft: return INPUT.LEFT;
+            case KeyType.Character:
+                switch (keyStroke.getCharacter()) {
+                    case 'q': return INPUT.QUIT;
+                    default: return INPUT.NONE;
+                }
+            case KeyType.Escape, KeyType.EOF: return INPUT.QUIT;
+            case KeyType.Enter: return INPUT.SELECT;
+            default: return INPUT.NONE;
+        }
     }
 }
