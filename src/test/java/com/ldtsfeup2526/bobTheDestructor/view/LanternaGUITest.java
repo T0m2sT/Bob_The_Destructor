@@ -1,5 +1,6 @@
 package com.ldtsfeup2526.bobTheDestructor.view;
 
+import com.ldtsfeup2526.bobTheDestructor.gui.GUILanterna;
 import com.ldtsfeup2526.bobTheDestructor.model.Position;
 
 import com.googlecode.lanterna.TextColor;
@@ -9,8 +10,6 @@ import com.googlecode.lanterna.screen.Screen;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
-import java.awt.*;
 
 class LanternaGUITest {
     private Screen screen;

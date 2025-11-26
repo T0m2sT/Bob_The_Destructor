@@ -1,10 +1,9 @@
-package com.ldtsfeup2526.bobTheDestructor.view;
+package com.ldtsfeup2526.bobTheDestructor.gui;
 
 import com.ldtsfeup2526.bobTheDestructor.model.Position;
 
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
@@ -12,7 +11,7 @@ import com.googlecode.lanterna.terminal.Terminal;
 
 import java.io.IOException;
 
-public class GUILanterna extends GUI {
+public class GUILanterna implements GUI {
     private final Screen screen;
 
     public GUILanterna(int width, int height) throws IOException {
@@ -29,7 +28,7 @@ public class GUILanterna extends GUI {
     }
 
     private Screen createScreen(Terminal terminal) throws IOException {
-        final Screen screen;
+        Screen screen;
         screen = new TerminalScreen(terminal);
         screen.setCursorPosition(null);   // we will not use the cursor yet
         screen.startScreen();
@@ -45,29 +44,9 @@ public class GUILanterna extends GUI {
 
     public Screen getScreen() {return screen;}
 
-    private void draw(Position position, char c, String color) {
-        // Draws the character c with given color to the screen in the provided position
-        // (text graphics should be replaced with sprites later)
-        TextGraphics graphics = screen.newTextGraphics();
-        graphics.setForegroundColor(TextColor.Factory.fromString(color));
-        graphics.putString(position.getX(), position.getY(), "" + c);
-    }
-
     @Override
-    public void drawMiner(Position position) {
-        draw(position, 'M', "yellow");
-    }
+    public void drawPixel(Position position, TextColor color) {
 
-    @Override
-    public void drawElement(Position position){
-        draw(position, 'X', "red");
-    }
-
-    @Override
-    public void drawText(Position position, String text, String color) {
-        TextGraphics graphics = screen.newTextGraphics();
-        graphics.setForegroundColor(TextColor.Factory.fromString(color));
-        graphics.putString(position.getX(), position.getY(), text);
     }
 
     @Override
