@@ -1,4 +1,4 @@
-package com.ldtsfeup2526.bobTheDestructor.controller;
+package com.ldtsfeup2526.bobTheDestructor;
 
 import com.ldtsfeup2526.bobTheDestructor.view.GUI;
 import com.ldtsfeup2526.bobTheDestructor.view.GUILanterna;
@@ -15,6 +15,16 @@ public class Game {
         System.out.println( "Starting GUI... ");
         gui = new GUILanterna();
         inputReader = new InputReaderLanterna(gui.getScreen());
+    }
+
+    public static void main(String[] args) {
+        try {
+            Game game = new Game();
+            game.run();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void run() throws IOException {
