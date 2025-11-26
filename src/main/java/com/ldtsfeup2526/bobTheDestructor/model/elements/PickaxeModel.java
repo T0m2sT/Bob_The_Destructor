@@ -4,7 +4,7 @@ public class PickaxeModel {
     private int level;
 
     public PickaxeModel(int level) {
-        level = 1;
+        this.level = level;
     }
 
     public int getLevel() {return level;}
