@@ -27,20 +27,6 @@ public class Position {
         return new Position(x, y + 1);
     }
 
-    public Position getRandomNeighbour() {
-        int n = (int) (Math.random() * 4);
-        switch (n) {
-            case 0:
-                return getUp();
-            case 1:
-                return getRight();
-            case 2:
-                return getDown();
-            default:
-                return getLeft();
-        }
-    }
-
     public int getX() {
         return x;
     }
