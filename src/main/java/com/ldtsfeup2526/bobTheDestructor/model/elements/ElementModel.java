@@ -2,10 +2,10 @@ package com.ldtsfeup2526.bobTheDestructor.model.elements;
 
 import com.ldtsfeup2526.bobTheDestructor.model.Position;
 
-public abstract class Element {
+public abstract class ElementModel {
     private Position position;
 
-    public Element(Position position) {
+    public ElementModel(Position position) {
         this.position = position;
     }
 
