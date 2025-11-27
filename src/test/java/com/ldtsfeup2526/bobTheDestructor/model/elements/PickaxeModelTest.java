@@ -7,10 +7,14 @@ public class PickaxeModelTest {
     private PickaxeModel pickaxe;
 
     @BeforeEach
-    void setUp() {pickaxe = new PickaxeModel(PickaxeModel.Type.IRON);}
+    void setUp() {
+        pickaxe = new PickaxeModel(PickaxeModel.Type.IRON);
+    }
 
     @Test
-    void pickaxeGetDamageTest() {assert pickaxe.getDamage() == 1;}
+    void pickaxeGetDamageTest() {
+        assert pickaxe.getDamage() == 1;
+    }
 
     @Test
     void pickaxeGetDamageAfterSetTypeTest() {
@@ -19,7 +23,9 @@ public class PickaxeModelTest {
     }
 
     @Test
-    void pickaxeGetTypeTest() {assert pickaxe.getType() == PickaxeModel.Type.IRON;}
+    void pickaxeGetTypeTest() {
+        assert pickaxe.getType() == PickaxeModel.Type.IRON;
+    }
 
     @Test
     void pickaxeSetTypeTest() {

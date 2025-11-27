@@ -16,9 +16,13 @@ public class PickaxeModel {
         }
     }
 
-    public int getDamage() {return damage;}
+    public int getDamage() {
+        return damage;
+    }
 
-    public Type getType() {return type;}
+    public Type getType() {
+        return type;
+    }
 
     private void updateDamage() {
         switch (type) {

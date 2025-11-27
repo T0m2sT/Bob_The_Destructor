@@ -17,11 +17,19 @@ public abstract class ElementModel {
         this.position = position;
     }
 
-    public void moveLeft() {this.position = position.getLeft();}
+    public void moveLeft() {
+        this.position = position.getLeft();
+    }
 
-    public void moveRight() {this.position = position.getRight();}
+    public void moveRight() {
+        this.position = position.getRight();
+    }
 
-    public void moveUp() {this.position = position.getUp();}
+    public void moveUp() {
+        this.position = position.getUp();
+    }
 
-    public void moveDown() {this.position = position.getDown();}
+    public void moveDown() {
+        this.position = position.getDown();
+    }
 }

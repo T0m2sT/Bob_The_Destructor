@@ -20,7 +20,11 @@ public class MineralModel extends ElementModel {
         }
     }
 
-    public Type getType() {return type;}
+    public Type getType() {
+        return type;
+    }
 
-    public int getValue() {return value;}
+    public int getValue() {
+        return value;
+    }
 }

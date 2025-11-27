@@ -8,7 +8,9 @@ public class MineralModelTest {
     private MineralModel mineral;
 
     @BeforeEach
-    void setUp() {mineral = new MineralModel(new Position(1,2), MineralModel.Type.COAL);}
+    void setUp() {
+        mineral = new MineralModel(new Position(1,2), MineralModel.Type.COAL);
+    }
 
     @Test
     void mineralGetPositionTest() {
@@ -24,8 +26,12 @@ public class MineralModelTest {
     }
 
     @Test
-    void mineralGetType() {assert mineral.getType() == MineralModel.Type.COAL;}
+    void mineralGetType() {
+        assert mineral.getType() == MineralModel.Type.COAL;
+    }
 
     @Test
-    void mineralGetValue() {assert mineral.getValue() == 1;}
+    void mineralGetValue() {
+        assert mineral.getValue() == 1;
+    }
 }

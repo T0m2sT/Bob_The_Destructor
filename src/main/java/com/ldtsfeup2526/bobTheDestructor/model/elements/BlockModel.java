@@ -21,11 +21,19 @@ public class BlockModel extends ElementModel {
         }
     }
 
-    public Type getType() {return type;}
+    public Type getType() {
+        return type;
+    }
 
-    public int getDurability() {return durability;}
+    public int getDurability() {
+        return durability;
+    }
 
-    public void setDurability(int durability) {this.durability = durability;}
+    public void setDurability(int durability) {
+        this.durability = durability;
+    }
 
-    public int decreaseDurability(PickaxeModel pickaxe) {return durability - pickaxe.getDamage();}
+    public int decreaseDurability(PickaxeModel pickaxe) {
+        return durability - pickaxe.getDamage();
+    }
 }

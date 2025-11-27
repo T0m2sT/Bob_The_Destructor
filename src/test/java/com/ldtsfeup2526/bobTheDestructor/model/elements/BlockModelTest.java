@@ -9,7 +9,9 @@ public class BlockModelTest {
     private PickaxeModel pickaxe;
 
     @BeforeEach
-    void setup() {block = new BlockModel(new Position(1,2), BlockModel.Type.DIAMOND);}
+    void setup() {
+        block = new BlockModel(new Position(1,2), BlockModel.Type.DIAMOND);
+    }
 
     @Test
     void blockGetTypeTest() {
