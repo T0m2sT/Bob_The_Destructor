@@ -36,4 +36,16 @@ public class MinerModelTest {
         miner.moveRight();
         assert miner.getPosition().getX() == 2;
     }
+
+    @Test
+    void minerMoveUpTest() {
+        miner.moveUp();
+        assert miner.getPosition().getY() == 3;
+    }
+
+    @Test
+    void minerMoveDownTest() {
+        miner.moveDown();
+        assert miner.getPosition().getY() == 1;
+    }
 }
