@@ -1,9 +1,9 @@
 package com.ldtsfeup2526.bobTheDestructor.model.elements;
 
-public class Pickaxe {
+public class PickaxeModel {
     private int level;
 
-    public Pickaxe(int level) {level = 1;}
+    public PickaxeModel(int level) {level = 1;}
 
     public int getLevel() {return level;}
 
