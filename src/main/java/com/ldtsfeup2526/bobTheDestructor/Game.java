@@ -45,13 +45,6 @@ public class Game {
         int FPS = 30;
         long deltaTime = 1000/FPS;
 
-        /*PlayerViewer player = new PlayerViewer(spriteLoader);
-        player.draw(new Position(10, 10), gui);*/
-
-        /*Sprite sprite = spriteLoader.get("sprites/player/player1.png");
-        sprite.draw(gui, new Position(50, 20));*/
-        gui.refresh();
-
         while (this.state != null) {
             long startTime = System.currentTimeMillis();
 
