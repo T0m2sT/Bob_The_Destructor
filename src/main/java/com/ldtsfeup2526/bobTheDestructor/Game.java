@@ -9,6 +9,7 @@ import com.ldtsfeup2526.bobTheDestructor.model.game.Scene;
 import com.ldtsfeup2526.bobTheDestructor.states.State;
 import com.ldtsfeup2526.bobTheDestructor.states.game.GameState;
 import com.ldtsfeup2526.bobTheDestructor.view.*;
+import com.ldtsfeup2526.bobTheDestructor.view.elements.PlayerViewer;
 
 import java.awt.*;
 import java.io.IOException;
@@ -44,9 +45,11 @@ public class Game {
         int FPS = 30;
         long deltaTime = 1000/FPS;
 
+        PlayerViewer player = new PlayerViewer(spriteLoader);
+        player.draw(new Position(10, 10), gui);
 
-        Sprite sprite = spriteLoader.get("sprites/player/player1.png");
-        sprite.draw(gui, new Position(50, 20));
+        /*Sprite sprite = spriteLoader.get("sprites/player/player1.png");
+        sprite.draw(gui, new Position(50, 20));*/
         gui.refresh();
 
         while (this.state != null) {
