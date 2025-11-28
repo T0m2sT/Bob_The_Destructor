@@ -1,6 +1,7 @@
 package com.ldtsfeup2526.bobTheDestructor.states;
 
 import com.ldtsfeup2526.bobTheDestructor.controller.Controller;
+import com.ldtsfeup2526.bobTheDestructor.gui.GUI;
 import com.ldtsfeup2526.bobTheDestructor.view.SpriteLoader;
 import com.ldtsfeup2526.bobTheDestructor.view.ViewerProvider;
 import com.ldtsfeup2526.bobTheDestructor.view.screens.ScreenViewer;
@@ -25,7 +26,7 @@ public abstract class State<T> {
         return model;
     }
 
-    public void update() {
-
+    public void update(GUI gui) throws IOException {
+        screenViewer.draw(gui);
     }
 }
