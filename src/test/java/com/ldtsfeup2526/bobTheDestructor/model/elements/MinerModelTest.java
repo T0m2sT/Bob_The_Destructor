@@ -1,16 +1,20 @@
 package com.ldtsfeup2526.bobTheDestructor.model.elements;
 
+<<<<<<<< HEAD:src/test/java/com/ldtsfeup2526/bobTheDestructor/model/elements/MinerModelTest.java
 import com.ldtsfeup2526.bobTheDestructor.model.Position;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.MinerModel;
+========
+import com.ldtsfeup2526.bobTheDestructor.model.elements.PlayerModel;
+>>>>>>>> ElementsModel:src/test/java/com/ldtsfeup2526/bobTheDestructor/model/PlayerModelTest.java
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class MinerModelTest {
-    private MinerModel miner;
+public class PlayerModelTest {
+    private PlayerModel miner;
 
     @BeforeEach
     void setUp() {
-        miner = new MinerModel(new Position(1,2));
+        miner = new PlayerModel(new Position(1,2));
     }
 
     @Test
