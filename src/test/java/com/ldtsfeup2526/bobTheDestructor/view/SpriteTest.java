@@ -13,12 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SpriteTest {
-    private BufferedImage image2x2;
     private Sprite sprite;
 
     @BeforeEach
     void setUp() {
-        image2x2 = new BufferedImage(2, 2, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage image2x2 = new BufferedImage(2, 2, BufferedImage.TYPE_INT_ARGB);
 
         // (0,0) transparent
         image2x2.setRGB(0, 0, 0x00000000);
@@ -33,13 +32,16 @@ public class SpriteTest {
     }
 
     @Test
-    void GetSetTest() {
+    void getOffsetTest() {
         assert sprite.getOffset().getX() == 0;
         assert sprite.getOffset().getY() == 0;
-        
-        sprite.setOffset(new Position(2, 3));
-        assert sprite.getOffset().getX() == 2;
-        assert sprite.getOffset().getY() == 3;
+    }
+
+    @Test
+    void setOffsetTest() {
+        sprite.setOffset(new Position(1, 2));
+        assert sprite.getOffset().getX() == 1;
+        assert sprite.getOffset().getY() == 2;
     }
 
     @Test
