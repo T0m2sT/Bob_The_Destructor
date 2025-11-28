@@ -1,4 +1,4 @@
-package com.ldtsfeup2526.bobTheDestructor.model.elements;
+package com.ldtsfeup2526.bobTheDestructor.model.game.elements;
 
 import com.ldtsfeup2526.bobTheDestructor.model.Position;
 

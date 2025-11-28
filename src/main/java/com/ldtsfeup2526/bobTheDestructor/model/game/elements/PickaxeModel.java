@@ -1,4 +1,4 @@
-package com.ldtsfeup2526.bobTheDestructor.model.elements;
+package com.ldtsfeup2526.bobTheDestructor.model.game.elements;
 
 public class PickaxeModel {
     public enum Type {IRON, GOLD, DIAMOND}
