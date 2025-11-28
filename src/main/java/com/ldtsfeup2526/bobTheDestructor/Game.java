@@ -3,22 +3,27 @@ package com.ldtsfeup2526.bobTheDestructor;
 import com.googlecode.lanterna.TextColor;
 import com.ldtsfeup2526.bobTheDestructor.gui.GUI;
 import com.ldtsfeup2526.bobTheDestructor.gui.GUILanterna;
+import com.ldtsfeup2526.bobTheDestructor.gui.Resolution;
 import com.ldtsfeup2526.bobTheDestructor.model.Position;
 import com.ldtsfeup2526.bobTheDestructor.states.State;
 import com.ldtsfeup2526.bobTheDestructor.view.*;
 import com.ldtsfeup2526.bobTheDestructor.view.elements.PlayerViewer;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 public class Game {
+    private final int PIXEL_SIZE = 6;
+    private Resolution resolution = new Resolution(240, 135);
     private final GUILanterna gui;
-    private InputReader inputReader;
     private final SpriteLoader spriteLoader = new GameSpriteLoader();
+    private InputReader inputReader;
     private State<?> state;
 
-    public Game() throws IOException {
+    public Game() throws IOException, URISyntaxException, FontFormatException {
         System.out.println( "Starting GUI... ");
-        gui = new GUILanterna();
+        gui = new GUILanterna(resolution, PIXEL_SIZE, "Bob, The Destructor");
         inputReader = new InputReaderLanterna(gui.getScreen());
     }
 
@@ -38,6 +43,9 @@ public class Game {
 
         PlayerViewer player = new PlayerViewer(spriteLoader);
         player.draw(new Position(10, 10), gui);
+
+        /*Sprite sprite = spriteLoader.get("sprites/player/player1.png");
+        sprite.draw(gui, new Position(50, 20));*/
         gui.refresh();
 
         while (this.state != null) {

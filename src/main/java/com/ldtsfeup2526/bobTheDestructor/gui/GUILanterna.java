@@ -10,46 +10,44 @@ import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 
+import java.awt.*;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 public class GUILanterna implements GUI {
-    private final Screen screen;
+    private final ScreenCreator screenCreator = new LanternaScreenCreator();
+    private final String title;
+    private final Resolution resolution;
+    private Screen screen;
 
-    public GUILanterna(int width, int height) throws IOException {
-        Terminal terminal = createTerminal(width, height);
-
-        this.screen = createScreen(terminal);
+    public GUILanterna(String title) throws IOException, URISyntaxException, FontFormatException {
+        this.title = title;
+        this.resolution = new Resolution(240, 135);
+        createScreen(6);
     }
 
-    private Terminal createTerminal(int width, int height) throws IOException {
-        TerminalSize terminalSize = new TerminalSize(width, height);
-        DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
-        Terminal terminal = terminalFactory.createTerminal();
-        return terminal;
+    public GUILanterna(Resolution resolution, int fontSize, String title) throws IOException, URISyntaxException, FontFormatException {
+        this.title = title;
+        this.resolution = resolution;
+        createScreen(fontSize);
     }
 
-    private Screen createScreen(Terminal terminal) throws IOException {
-        Screen screen;
-        screen = new TerminalScreen(terminal);
-        screen.setCursorPosition(null);   // we will not use the cursor yet
+    private void createScreen(int fontSize) throws IOException, URISyntaxException, FontFormatException {
+        screen = screenCreator.createScreen(resolution, fontSize, title);
+
+        screen.setCursorPosition(null);
         screen.startScreen();
-        screen.doResizeIfNecessary();
-        return screen;
     }
-
-    public GUILanterna() throws IOException {
-        this(200, 60);
-    }
-
-    public GUILanterna(Screen screen) {this.screen = screen;}
-
-    public Screen getScreen() {return screen;}
 
     @Override
     public void drawPixel(Position position, TextColor color) {
         TextGraphics graphics = screen.newTextGraphics();
         graphics.setBackgroundColor(color);
         graphics.setCharacter(position.getX(), position.getY(), ' ');
+    }
+
+    public Screen getScreen() {
+        return screen;
     }
 
     @Override

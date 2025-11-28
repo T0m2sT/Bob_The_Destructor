@@ -40,6 +40,24 @@ public class Sprite {
         }
     }
 
+    public void drawFlipX(GUI gui, Position position) {
+        for (int y = 0; y < image.getHeight(); y++) {
+            for (int x = 0; x < image.getWidth(); x++) {
+                int ARGB = image.getRGB(image.getWidth()-x-1, y);
+
+                if (getAlpha(ARGB) != 0) {
+                    Position pixelPosition = new Position(
+                            position.getX() + offset.getX() + x,
+                            position.getY() + offset.getY() + y
+                    );
+
+                    gui.drawPixel(pixelPosition, getRGB(ARGB));
+                }
+
+            }
+        }
+    }
+
     private int getAlpha(int ARGB) {
         return ARGB >> 24;
     }
