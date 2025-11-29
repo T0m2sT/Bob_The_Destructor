@@ -7,3 +7,4 @@ public class PlayerModel extends ElementModel {
         super(position);
     }
 }
+
