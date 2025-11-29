@@ -5,7 +5,7 @@ import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
 
 import java.io.IOException;
-
+/*
 public class InputReaderLanterna implements InputReader {
     private final Screen screen;
 
@@ -34,3 +34,4 @@ public class InputReaderLanterna implements InputReader {
         }
     }
 }
+*/
