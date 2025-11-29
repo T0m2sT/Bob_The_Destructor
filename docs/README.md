@@ -34,73 +34,78 @@ This project was developed by Aléxis Ramos, Pedro Tomás Teixeira, Rafael Pinho
 
 ### Design
 
-#### SCREENS AND FLOW CONTROL SHOULD BE SWITCHABLE WITHOUT SCATTERED IF/SWITCH LOGIC
+#### THE SCREENS AND GAME LOOP SHOULD BE SWITCHABLE WITHOUT UPDATING IF/SWITCH LOGIC
 
 **Problem in Context**
 
-We needed to support different application screens (e.g., gameplay, menus) and switch between them at runtime. Early drafts risked centralizing control via `if/switch` statements in `Game`, mixing rendering coordination with screen-specific logic, which violates the Single Responsibility Principle and makes transitions brittle.
+We need to support different application screens such as gameplay and menus and switch between them while the application is running.
+This means we can't mix rendering coordination with screen logic, because it would violate the Single Responsibility Principle and made transitions more complex.
 
-Relevant prior code (pre-pattern idea): manual calls from the main loop to different drawing routines coupled in `Game` would have led to conditionals deciding which screen to update/draw. We avoided committing that version, and instead structured screens from the start via a dedicated abstraction.
+Manual calls from the loop in the `Game` class to different drawing would have led to conditionals deciding which screen to update and draw.
 
 **The Pattern**
 
-We applied the State pattern. Each screen is a distinct state encapsulating its own model, viewer, and controller. `Game` holds a reference to the current `State<?>` and simply delegates to it. Switching screens becomes replacing the state instance.
+We applied the State pattern. Each screen is a distinct state encapsulating its own model, viewer and controller.
+`Game` holds a reference to the current `State<?>` and then it only needs to delegate to it. This way, switching screens is now replacing the state instance.
 
-This fits because screens exhibit stateful behavior with uniform operations (`update(gui)`), and transitions are well expressed as state replacements without conditionals.
+This fits because screens show states behavior with uniform operations (`update(gui)`), and transitions are well expressed as state replacements without conditionals.
 
 **Implementation**
 
 - Core abstraction: [`states/State.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/states/State.java#L11-L33). It holds the screen model, a `Controller<T>`, and a `ScreenViewer<T>`, created via factory methods.
 - Game loop delegation: [`Game.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/Game.java#L43-L61) calls `state.update(gui)` every frame and exposes `setState(...)` for transitions ([`Game.java#setState`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/Game.java#L65-L67)).
-- Concrete states (example placeholder in package `states.game`): a `GameState` links the `Scene` model with its screen viewer and controller.
+- Concrete states: a `GameState` links the `Scene` model with its screen viewer and controller.
 
 **Consequences**
 
 Benefits:
-- Clean separation of concerns between the main loop and screen-specific logic.
-- Adding a new screen is localized: implement a new `State<T>` subclass and its viewer/controller.
+- Clean separation of concerns between the main loop and screen logic.
+- Adding a new screen is simpler: implement a new `State<T>` subclass and its viewer and controller.
 - Transitions are explicit and testable via `Game.setState(...)`.
 
 Liabilities:
-- More types and indirection; initial boilerplate for each new screen.
+- More types and indirection.
 
 #### RENDERING BEHAVIOR FOR DIFFERENT ELEMENTS SHOULD BE EXTENSIBLE WITHOUT MODIFYING A CENTRAL RENDERER
 
 **Problem in Context**
 
-As we introduced multiple renderable elements (player, tiles, decor, etc.), a single monolithic renderer would accumulate `if/switch` chains to handle each type, making it hard to add new visuals and violating Open/Closed Principle.
+As we introduced multiple renderable elements like (player, tiles, decor, etc.), a single monolithic renderer would accumulate `if/switch` chains to handle each type,
+making it hard to add new visuals and violating the Open/Closed Principle.
 
 **The Pattern**
 
-We applied the Strategy pattern for drawing. Each drawable element has its own viewer strategy implementing a common interface. Screens compose these strategies to render the model.
+We applied the Strategy pattern for the drawing method. Each drawable element has its own viewer strategy implementing a common interface.
+Screens then will compose these strategies to render the model.
 
 **Implementation**
 
 - Strategy interface: [`view/elements/ElementViewer.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/view/elements/ElementViewer.java#L6-L8).
-- Strategy composition/provider: [`view/ViewerProvider.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/view/ViewerProvider.java#L7-L16) instantiates and exposes concrete viewers (e.g., `PlayerViewer`).
+- Strategy composition/provider: [`view/ViewerProvider.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/view/ViewerProvider.java#L7-L16) instantiates and exposes concrete viewers like `PlayerViewer`.
 - Example concrete strategy: [`view/elements/PlayerViewer.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/view/elements/PlayerViewer.java).
-- Screen-level composition: `ScreenViewer<T>` (see `view/screens`) aggregates the strategies to draw a complete screen.
+- Screen-level composition: `ScreenViewer<T>` aggregates the strategies to draw a complete screen.
 
 **Consequences**
 
 Benefits:
-- New renderable types can be added by creating a new `ElementViewer` implementation; existing code stays closed to modification.
+- New renderable types can be added by creating a new `ElementViewer` implementation while existing code stays closed to modification.
 - Testability improves by isolating drawing logic per element.
 
 Liabilities:
 - Slight increase in the number of classes and indirection through the provider.
 
-#### WE MUST DECOUPLE THE GAME VIEW FROM THE LANTERNA BACKEND AND CENTRALIZE SCREEN CREATION
+#### GUI IMPLEMENTATION SHOULD BE SEPARATED FROM LANTERNA LOGIC AND SCREEN CREATION
 
 **Problem in Context**
 
-Directly using Lanterna APIs in game code tightly couples rendering to a specific terminal library and spreads configuration details (resolution, font, title) across the codebase. This hampers portability and makes switching or configuring the backend harder.
+Directly using Lanterna APIs in game code makes so that we can only render to a specific terminal library and also make configuration details (resolution, font, title) more confuse across the code.
+This would mess up portability and made switching or configuring the backend harder.
 
 **The Pattern**
 
 We combined Adapter and Factory patterns:
 - Adapter: define a minimal `GUI` interface for drawing operations, with `GUILanterna` adapting Lanterna’s `Screen` to that interface.
-- Factory: centralize creation/configuration of the `Screen` via a `ScreenCreator` (implemented by `LanternaScreenCreator`).
+- Factory: centralize creation and also configuration of the `Screen` via a `ScreenCreator`.
 
 **Implementation**
 
@@ -111,18 +116,19 @@ We combined Adapter and Factory patterns:
 **Consequences**
 
 Benefits:
-- The view layer uses a stable `GUI` API and is decoupled from Lanterna specifics.
-- Screen creation details (resolution, font size, window title, KeyListener wiring) are centralized, easing configuration and testing.
+- The view classes uses a stable `GUI` API and is decoupled from Lanterna specific methods.
+- Screen creation details, the resolution, font size, window title and KeyListener are centralized, easing configuration and testing.
 - Future backends can be introduced by implementing `GUI` and a matching `ScreenCreator`.
 
 Liabilities:
-- Additional abstraction layers; must ensure adapters stay thin and efficient.
+- Additional abstraction layers making it more complex and efficiency might be compromised.
 
 #### INPUT HANDLING SHOULD MAP KEY EVENTS TO HIGH-LEVEL ACTIONS AND SUPPORT SINGLE-SHOT SEMANTICS
 
 **Problem in Context**
 
-Raw key events (press/release) are noisy and platform-dependent. Game logic should operate on semantic actions (e.g., `UP`, `JUMP`, `SELECT`) and avoid repeated triggers for single-shot actions while a key is held. Early designs risked scattering key-code checks and debouncing across controllers.
+Raw key events (press/release) are noisy and platform-dependent. Game logic should operate on semantic actions (e.g., `UP`, `JUMP`, `SELECT`) and avoid repeated triggers for single-shot actions while a key is held.
+Naive solutions would scatter key-code checks and introduce confusion across controllers.
 
 **The Pattern**
 
@@ -132,7 +138,7 @@ This combination cleanly separates event capture from action semantics.
 
 **Implementation**
 
-- Event capture buffer: [`controller/input/InputReader.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/controller/input/InputReader.java#L9-L56) implements `KeyListener`, maintaining `inputPressed` and `inputFinished` lists; `updateInputPressed()` prunes consumed inputs each frame.
+- Event capture buffer: [`controller/input/InputReader.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/controller/input/InputReader.java#L9-L56) implements `KeyListener`, maintaining `inputPressed` and `inputFinished` lists; `updateInputPressed()` updates inputs each frame.
 - Parsing to actions: [`controller/input/ActionParser.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/controller/input/ActionParser.java#L8-L59) maps key codes to `Action` values and marks single-shot actions (`SPACE`, `ENTER`, `ESCAPE`) as finished.
 - Wiring in boot: `Game` creates the parser and passes its `InputReader` into the GUI, so the same listener receives events; see [`Game.java` boot](../src/main/java/com/ldtsfeup2526/bobTheDestructor/Game.java#L26-L31).
 
@@ -144,7 +150,7 @@ Benefits:
 - Controllers can depend on `Action` lists without caring about AWT details.
 
 Liabilities:
-- Requires disciplined use of `inputFinished` to avoid starving inputs; controllers must mark single-shot actions appropriately (the parser handles main cases already).
+- Requires careful usage of `inputFinished` to avoid starving inputs; controllers must mark single-shot actions appropriately.
 
 #### Singletons...
 
