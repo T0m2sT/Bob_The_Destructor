@@ -23,7 +23,7 @@ public class Game {
     public Game() throws IOException, URISyntaxException, FontFormatException {
         System.out.println( "Starting GUI... ");
         inputReader = new InputReader();
-        gui = new GUILanterna(resolution, PIXEL_SIZE, "Bob, The Destructor", inputReader);
+        gui = new GUILanterna(inputReader, resolution, PIXEL_SIZE, "Bob, The Destructor");
 
         this.state = new GameState(new Scene(), spriteLoader);
     }

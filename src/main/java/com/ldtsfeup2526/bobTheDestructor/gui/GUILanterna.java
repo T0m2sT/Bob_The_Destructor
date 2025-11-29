@@ -22,13 +22,13 @@ public class GUILanterna implements GUI {
     private final Resolution resolution;
     private Screen screen;
 
-    public GUILanterna(String title, KeyListener keyListener) throws IOException, URISyntaxException, FontFormatException {
+    public GUILanterna(KeyListener keyListener, String title) throws IOException, URISyntaxException, FontFormatException {
         this.title = title;
         this.resolution = new Resolution(240, 135);
         createScreen(6, keyListener);
     }
 
-    public GUILanterna(Resolution resolution, int fontSize, String title, KeyListener keyListener) throws IOException, URISyntaxException, FontFormatException {
+    public GUILanterna(KeyListener keyListener, Resolution resolution, int fontSize, String title) throws IOException, URISyntaxException, FontFormatException {
         this.title = title;
         this.resolution = resolution;
         createScreen(fontSize, keyListener);
