@@ -28,3 +28,11 @@ For a more detailed version of this description, click [here](./docs/README.md).
 <p align="center">
     <img src="docs/mockups/game_mockup.gif">
 </p>
+
+<h3 align="center">
+  MainMenu Mockup
+</h3>
+
+<p align="center">
+    <img src="docs/mockups/MainMenu.png">
+</p>
