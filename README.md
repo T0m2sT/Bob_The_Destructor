@@ -22,6 +22,14 @@ For a more detailed version of this description, click [here](./docs/README.md).
 </p>
 
 <h3 align="center">
+  MainMenu Mockup
+</h3>
+
+<p align="center">
+    <img src="docs/mockups/MainMenu.png">
+</p>
+
+<h3 align="center">
   Game Mockup
 </h3>
 
@@ -29,10 +37,3 @@ For a more detailed version of this description, click [here](./docs/README.md).
     <img src="docs/mockups/game_mockup.gif">
 </p>
 
-<h3 align="center">
-  MainMenu Mockup
-</h3>
-
-<p align="center">
-    <img src="docs/mockups/MainMenu.png">
-</p>
