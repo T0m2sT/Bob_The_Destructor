@@ -4,7 +4,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class InputReader implements KeyListener {
     private List<Integer> inputPressed = new ArrayList<>();

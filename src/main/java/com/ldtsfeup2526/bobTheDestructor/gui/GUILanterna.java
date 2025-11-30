@@ -1,15 +1,10 @@
 package com.ldtsfeup2526.bobTheDestructor.gui;
 
 import com.googlecode.lanterna.graphics.TextGraphics;
-import com.ldtsfeup2526.bobTheDestructor.controller.input.InputReader;
 import com.ldtsfeup2526.bobTheDestructor.model.Position;
 
-import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.screen.Screen;
-import com.googlecode.lanterna.screen.TerminalScreen;
-import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
-import com.googlecode.lanterna.terminal.Terminal;
 
 import java.awt.*;
 import java.awt.event.KeyListener;

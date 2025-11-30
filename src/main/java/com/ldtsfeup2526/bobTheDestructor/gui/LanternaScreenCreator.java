@@ -6,7 +6,6 @@ import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.swing.AWTTerminalFontConfiguration;
 import com.googlecode.lanterna.terminal.swing.AWTTerminalFrame;
-import com.ldtsfeup2526.bobTheDestructor.controller.input.InputReader;
 
 import java.awt.*;
 import java.awt.event.KeyListener;

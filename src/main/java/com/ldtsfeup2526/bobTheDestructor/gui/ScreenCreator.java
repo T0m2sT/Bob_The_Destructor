@@ -1,7 +1,6 @@
 package com.ldtsfeup2526.bobTheDestructor.gui;
 
 import com.googlecode.lanterna.screen.Screen;
-import com.ldtsfeup2526.bobTheDestructor.controller.input.InputReader;
 
 import java.awt.*;
 import java.awt.event.KeyListener;

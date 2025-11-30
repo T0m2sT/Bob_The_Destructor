@@ -47,7 +47,7 @@ The main idea behind this pattern is dividing the software into three sections:
 
 The following diagram explains the current implementation:
 
-<img src="images/MVC_diagram.jpg">
+<img src="images/MVC_diagram.jpg" alt="MVC Diagram" width="500">
 
 #### Consequences
 
@@ -178,4 +178,32 @@ Liabilities:
 
 ## Testing
 
-## Self-Evaluation
+We focused on unit testing to ensure the reliability of the game's architectural components, specifically the **Model**, **View**, and **State** systems. By isolating these components, we could verify behavior without relying on the complex graphical backend.
+
+**Testing Strategy:**
+*   **Models**: We verified that game elements (Player, Blocks, Minerals) hold state correctly and interactions (like collision bounding boxes) function as expected.
+*   **Controllers**: We tested the `InputReader` and `ActionParser` to ensure that raw keyboard inputs are correctly translated into semantic game actions (`UP`, `SELECT`, etc.).
+*   **Viewers**: We achieved high coverage in the view package by testing the strategy pattern implementations, ensuring the correct symbols and colors are associated with game elements.
+*   **States**: We validated that states correctly initialize their respective controllers and viewers.
+
+**Coverage Summary:**
+The project achieved a high degree of code coverage, as shown in the report below:
+
+![Coverage Report](./Overall_Coverage_Report.png)
+
+*   **Class Coverage**: 89.7%
+*   **Method Coverage**: 91.7%
+*   **Line Coverage**: 85.6%
+
+**Detailed Breakdown:**
+*   **Core Logic (`model.game`, `states`, `view`)**: These packages achieved **100% line coverage**. This ensures that the core gameplay loop, state transitions, and rendering logic are robust and error-free.
+*   **Input Handling (`controller.input`)**: With **89.8% line coverage**, the input system is reliable, ensuring smooth player control.
+*   **Untested Areas**: The lower coverage in specific areas (like `model.menu` or parts of the main `Game` loop) is due to these classes being simple data containers or the main entry point, which are verified through manual integration testing.
+
+### Self-Evaluation
+
+| Name | Contribution |
+| :---: | :---: |
+| Aléxis Ramos | 33.33% |
+| Pedro Tomás Teixeira | 33.33% |
+| Rafael Pinho e Silva | 33.33% |

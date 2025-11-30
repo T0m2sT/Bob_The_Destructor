@@ -1,0 +1,188 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Sprite</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.ldtsfeup2526.bobTheDestructor.view</a>
+</div>
+
+<h1>Coverage Summary for Class: Sprite (com.ldtsfeup2526.bobTheDestructor.view)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Sprite</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (12/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (26/26)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.ldtsfeup2526.bobTheDestructor.view;
+&nbsp;
+&nbsp;import com.googlecode.lanterna.TextColor;
+&nbsp;import com.ldtsfeup2526.bobTheDestructor.gui.GUI;
+&nbsp;import com.ldtsfeup2526.bobTheDestructor.model.Position;
+&nbsp;
+&nbsp;import java.awt.image.BufferedImage;
+&nbsp;
+&nbsp;public class Sprite {
+&nbsp;    private final BufferedImage image;
+<b class="fc">&nbsp;    private Position offset = new Position(0, 0);</b>
+&nbsp;
+<b class="fc">&nbsp;    public Sprite(BufferedImage image) {</b>
+<b class="fc">&nbsp;        this.image = image;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Position getOffset() {
+<b class="fc">&nbsp;        return offset;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setOffset(Position offset) {
+<b class="fc">&nbsp;        this.offset = offset;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void draw(GUI gui, Position position) {
+<b class="fc">&nbsp;        for (int y = 0; y &lt; image.getHeight(); y++) {</b>
+<b class="fc">&nbsp;            for (int x = 0; x &lt; image.getWidth(); x++) {</b>
+<b class="fc">&nbsp;                int ARGB = image.getRGB(x, y);</b>
+&nbsp;
+<b class="fc">&nbsp;                if (getAlpha(ARGB) != 0) {</b>
+<b class="fc">&nbsp;                    Position pixelPosition = new Position(</b>
+<b class="fc">&nbsp;                            position.getX() + offset.getX() + x,</b>
+<b class="fc">&nbsp;                            position.getY() + offset.getY() + y</b>
+&nbsp;                        );
+&nbsp;
+<b class="fc">&nbsp;                    gui.drawPixel(pixelPosition, getRGB(ARGB));</b>
+&nbsp;                }
+&nbsp;
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    public void drawFlipX(GUI gui, Position position) {
+<b class="fc">&nbsp;        for (int y = 0; y &lt; image.getHeight(); y++) {</b>
+<b class="fc">&nbsp;            for (int x = 0; x &lt; image.getWidth(); x++) {</b>
+<b class="fc">&nbsp;                int ARGB = image.getRGB(image.getWidth()-x-1, y);</b>
+&nbsp;
+<b class="fc">&nbsp;                if (getAlpha(ARGB) != 0) {</b>
+<b class="fc">&nbsp;                    Position pixelPosition = new Position(</b>
+<b class="fc">&nbsp;                            position.getX() + offset.getX() + x,</b>
+<b class="fc">&nbsp;                            position.getY() + offset.getY() + y</b>
+&nbsp;                    );
+&nbsp;
+<b class="fc">&nbsp;                    gui.drawPixel(pixelPosition, getRGB(ARGB));</b>
+&nbsp;                }
+&nbsp;
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    private int getAlpha(int ARGB) {
+<b class="fc">&nbsp;        return ARGB &gt;&gt; 24;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private TextColor getRGB(int ARGB) {
+<b class="fc">&nbsp;        int red = ARGB &gt;&gt; 16 &amp; 0xFF;</b>
+<b class="fc">&nbsp;        int green = ARGB &gt;&gt; 8 &amp; 0xFF;</b>
+<b class="fc">&nbsp;        int blue = ARGB &amp; 0xFF;</b>
+<b class="fc">&nbsp;        return new TextColor.RGB(red, green, blue);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-11-30 18:30</div>
+</div>
+</body>
+</html>
