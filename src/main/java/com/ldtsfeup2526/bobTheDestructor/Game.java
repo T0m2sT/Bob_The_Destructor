@@ -1,5 +1,6 @@
 package com.ldtsfeup2526.bobTheDestructor;
 
+import com.ldtsfeup2526.bobTheDestructor.controller.input.Action;
 import com.ldtsfeup2526.bobTheDestructor.controller.input.ActionParser;
 import com.ldtsfeup2526.bobTheDestructor.gui.GUILanterna;
 import com.ldtsfeup2526.bobTheDestructor.gui.Resolution;
@@ -11,6 +12,7 @@ import com.ldtsfeup2526.bobTheDestructor.view.*;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 
 public class Game {
     private final int PIXEL_SIZE = 6;
@@ -44,10 +46,11 @@ public class Game {
         while (this.state != null) {
             long startTime = System.currentTimeMillis();
 
-            /*List<Action> list = actionParser.get();
+            // Used to test Inputs
+            List<Action> list = actionParser.get();
             if (list.size() != 0) {
                 System.out.println(list);
-            }*/
+            }
             state.update(gui);
 
             long elapsedTime = System.currentTimeMillis() - startTime;
