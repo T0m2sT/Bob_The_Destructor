@@ -30,7 +30,13 @@ This project was developed by Aléxis Ramos, Pedro Tomás Teixeira, Rafael Pinho
 
 ### Implemented features
 
+* **Sprite Loader** - A class that parses and renders PNGs onto the GUI's screen.
+* **Input System** - A system that allows the user to use keyboard inputs, multiple inputs per frame are supported.
+* **Action System** - A system that implements the input system into the game by turning any user input into a game action.
+* **State System** - A system that allows the game to know in what state it is, and proceeds accordingly.
+
 ### Planned features
+
 
 ### Design
 
