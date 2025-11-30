@@ -60,27 +60,55 @@ Benefits:
 * Helps with the segregation of the code
 * Avoids conflicts
 
-### THE SCREENS AND GAME LOOP SHOULD BE SWITCHABLE WITHOUT UPDATING IF/SWITCH LOGIC
+### Game Loop
+
+#### Problem in Context
+
+In game development it is essential to control the frame rate of a game. Both the rendering and code speed depend on the game's frame rate.
+
+#### The Pattern
+
+The design pattern used to solve this issue is the **Game Loop**. A Game Loop is a while-loop that runs until there is a state change to quit the game.
+With this loop there is also a target FPS (frames per second), which represent how manny times per second all the code runs and how manny times the images in the screen are updated.
+There is also the need to track the **deltaTime** which is the time between frames. This value is extremely important to maintain compatibility with different FPS, while still maintaining the appropriate behaviour.
+This way our game will run continuously and smoothly across different systems and frame rates.
+
+#### Implementation
+
+The implementation of this pattern in our project is present in run method of our [game class](/src/main/java/com/ldtsfeup2526/bobTheDestructor/Game.java).
+
+Here is a visual representation of the game loop:
+<img src="images/gameLoop.png">
+
+#### Consequences
+
+Benefits:
+* Allows to control frame rate
+* Keeps the experience consistent
+
+### Multiple Game States
 
 **Problem in Context**
 
-We need to support different application screens such as gameplay and menus and switch between them while the application is running.
+It is crucial that we support multiple game states. The game should know whether it is currently on the game or in a menu.
 This means we can't mix rendering coordination with screen logic, because it would violate the Single Responsibility Principle and made transitions more complex.
-
-Manual calls from the loop in the `Game` class to different drawing would have led to conditionals deciding which screen to update and draw.
+This could obviously be solved with some conditionals, this is not a very scalable approach as eventually there would be a giant block of code inside our game.
 
 **The Pattern**
 
-We applied the State pattern. Each screen is a distinct state encapsulating its own model, viewer and controller.
-`Game` holds a reference to the current `State<?>` and then it only needs to delegate to it. This way, switching screens is now replacing the state instance.
+We applied the **State** pattern. Each game state is distinct encapsulating its own model, viewer and controller.
+`Game` holds a reference to the current `State<?>` and then it only needs to delegate to it. This way, switching game scene is now replacing the state instance.
 
-This fits because screens show states behavior with uniform operations (`update(gui)`), and transitions are well expressed as state replacements without conditionals.
+States are also the glue for our project structure, containing the model, view and controller. Allowing everything to be updated in order.
 
 **Implementation**
 
-- Core abstraction: [`states/State.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/states/State.java#L11-L33). It holds the screen model, a `Controller<T>`, and a `ScreenViewer<T>`, created via factory methods.
-- Game loop delegation: [`Game.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/Game.java#L43-L61) calls `state.update(gui)` every frame and exposes `setState(...)` for transitions ([`Game.java#setState`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/Game.java#L65-L67)).
+- Core abstraction: [`states/State.java`](/src/main/java/com/ldtsfeup2526/bobTheDestructor/states/State.java#L11-L33). It holds the screen model, a `Controller<T>`, and a `ScreenViewer<T>`, created via factory methods.
+- Game loop delegation: [`Game.java`](/src/main/java/com/ldtsfeup2526/bobTheDestructor/Game.java#L43-L61) calls `state.update(gui)` every frame and exposes `setState(...)` for transitions ([`Game.java#setState`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/Game.java#L65-L67)).
 - Concrete states: a `GameState` links the `Scene` model with its screen viewer and controller.
+
+Here is a visualization of how it is implemented:
+<img src="images/states.png">
 
 **Consequences**
 
@@ -92,7 +120,7 @@ Benefits:
 Liabilities:
 - More types and indirection.
 
-### RENDERING BEHAVIOR FOR DIFFERENT ELEMENTS SHOULD BE EXTENSIBLE WITHOUT MODIFYING A CENTRAL RENDERER
+### Rendering Multiple Elements
 
 **Problem in Context**
 
@@ -101,7 +129,7 @@ making it hard to add new visuals and violating the Open/Closed Principle.
 
 **The Pattern**
 
-We applied the Strategy pattern for the drawing method. Each drawable element has its own viewer strategy implementing a common interface.
+We applied the **Strategy pattern** for the drawing method. Each drawable element has its own viewer strategy implementing a common interface.
 Screens then will compose these strategies to render the model.
 
 **Implementation**
@@ -120,24 +148,24 @@ Benefits:
 Liabilities:
 - Slight increase in the number of classes and indirection through the provider.
 
-### GUI IMPLEMENTATION SHOULD BE SEPARATED FROM LANTERNA LOGIC AND SCREEN CREATION
+### Simplification of Lanterna's interface
 
 **Problem in Context**
 
-Directly using Lanterna APIs in game code makes so that we can only render to a specific terminal library and also make configuration details (resolution, font, title) more confuse across the code.
-This would mess up portability and made switching or configuring the backend harder.
+Directly using Lanterna's API can be frustrating and unclear, specially for rendering multiple game elements.
+This would mess up portability and made switching or configuring anything harder.
 
 **The Pattern**
 
-We combined Adapter and Factory patterns:
-- Adapter: define a minimal `GUI` interface for drawing operations, with `GUILanterna` adapting Lanterna’s `Screen` to that interface.
-- Factory: centralize creation and also configuration of the `Screen` via a `ScreenCreator`.
+We combined **Adapter** and **Factory** patterns:
+- **Adapter:** define a minimal `GUI` interface for drawing operations, with `GUILanterna` adapting Lanterna’s `Screen` to that interface.
+- **Factory:** centralize creation and also configuration of the `Screen` via a `ScreenCreator`.
 
 **Implementation**
 
-- Adapter (`GUILanterna`): wraps Lanterna and implements drawing methods; see [`gui/GUILanterna.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/gui/GUILanterna.java#L19-L81). Notable operations include `drawPixel`, `clear`, `refresh`, and `close`.
-- Factory (`ScreenCreator`): interface to build a configured Lanterna `Screen`; see [`gui/ScreenCreator.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/gui/ScreenCreator.java#L11-L13). `GUILanterna` delegates actual creation to this factory in `createScreen(...)`.
-- Integration in boot: `Game` builds `GUILanterna` with resolution, pixel size, and title; see [`Game.java` constructor](../src/main/java/com/ldtsfeup2526/bobTheDestructor/Game.java#L26-L31).
+- Adapter (`GUILanterna`): wraps Lanterna and implements drawing methods; see [`gui/GUILanterna.java`](/src/main/java/com/ldtsfeup2526/bobTheDestructor/gui/GUILanterna.java#L19-L81). Notable operations include `drawPixel`, `clear`, `refresh`, and `close`.
+- Factory (`ScreenCreator`): interface to build a configured Lanterna `Screen`; see [`gui/ScreenCreator.java`](/src/main/java/com/ldtsfeup2526/bobTheDestructor/gui/ScreenCreator.java#L11-L13). `GUILanterna` delegates actual creation to this factory in `createScreen(...)`.
+- Integration in boot: `Game` builds `GUILanterna` with resolution, pixel size, and title; see [`Game.java` constructor](/src/main/java/com/ldtsfeup2526/bobTheDestructor/Game.java#L26-L31).
 
 **Consequences**
 
@@ -149,7 +177,7 @@ Benefits:
 Liabilities:
 - Additional abstraction layers making it more complex and efficiency might be compromised.
 
-### INPUT HANDLING SHOULD MAP KEY EVENTS TO HIGH-LEVEL ACTIONS AND SUPPORT SINGLE-SHOT SEMANTICS
+### Input Handling
 
 **Problem in Context**
 
@@ -158,15 +186,16 @@ Naive solutions would scatter key-code checks and introduce confusion across con
 
 **The Pattern**
 
-We leveraged the Observer style provided by Java AWT (`KeyListener`) to receive events, and applied a small parsing layer that behaves like a Command/Interpreter for inputs: `ActionParser` translates key codes into domain actions and coordinates one-shot behavior using an `InputReader` buffer.
+We leveraged the **Observer** style provided by Java AWT (`KeyListener`) to receive events, and applied a small parsing layer that behaves like a Command/Interpreter for inputs: `ActionParser` translates key codes into domain actions and coordinates one-shot behavior using an `InputReader` buffer.
 
-This combination cleanly separates event capture from action semantics.
+This combination cleanly separates event capture from action semantics. We also abstained from using Lanterna's implementation as it had a few drawbacks.
+This implementation allows for multiple Key Events per frame while having a clean implementation separate from the GUI.
 
 **Implementation**
 
 - Event capture buffer: [`controller/input/InputReader.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/controller/input/InputReader.java#L9-L56) implements `KeyListener`, maintaining `inputPressed` and `inputFinished` lists; `updateInputPressed()` updates inputs each frame.
 - Parsing to actions: [`controller/input/ActionParser.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/controller/input/ActionParser.java#L8-L59) maps key codes to `Action` values and marks single-shot actions (`SPACE`, `ENTER`, `ESCAPE`) as finished.
-- Wiring in boot: `Game` creates the parser and passes its `InputReader` into the GUI, so the same listener receives events; see [`Game.java` boot](../src/main/java/com/ldtsfeup2526/bobTheDestructor/Game.java#L26-L31).
+- Wiring in boot: `Game` creates the parser and passes its `InputReader` into the GUI, so the same listener receives events and focuses keyboard while using Lanterna's screen; see [`Game.java` boot](../src/main/java/com/ldtsfeup2526/bobTheDestructor/Game.java#L26-L31).
 
 **Consequences**
 
