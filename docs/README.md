@@ -73,8 +73,9 @@ We applied the State pattern. Each screen is a distinct state encapsulating its 
 This fits because screens show states behavior with uniform operations (`update(gui)`), and transitions are well expressed as state replacements without conditionals.
 
 **Implementation**
-- Core abstraction: [`states/State.java`](../src/main/java/com.ldtsfeup2526.bobTheDestructor/states/State.java#L11-L33). It holds the screen model, a `Controller<T>`, and a `ScreenViewer<T>`, created via factory methods.
-- Game loop delegation: [`Game.java`](../src/main/java/com.ldtsfeup2526.bobTheDestructor/Game.java#L43-L61) calls `state.update(gui)` every frame and exposes `setState(...)` for transitions ([`Game.java#setState`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/Game.java#L65-L67)).
+
+- Core abstraction: [`states/State.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/states/State.java#L11-L33). It holds the screen model, a `Controller<T>`, and a `ScreenViewer<T>`, created via factory methods.
+- Game loop delegation: [`Game.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/Game.java#L43-L61) calls `state.update(gui)` every frame and exposes `setState(...)` for transitions ([`Game.java#setState`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/Game.java#L65-L67)).
 - Concrete states: a `GameState` links the `Scene` model with its screen viewer and controller.
 
 **Consequences**
@@ -101,9 +102,9 @@ Screens then will compose these strategies to render the model.
 
 **Implementation**
 
-- Strategy interface: [`view/elements/ElementViewer.java`](../src/main/java/com.ldtsfeup2526.bobTheDestructor/view/elements/ElementViewer.java#L6-L8).
-- Strategy composition/provider: [`view/ViewerProvider.java`](../src/main/java/com.ldtsfeup2526.bobTheDestructor/view/ViewerProvider.java#L7-L16) instantiates and exposes concrete viewers like `PlayerViewer`.
-- Example concrete strategy: [`view/elements/PlayerViewer.java`](../src/main/java/com.ldtsfeup2526.bobTheDestructor/view/elements/PlayerViewer.java).
+- Strategy interface: [`view/elements/ElementViewer.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/view/elements/ElementViewer.java#L6-L8).
+- Strategy composition/provider: [`view/ViewerProvider.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/view/ViewerProvider.java#L7-L16) instantiates and exposes concrete viewers like `PlayerViewer`.
+- Example concrete strategy: [`view/elements/PlayerViewer.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/view/elements/PlayerViewer.java).
 - Screen-level composition: `ScreenViewer<T>` aggregates the strategies to draw a complete screen.
 
 **Consequences**
@@ -130,9 +131,9 @@ We combined Adapter and Factory patterns:
 
 **Implementation**
 
-- Adapter (`GUILanterna`): wraps Lanterna and implements drawing methods; see [`gui/GUILanterna.java`](../src/main/java/com.ldtsfeup2526.bobTheDestructor/gui/GUILanterna.java#L19-L81). Notable operations include `drawPixel`, `clear`, `refresh`, and `close`.
-- Factory (`ScreenCreator`): interface to build a configured Lanterna `Screen`; see [`gui/ScreenCreator.java`](../src/main/java/com.ldtsfeup2526.bobTheDestructor/gui/ScreenCreator.java#L11-L13). `GUILanterna` delegates actual creation to this factory in `createScreen(...)`.
-- Integration in boot: `Game` builds `GUILanterna` with resolution, pixel size, and title; see [`Game.java` constructor](../src/main/java/com.ldtsfeup2526.bobTheDestructor/Game.java#L26-L31).
+- Adapter (`GUILanterna`): wraps Lanterna and implements drawing methods; see [`gui/GUILanterna.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/gui/GUILanterna.java#L19-L81). Notable operations include `drawPixel`, `clear`, `refresh`, and `close`.
+- Factory (`ScreenCreator`): interface to build a configured Lanterna `Screen`; see [`gui/ScreenCreator.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/gui/ScreenCreator.java#L11-L13). `GUILanterna` delegates actual creation to this factory in `createScreen(...)`.
+- Integration in boot: `Game` builds `GUILanterna` with resolution, pixel size, and title; see [`Game.java` constructor](../src/main/java/com/ldtsfeup2526/bobTheDestructor/Game.java#L26-L31).
 
 **Consequences**
 
@@ -159,9 +160,9 @@ This combination cleanly separates event capture from action semantics.
 
 **Implementation**
 
-- Event capture buffer: [`controller/input/InputReader.java`](../src/main/java/com.ldtsfeup2526.bobTheDestructor/controller/input/InputReader.java#L9-L56) implements `KeyListener`, maintaining `inputPressed` and `inputFinished` lists; `updateInputPressed()` updates inputs each frame.
-- Parsing to actions: [`controller/input/ActionParser.java`](../src/main/java/com.ldtsfeup2526.bobTheDestructor/controller/input/ActionParser.java#L8-L59) maps key codes to `Action` values and marks single-shot actions (`SPACE`, `ENTER`, `ESCAPE`) as finished.
-- Wiring in boot: `Game` creates the parser and passes its `InputReader` into the GUI, so the same listener receives events; see [`Game.java` boot](../src/main/java/com.ldtsfeup2526.bobTheDestructor/Game.java#L26-L31).
+- Event capture buffer: [`controller/input/InputReader.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/controller/input/InputReader.java#L9-L56) implements `KeyListener`, maintaining `inputPressed` and `inputFinished` lists; `updateInputPressed()` updates inputs each frame.
+- Parsing to actions: [`controller/input/ActionParser.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/controller/input/ActionParser.java#L8-L59) maps key codes to `Action` values and marks single-shot actions (`SPACE`, `ENTER`, `ESCAPE`) as finished.
+- Wiring in boot: `Game` creates the parser and passes its `InputReader` into the GUI, so the same listener receives events; see [`Game.java` boot](../src/main/java/com/ldtsfeup2526/bobTheDestructor/Game.java#L26-L31).
 
 **Consequences**
 
