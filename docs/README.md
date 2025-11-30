@@ -27,7 +27,36 @@ This project was developed by Aléxis Ramos, Pedro Tomás Teixeira, Rafael Pinho
 
 ## Design
 
-#### THE SCREENS AND GAME LOOP SHOULD BE SWITCHABLE WITHOUT UPDATING IF/SWITCH LOGIC
+### Code Structure
+
+#### Problem in Context
+
+When developing a game or any complex piece of software, it is essential to be very careful with the way it is implemented and structured.
+Due to this, it is essential to compartmentalize all the components.
+
+#### The Pattern
+
+We chose the **Model/View/Controller** pattern. This pattern is very common in projects which have to display a Graphical User Interface (GUI).
+The main idea behind this pattern is dividing the software into three sections:
+
+* **Model** - represents the data and game logic
+* **View** - renders the model
+* **Controller** - receives and interprets the user actions
+
+#### Implementation
+
+The following diagram explains the current implementation:
+
+<img src="images/MVC_diagram.jpg">
+
+#### Consequences
+
+Benefits:
+* Allows for better code organization
+* Helps with the segregation of the code
+* Avoids conflicts
+
+### THE SCREENS AND GAME LOOP SHOULD BE SWITCHABLE WITHOUT UPDATING IF/SWITCH LOGIC
 
 **Problem in Context**
 
@@ -59,7 +88,7 @@ Benefits:
 Liabilities:
 - More types and indirection.
 
-#### RENDERING BEHAVIOR FOR DIFFERENT ELEMENTS SHOULD BE EXTENSIBLE WITHOUT MODIFYING A CENTRAL RENDERER
+### RENDERING BEHAVIOR FOR DIFFERENT ELEMENTS SHOULD BE EXTENSIBLE WITHOUT MODIFYING A CENTRAL RENDERER
 
 **Problem in Context**
 
@@ -87,7 +116,7 @@ Benefits:
 Liabilities:
 - Slight increase in the number of classes and indirection through the provider.
 
-#### GUI IMPLEMENTATION SHOULD BE SEPARATED FROM LANTERNA LOGIC AND SCREEN CREATION
+### GUI IMPLEMENTATION SHOULD BE SEPARATED FROM LANTERNA LOGIC AND SCREEN CREATION
 
 **Problem in Context**
 
@@ -116,7 +145,7 @@ Benefits:
 Liabilities:
 - Additional abstraction layers making it more complex and efficiency might be compromised.
 
-#### INPUT HANDLING SHOULD MAP KEY EVENTS TO HIGH-LEVEL ACTIONS AND SUPPORT SINGLE-SHOT SEMANTICS
+### INPUT HANDLING SHOULD MAP KEY EVENTS TO HIGH-LEVEL ACTIONS AND SUPPORT SINGLE-SHOT SEMANTICS
 
 **Problem in Context**
 
@@ -145,8 +174,8 @@ Benefits:
 Liabilities:
 - Requires careful usage of `inputFinished` to avoid starving inputs; controllers must mark single-shot actions appropriately.
 
-### Known code smells
+## Known code smells
 
-### Testing
+## Testing
 
-### Self-Evaluation
+## Self-Evaluation
