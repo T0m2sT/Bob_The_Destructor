@@ -8,7 +8,6 @@ import com.googlecode.lanterna.screen.Screen;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.awt.*;
 import java.awt.event.KeyListener;
@@ -17,6 +16,7 @@ import java.net.URISyntaxException;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.*;
 
 public class GUILanternaTest {
     private GUILanterna gui;
@@ -25,15 +25,15 @@ public class GUILanternaTest {
 
     @BeforeEach
     void setUp() throws IOException, URISyntaxException, FontFormatException {
-        LanternaScreenCreator lscreenCreator = Mockito.mock(LanternaScreenCreator.class);
-        screen = Mockito.mock(Screen.class);
-        tg = Mockito.mock(TextGraphics.class);
+        LanternaScreenCreator lscreenCreator = mock(LanternaScreenCreator.class);
+        screen = mock(Screen.class);
+        tg = mock(TextGraphics.class);
 
-        Mockito.when(lscreenCreator.createScreen(any(), anyInt(), any(), any())).thenReturn(screen);
-        Mockito.when(screen.newTextGraphics()).thenReturn(tg);
+        when(lscreenCreator.createScreen(any(), anyInt(), any(), any())).thenReturn(screen);
+        when(screen.newTextGraphics()).thenReturn(tg);
 
 
-        gui = new GUILanterna(lscreenCreator, Mockito.mock(KeyListener.class), new Resolution(240, 135), 6, "Test");
+        gui = new GUILanterna(lscreenCreator, mock(KeyListener.class), new Resolution(240, 135), 6, "Test");
     }
 
     @Test
@@ -45,25 +45,25 @@ public class GUILanternaTest {
     @Test
     void drawPixel() {
         gui.drawPixel(new Position(2, 3),new TextColor.RGB(255, 0, 0));
-        Mockito.verify(tg, Mockito.times(1)).setBackgroundColor(new TextColor.RGB(255, 0, 0));
-        Mockito.verify(tg, Mockito.times(1)).setCharacter(2, 3, ' ');
+        verify(tg, times(1)).setBackgroundColor(new TextColor.RGB(255, 0, 0));
+        verify(tg, times(1)).setCharacter(2, 3, ' ');
     }
 
     @Test
     void clearScreen() {
         gui.clear();
-        Mockito.verify(screen, Mockito.times(1)).clear();
+        verify(screen, times(1)).clear();
     }
 
     @Test
     void refreshScreen() throws IOException {
         gui.refresh();
-        Mockito.verify(screen, Mockito.times(1)).refresh();
+        verify(screen, times(1)).refresh();
     }
 
     @Test
     void closeScreen() throws IOException {
         gui.close();
-        Mockito.verify(screen, Mockito.times(1)).close();
+        verify(screen, times(1)).close();
     }
 }

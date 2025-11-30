@@ -6,11 +6,12 @@ import com.ldtsfeup2526.bobTheDestructor.model.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mockito;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.mockito.Mockito.*;
 
 public class SpriteTest {
     private Sprite sprite;
@@ -46,14 +47,14 @@ public class SpriteTest {
 
     @Test
     void drawTest() {
-        GUI gui = Mockito.mock(GUI.class);
+        GUI gui = mock(GUI.class);
         sprite.setOffset(new Position(1, 1));
         Position base = new Position(5, 10);
 
         sprite.draw(gui, base);
 
         ArgumentCaptor<Position> posCaptor = ArgumentCaptor.forClass(Position.class);
-        Mockito.verify(gui, Mockito.times(3)).drawPixel(posCaptor.capture(), Mockito.any(TextColor.class));
+        verify(gui, times(3)).drawPixel(posCaptor.capture(), any(TextColor.class));
 
         List<Position> expected = new ArrayList<>();
         expected.add(new Position(7, 11));
@@ -69,14 +70,14 @@ public class SpriteTest {
 
     @Test
     void drawFlipXTest() {
-        GUI gui = Mockito.mock(GUI.class);
+        GUI gui = mock(GUI.class);
         sprite.setOffset(new Position(1, 1));
         Position base = new Position(5, 10);
 
         sprite.drawFlipX(gui, base);
 
         ArgumentCaptor<Position> posCaptor = ArgumentCaptor.forClass(Position.class);
-        Mockito.verify(gui, Mockito.times(3)).drawPixel(posCaptor.capture(), Mockito.any(TextColor.class));
+        verify(gui, times(3)).drawPixel(posCaptor.capture(), any(TextColor.class));
 
         List<Position> expected = new ArrayList<>();
         expected.add(new Position(6, 11));

@@ -3,8 +3,10 @@ package com.ldtsfeup2526.bobTheDestructor.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class PositionTest {
-    Position p;
+    private Position p;
 
     @BeforeEach
     void setUp() {
@@ -13,30 +15,42 @@ public class PositionTest {
 
     @Test
     void getTest() {
-        assert p.getX() == 1;
-        assert p.getY() == 2;
+        assertEquals(1, p.getX());
+        assertEquals(2, p.getY());
     }
 
     @Test
     void getLeftTest() {
-        assert p.getLeft().getX() == 0;
+        assertEquals(0, p.getLeft().getX());
+        assertEquals(2, p.getLeft().getY());
     }
 
     @Test
     void getRightTest() {
-        assert p.getRight().getX() == 2;
+        assertEquals(2, p.getRight().getX());
+        assertEquals(2, p.getRight().getY());
+    }
+
+    @Test
+    void getUpTest() {
+        assertEquals(1, p.getUp().getX());
+        assertEquals(1, p.getUp().getY());
+    }
+
+    @Test
+    void getDownTest() {
+        assertEquals(1, p.getDown().getX());
+        assertEquals(3, p.getDown().getY());
     }
 
     @Test
     void equalsTest() {
-        Position a = new Position(2, 3);
-        // reflexive property
-        assert p.equals(p);
-        // different coordinates are not equal
-        assert !a.equals(p);
-        // symmetric property
-        assert a.equals(p) == p.equals(a);
-        // null test
-        assert !p.equals(null);
+        Position first_position = new Position(2, 3);
+        Position second_position = new Position(1, 2);
+
+        assertEquals(p, p);
+        assertNotEquals(p, first_position);
+        assertEquals(p, second_position);
+        assertNotEquals(null, p);
     }
 }

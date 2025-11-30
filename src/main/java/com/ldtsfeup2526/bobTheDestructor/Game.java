@@ -1,8 +1,6 @@
 package com.ldtsfeup2526.bobTheDestructor;
 
-import com.ldtsfeup2526.bobTheDestructor.controller.input.Action;
 import com.ldtsfeup2526.bobTheDestructor.controller.input.ActionParser;
-import com.ldtsfeup2526.bobTheDestructor.controller.input.InputReader;
 import com.ldtsfeup2526.bobTheDestructor.gui.GUILanterna;
 import com.ldtsfeup2526.bobTheDestructor.gui.Resolution;
 import com.ldtsfeup2526.bobTheDestructor.model.game.Scene;
@@ -13,7 +11,6 @@ import com.ldtsfeup2526.bobTheDestructor.view.*;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.List;
 
 public class Game {
     private final int PIXEL_SIZE = 6;
@@ -24,7 +21,7 @@ public class Game {
     private State<?> state;
 
     public Game() throws IOException, URISyntaxException, FontFormatException {
-        System.out.println( "Starting GUI... ");
+        System.out.println("Starting GUI... ");
         gui = new GUILanterna(actionParser.getInputReader(), resolution, PIXEL_SIZE, "Bob, The Destructor");
 
         this.state = new GameState(new Scene(), spriteLoader);
