@@ -11,14 +11,20 @@ For a more detailed version of this description, click [here](./docs/README.md).
 
 ## Screenshots And Mockups
 
-### Main Character Design
+<h3 align="center">
+  Main Character Design
+</h3>
 
-<div>
+<p align="center">
     <img src="docs/mockups/player.png">
     <img src="docs/mockups/player_walk.gif">
     <img src="docs/mockups/player_swim.gif">
-</div>
+</p>
 
-### Game Mokcup
+<h3 align="center">
+  Game Mockup
+</h3>
 
-<img src="docs/mockups/game_mockup.gif">
+<p align="center">
+    <img src="docs/mockups/game_mockup.gif">
+</p>
