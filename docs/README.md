@@ -36,12 +36,12 @@ Due to this, it is essential to compartmentalize all the components.
 
 #### The Pattern
 
-We chose the **Model/View/Controller** pattern. This pattern is very common in projects which have to display a Graphical User Interface (GUI).
+We chose the **Model/View/Controller** pattern. This pattern is very common in projects which have to display any kind of interface.
 The main idea behind this pattern is dividing the software into three sections:
 
 * **Model** - represents the data and game logic
 * **View** - renders the model
-* **Controller** - receives and interprets the user actions
+* **Controller** - receives and interprets the user inputs
 
 #### Implementation
 
