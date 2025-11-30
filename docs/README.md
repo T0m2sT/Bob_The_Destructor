@@ -25,6 +25,10 @@ This project was developed by Aléxis Ramos, Pedro Tomás Teixeira, Rafael Pinho
 * **Collectible System** - A system that allows the player to collect and spend in-game currency.
 * **Upgrade System** - A system that allows the player to upgrade the pickaxe.
 
+## Notes About Features
+
+We still have no gameplay, as for this delivery we focused solely on making the structure organized and scalable. With the current implementation we can easily start working on the playable features while not worrying so much about code integrity as until now since the game's structure is very solid.
+
 ## General Structure
 
 <img src="intermediateDelivery/uml.png">
