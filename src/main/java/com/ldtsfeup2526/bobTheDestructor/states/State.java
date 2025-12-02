@@ -20,7 +20,7 @@ public abstract class State<T> {
     }
 
     public abstract ScreenViewer<T> createScreenViewer(ViewerProvider viewerProvider);
-    public abstract  Controller<T> createController();
+    public abstract Controller<T> createController();
 
     public T getModel() {
         return model;

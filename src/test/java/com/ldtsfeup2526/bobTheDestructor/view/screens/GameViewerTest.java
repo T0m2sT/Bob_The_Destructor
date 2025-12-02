@@ -37,7 +37,7 @@ public class GameViewerTest {
 
         verify(gui, times(1)).clear();
         
-        verify(playerViewer, times(1)).draw(new Position(50, 50), gui);
+        verify(playerViewer, times(1)).draw(, new Position(50, 50), gui);
         
         verify(gui, times(1)).refresh();
     }

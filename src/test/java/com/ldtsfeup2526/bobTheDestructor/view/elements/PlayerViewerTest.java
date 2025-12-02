@@ -32,7 +32,7 @@ public class PlayerViewerTest {
         GUI gui = mock(GUI.class);
         Position position = new Position(10, 20);
 
-        playerViewer.draw(position, gui);
+        playerViewer.draw(, position, gui);
 
         verify(playerSprite, times(1)).draw(eq(gui), eq(position));
     }
