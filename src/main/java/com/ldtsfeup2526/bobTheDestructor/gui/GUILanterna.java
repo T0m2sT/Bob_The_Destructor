@@ -55,6 +55,17 @@ public class GUILanterna implements GUI {
         graphics.setCharacter(position.getX(), position.getY(), ' ');
     }
 
+    @Override
+    public void drawBackground(TextColor color) {
+        TextGraphics graphics = screen.newTextGraphics();
+        graphics.setBackgroundColor(color);
+        for (int i = 0; i < resolution.getWidth(); i++) {
+            for (int j = 0; j < resolution.getHeight(); j++) {
+                graphics.setCharacter(i, j, ' ');
+            }
+        }
+    }
+
     public Screen getScreen() {
         return screen;
     }

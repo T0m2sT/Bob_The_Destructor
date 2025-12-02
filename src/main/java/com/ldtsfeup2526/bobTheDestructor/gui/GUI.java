@@ -10,6 +10,7 @@ public interface GUI {
 
     Screen getScreen();
     void drawPixel(Position position, TextColor color);
+    void drawBackground(TextColor color);
     void clear();
     void refresh() throws IOException;
     void close() throws IOException;
