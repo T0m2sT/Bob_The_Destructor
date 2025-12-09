@@ -17,8 +17,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 public class Game {
-    public static final Resolution resolution = new Resolution(240, 135);
-    private final int PIXEL_SIZE = 6;
+    public static final Resolution resolution = new Resolution(160, 90);
+    private final int PIXEL_SIZE = 7;
     private final GUILanterna gui;
     private final SpriteLoader spriteLoader = new GameSpriteLoader();
     private ActionParser actionParser = new ActionParser();
@@ -48,12 +48,13 @@ public class Game {
         while (this.state != null) {
             long startTime = System.currentTimeMillis();
 
+            /*
             List<Action> actions = actionParser.get();
             if (actions.size() != 0) {
                 System.out.println(actions);
-            }
+            }*/
 
-            state.update(this, gui, actions);
+            state.update(this, gui, actionParser);
 
             long elapsedTime = System.currentTimeMillis() - startTime;
             long sleepTime = deltaTime - elapsedTime;
