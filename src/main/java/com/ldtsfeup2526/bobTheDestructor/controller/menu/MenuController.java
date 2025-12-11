@@ -5,6 +5,8 @@ import com.ldtsfeup2526.bobTheDestructor.controller.Controller;
 import com.ldtsfeup2526.bobTheDestructor.controller.input.Action;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.Menu;
 
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class MenuController<T extends Menu> extends Controller<T> {
@@ -12,11 +14,11 @@ public abstract class MenuController<T extends Menu> extends Controller<T> {
 
     public MenuController(T model) {
         super(model);
-        this.buttonController = new ButtonController();
+        this.buttonController = new ButtonController(getModel());
     }
 
     @Override
-    public void update(Game game, List<Action> actions) {
+    public void update(Game game, List<Action> actions) throws IOException {
         for (Action action : actions) {
             switch (action) {
                 case UP:
@@ -25,7 +27,15 @@ public abstract class MenuController<T extends Menu> extends Controller<T> {
                 case DOWN:
                     this.getModel().moveDown();
                     break;
+                case QUIT:
+                    onQuit(game);
+                    break;
+                default:
+                    buttonController.update(game, List.of(action));
+                    break;
             }
         }
     }
+
+    protected abstract void onQuit(Game game);
 }

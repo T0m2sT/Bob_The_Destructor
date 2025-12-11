@@ -69,4 +69,8 @@ public class Game {
         this.state = state;
         actionParser.notifyStateChange(state);
     }
+
+    public SpriteLoader getSpriteLoader() {
+        return spriteLoader;
+    }
 }
