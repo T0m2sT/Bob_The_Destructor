@@ -28,7 +28,7 @@ public class Game {
         System.out.println("Starting GUI... ");
         gui = new GUILanterna(actionParser.getInputReader(), resolution, PIXEL_SIZE, "Bob, The Destructor");
 
-        this.state = new MainMenuState(new MainMenu(), spriteLoader);
+        setState(new MainMenuState(new MainMenu(), spriteLoader));
     }
 
     public static void main(String[] args) {
@@ -67,5 +67,6 @@ public class Game {
 
     public void setState(State<?> state) {
         this.state = state;
+        actionParser.notifyStateChange(state);
     }
 }

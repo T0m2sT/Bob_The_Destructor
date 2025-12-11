@@ -1,15 +1,24 @@
 package com.ldtsfeup2526.bobTheDestructor.controller.input;
 
+import com.ldtsfeup2526.bobTheDestructor.states.IGameStateObserver;
+import com.ldtsfeup2526.bobTheDestructor.states.State;
+import com.ldtsfeup2526.bobTheDestructor.states.game.MainMenuState;
+
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActionParser {
+public class ActionParser implements IGameStateObserver {
     private final InputReader inputReader = new InputReader();
     private List<Action> currentActions = new ArrayList<>();
+    private boolean allowKeyHold = false;
 
     public InputReader getInputReader() {
         return inputReader;
+    }
+
+    private void setAllowKeyHold(boolean allowKeyHold) {
+        this.allowKeyHold = allowKeyHold;
     }
 
     public List<Action> get() {
@@ -19,22 +28,9 @@ public class ActionParser {
         for (Integer integer : inputPressed) {
             Action action = parseInput(integer);
 
-            if (action != Action.NONE) {
-                currentActions.add(parseInput(integer));
+            if (!allowKeyHold) {
+                inputReader.addInputFinished(integer);
             }
-        }
-        inputReader.updateInputPressed();
-
-        return currentActions;
-    }
-
-    public List<Action> getOneShotAction() {
-        currentActions.clear();
-
-        List<Integer> inputPressed = inputReader.getInputPressed();
-        for (Integer integer : inputPressed) {
-            Action action = parseInput(integer);
-            inputReader.addInputFinished(integer);
 
             if (action != Action.NONE) {
                 currentActions.add(parseInput(integer));
@@ -70,6 +66,13 @@ public class ActionParser {
                 return Action.QUIT;
             default:
                 return Action.NONE;
+        }
+    }
+
+    @Override
+    public void notifyStateChange(State<?> state) {
+        if (state instanceof MainMenuState) {
+            setAllowKeyHold(false);
         }
     }
 }
