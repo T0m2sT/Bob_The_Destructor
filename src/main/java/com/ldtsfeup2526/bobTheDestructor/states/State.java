@@ -31,8 +31,7 @@ public abstract class State<T> {
     }
 
     public void update(Game game, GUI gui, ActionParser actionParser) throws IOException {
-        List<Action> actions = actionParser.get();
-        controller.update(game, actions);
+        controller.update(game, actionParser.get()s);
         screenViewer.draw(gui);
     }
 }
