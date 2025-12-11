@@ -2,6 +2,7 @@ package com.ldtsfeup2526.bobTheDestructor.controller.input;
 
 import com.ldtsfeup2526.bobTheDestructor.states.IGameStateObserver;
 import com.ldtsfeup2526.bobTheDestructor.states.State;
+import com.ldtsfeup2526.bobTheDestructor.states.game.GameState;
 import com.ldtsfeup2526.bobTheDestructor.states.game.MainMenuState;
 
 import java.awt.event.KeyEvent;
@@ -73,6 +74,8 @@ public class ActionParser implements IGameStateObserver {
     public void notifyStateChange(State<?> state) {
         if (state instanceof MainMenuState) {
             setAllowKeyHold(false);
+        } else if (state instanceof GameState) {
+            setAllowKeyHold(true);
         }
     }
 }
