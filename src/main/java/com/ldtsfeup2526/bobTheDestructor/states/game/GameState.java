@@ -1,6 +1,7 @@
 package com.ldtsfeup2526.bobTheDestructor.states.game;
 
 import com.ldtsfeup2526.bobTheDestructor.controller.Controller;
+import com.ldtsfeup2526.bobTheDestructor.controller.game.SceneController;
 import com.ldtsfeup2526.bobTheDestructor.model.game.Scene;
 import com.ldtsfeup2526.bobTheDestructor.states.State;
 import com.ldtsfeup2526.bobTheDestructor.view.SpriteLoader;
@@ -20,6 +21,6 @@ public class GameState extends State<Scene> {
     }
 
     public Controller<Scene> createController() {
-        return null;
+        return new SceneController(getModel());
     }
 }
