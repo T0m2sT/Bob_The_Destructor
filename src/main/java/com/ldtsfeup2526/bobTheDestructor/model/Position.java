@@ -11,6 +11,10 @@ public class Position {
         this.y = y;
     }
 
+    public Position(Size size) {
+        this(size.getX(), size.getY());
+    }
+
     public Position getLeft() {
         return new Position(x - 1, y);
     }

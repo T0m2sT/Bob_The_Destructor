@@ -74,7 +74,7 @@ public class SpriteTest {
         sprite.setOffset(new Position(1, 1));
         Position base = new Position(5, 10);
 
-        sprite.drawFlipX(gui, base);
+        sprite.drawFlipX(base, gui);
 
         ArgumentCaptor<Position> posCaptor = ArgumentCaptor.forClass(Position.class);
         verify(gui, times(3)).drawPixel(posCaptor.capture(), any(TextColor.class));

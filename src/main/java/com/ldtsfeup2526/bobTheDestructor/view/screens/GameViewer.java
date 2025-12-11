@@ -20,9 +20,11 @@ public class GameViewer extends ScreenViewer<Scene> {
 
     @Override
     public void draw(GUI gui) throws IOException {
+
         //gui.clear();
         gui.drawBackground(new TextColor.RGB(30, 30, 46));
-        playerViewer.draw(new Position(50, 50), gui);
+        playerViewer.draw(getModel().getPlayerModel(), gui);
+
 
         gui.refresh();
     }

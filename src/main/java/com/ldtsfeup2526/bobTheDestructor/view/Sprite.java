@@ -1,8 +1,10 @@
 package com.ldtsfeup2526.bobTheDestructor.view;
 
 import com.googlecode.lanterna.TextColor;
+import com.ldtsfeup2526.bobTheDestructor.Game;
 import com.ldtsfeup2526.bobTheDestructor.gui.GUI;
 import com.ldtsfeup2526.bobTheDestructor.model.Position;
+import com.ldtsfeup2526.bobTheDestructor.model.Size;
 
 import java.awt.image.BufferedImage;
 
@@ -22,7 +24,15 @@ public class Sprite {
         this.offset = offset;
     }
 
-    public void draw(GUI gui, Position position) {
+    public Size getSize() {
+        return new Size(image.getWidth(), image.getHeight());
+    }
+
+    public void center() {
+        setOffset(new Position(-getSize().getX()/2, -getSize().getY()/2));
+    }
+
+    public void draw(Position position, GUI gui) {
         for (int y = 0; y < image.getHeight(); y++) {
             for (int x = 0; x < image.getWidth(); x++) {
                 int ARGB = image.getRGB(x, y);
@@ -40,7 +50,7 @@ public class Sprite {
         }
     }
 
-    public void drawFlipX(GUI gui, Position position) {
+    public void drawFlipX(Position position, GUI gui) {
         for (int y = 0; y < image.getHeight(); y++) {
             for (int x = 0; x < image.getWidth(); x++) {
                 int ARGB = image.getRGB(image.getWidth()-x-1, y);
