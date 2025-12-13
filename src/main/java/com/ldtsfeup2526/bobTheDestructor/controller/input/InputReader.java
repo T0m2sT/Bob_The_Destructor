@@ -3,7 +3,7 @@ package com.ldtsfeup2526.bobTheDestructor.controller.input;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
-import java.util.List;z
+import java.util.List;
 
 public class InputReader implements KeyListener {
     private List<Integer> inputPressed = new ArrayList<>();
