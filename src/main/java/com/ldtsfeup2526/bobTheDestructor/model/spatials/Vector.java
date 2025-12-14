@@ -8,6 +8,6 @@ public class Vector extends Spatial<Float> {
     }
 
     public Vector(Spatial<?> spatial) {
-        super(spatial);
+        super(spatial, Number::floatValue);
     }
 }
