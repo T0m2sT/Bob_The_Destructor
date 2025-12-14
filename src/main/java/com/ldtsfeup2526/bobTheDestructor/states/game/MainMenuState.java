@@ -14,6 +14,7 @@ import java.io.IOException;
 public class MainMenuState extends State<MainMenu> {
     public MainMenuState(MainMenu model, SpriteLoader spriteLoader) throws IOException {
         super(model, spriteLoader);
+        getModel().getSoundPlayer().start();
     }
 
     public ScreenViewer<MainMenu> createScreenViewer(ViewerProvider viewerProvider) {
