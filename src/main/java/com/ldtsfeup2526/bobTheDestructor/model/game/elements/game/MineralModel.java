@@ -6,7 +6,7 @@ import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
 public class MineralModel extends ElementModel {
     public enum Type {COAL, IRON, GOLD, DIAMOND}
 
-    private final int value;
+    private int health;
 
     private final Type type;
 
@@ -14,10 +14,10 @@ public class MineralModel extends ElementModel {
         super(position);
         this.type = type;
         switch (type) {
-            case DIAMOND: value = 20; break;
-            case GOLD: value = 10; break;
-            case IRON: value = 3; break;
-            default: value = 1; break;
+            case DIAMOND: health = 20; break;
+            case GOLD: health = 10; break;
+            case IRON: health = 3; break;
+            default: health = 1; break;
         }
     }
 
@@ -25,7 +25,11 @@ public class MineralModel extends ElementModel {
         return type;
     }
 
-    public int getValue() {
-        return value;
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
 }
