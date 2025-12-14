@@ -47,6 +47,10 @@ public class PlayerViewer implements ElementViewer<PlayerModel> {
     }
     public void draw(PlayerModel model, GUI gui) {
         Sprite sprite = spriteMap.get(IdleState.class)[0];
-        sprite.draw(model.getPosition(), gui);
+        if (model.getRigidBody().getVelocity().getX() > 0) {
+            sprite.draw(model.getPosition(), gui);
+        } else {
+            sprite.drawFlipX(model.getPosition(), gui);
+        }
     }
 }
