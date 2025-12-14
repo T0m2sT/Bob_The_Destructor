@@ -15,12 +15,12 @@ import java.util.List;
 
 public class SceneController extends Controller<SceneManager> {
     private final PlayerController playerController;
-    private final MineralsController mineralsController;
+    //private final MineralsController mineralsController;
 
     public SceneController(SceneManager sceneManager) {
         super(sceneManager);
         this.playerController = new PlayerController(getModel().getScene().getPlayerModel());
-        this.mineralsController = new MineralsController(getModel().getScene().getMineralsModel());
+        //this.mineralsController = new MineralsController(getModel().getScene().getMineralsModel());
     }
 
     @Override
@@ -30,6 +30,6 @@ public class SceneController extends Controller<SceneManager> {
         }
         playerController.update(game, actions);
 
-        mineralsController.update(getModel().getScene().getPlayerModel().getPosition(), actions);
+        //mineralsController.update(getModel().getScene().getPlayerModel().getPosition(), actions);
     }
 }
