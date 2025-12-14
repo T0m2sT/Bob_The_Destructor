@@ -16,14 +16,17 @@ public class PlayerController extends Controller<PlayerModel> {
 
     @Override
     public void update(Game game, List<Action> actions) {
-        getModel().update();
-        if (actions.contains(Action.LEFT)) moveLeft();
-        if (actions.contains(Action.RIGHT)) moveRight();
+        PlayerModel player = getModel();
+        player.getRigidBody().getVelocity().print();
+
+        if (actions.contains(Action.RIGHT)) player.getRigidBody().moveRight();
+        if (actions.contains(Action.LEFT)) player.getRigidBody().moveLeft();
         if (actions.contains(Action.UP)) moveUp();
         if (actions.contains(Action.DOWN)) moveDown();
 
-        if (!actions.contains(Action.LEFT) && !actions.contains(Action.RIGHT)) stopHorizontalMovement();
-        if (!actions.contains(Action.UP) && !actions.contains(Action.DOWN)) stopVerticalMovement();
+        if (!actions.contains(Action.LEFT) && !actions.contains(Action.RIGHT)) player.getRigidBody().applyFriction();
+
+        player.update();
     }
 
     public void moveLeft() {

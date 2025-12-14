@@ -12,6 +12,7 @@ public class PlayerModel extends ElementModel {
     private Collider collider;
     private RigidBody rigidBody;
     private Scene scene;
+    private boolean lookRight = true;
 
     public PlayerModel(Position position, Scene scene) {
         super(position);
@@ -21,9 +22,10 @@ public class PlayerModel extends ElementModel {
     }
 
     public void update() {
+        //rigidBody.getVelocity().print();
         rigidBody.update();
         Vector nextPosF = rigidBody.getNextPos();
-        Position nextPosI = new Position(nextPosF);
+        Position nextPosI = new Position(Math.round(nextPosF.getX()), nextPosF.getY());
         Collider nextColX = collider.colPosCheck(new Position(nextPosI.getX(), getPosition().getY()));
         Collider nextColY = collider.colPosCheck(new Position(getPosition().getX(), nextPosI.getY()));
 
@@ -42,10 +44,10 @@ public class PlayerModel extends ElementModel {
         if (!canMoveY) {
             y = rigidBody.getPosition().getY();
             rigidBody.setVelocity(new Vector(rigidBody.getVelocity().getX(), 0));
-            rigidBody.setAcceleration(new Vector(rigidBody.getAcceleration().getX(), 0));
+            //rigidBody.setAcceleration(new Vector(rigidBody.getAcceleration().getX(), 0));
         }
 
-        Position finalPos = new Position((int) x, (int) y);
+        Position finalPos = new Position((int) Math.round(x), (int) y);
         setPosition(finalPos);
         collider.setPosition(finalPos);
         rigidBody.setPosition(new Vector(finalPos));
@@ -57,6 +59,14 @@ public class PlayerModel extends ElementModel {
 
     public Collider getCollider() {
         return collider;
+    }
+
+    public void setLookRight(boolean lookRight) {
+        this.lookRight = lookRight;
+    }
+
+    public boolean isLookRight() {
+        return lookRight;
     }
 }
 
