@@ -1,7 +1,7 @@
 package com.ldtsfeup2526.bobTheDestructor.model.elements;
 
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
-import com.ldtsfeup2526.bobTheDestructor.model.game.elements.MineralModel;
+import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

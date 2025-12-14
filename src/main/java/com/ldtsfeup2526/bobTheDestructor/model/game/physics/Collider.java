@@ -49,11 +49,23 @@ public class Collider {
         return position;
     }
 
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
     public Size getSize() {
         return size;
     }
 
+    public void setSize(Size size) {
+        this.size = size;
+    }
+
     public Position getOppositeCorner() {
         return new Position(position.getX()+size.getX(), position.getY()+size.getY());
+    }
+
+    public Collider colPosCheck(Position position) {
+        return new Collider(position, size);
     }
 }

@@ -2,6 +2,7 @@ package com.ldtsfeup2526.bobTheDestructor.view.game;
 
 import com.ldtsfeup2526.bobTheDestructor.gui.GUI;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.Player.*;
+import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
 import com.ldtsfeup2526.bobTheDestructor.view.ElementViewer;
 import com.ldtsfeup2526.bobTheDestructor.view.Sprite;
 import com.ldtsfeup2526.bobTheDestructor.view.SpriteLoader;
@@ -36,6 +37,13 @@ public class PlayerViewer implements ElementViewer<PlayerModel> {
                 spriteLoader.get("sprites/player/player_fall1.png"),
                 spriteLoader.get("sprites/player/player_fall2.png")
         });
+
+        for (Sprite[] spriteArray : spriteMap.values()) {
+            for (Sprite sprite : spriteArray) {
+                sprite.setOffset(new Position(-2, -5));
+            }
+        }
+
     }
     public void draw(PlayerModel model, GUI gui) {
         Sprite sprite = spriteMap.get(IdleState.class)[0];

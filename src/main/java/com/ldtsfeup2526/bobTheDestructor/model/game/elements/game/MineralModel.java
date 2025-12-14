@@ -1,5 +1,6 @@
-package com.ldtsfeup2526.bobTheDestructor.model.game.elements;
+package com.ldtsfeup2526.bobTheDestructor.model.game.elements.game;
 
+import com.ldtsfeup2526.bobTheDestructor.model.game.elements.ElementModel;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
 
 public class MineralModel extends ElementModel {

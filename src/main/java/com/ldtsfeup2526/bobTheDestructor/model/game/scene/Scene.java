@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Scene {
     private final String caveFilePath;
-    private final PlayerModel playerModel = new PlayerModel(new Position(50, 50));
+    private final PlayerModel playerModel = new PlayerModel(new Position(50, 50), this);
     private List<Collider> blockColliders;
 
     public Scene(String caveFilePath) {
@@ -29,5 +29,14 @@ public class Scene {
 
     public List<Collider> getBlockColliders() {
         return blockColliders;
+    }
+
+    public boolean checkCollision(Collider collider) {
+        for (Collider c : blockColliders) {
+            if (c.isColliderOver(collider)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
