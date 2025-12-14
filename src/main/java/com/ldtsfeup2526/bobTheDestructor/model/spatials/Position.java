@@ -4,8 +4,8 @@ import com.ldtsfeup2526.bobTheDestructor.model.Spatial;
 
 public class Position extends Spatial<Integer> {
 
-    public Position(int x, int y) {
-        super(x, y);
+    public Position(Number x, Number y) {
+        super(x, y, Number::intValue);
     }
 
     public Position(Spatial<?> spatial) {

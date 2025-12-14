@@ -6,9 +6,9 @@ import java.util.function.Function;
 public abstract class Spatial<T extends Number> {
     private final T x;
     private final T y;
-    public Spatial(T x, T y) {
-        this.x = x;
-        this.y = y;
+    public Spatial(Number x, Number y, Function<Number, T> converter) {
+        this.x = converter.apply(x);
+        this.y = converter.apply(y);
     }
 
     public Spatial(Spatial<? extends Number> spatial, Function<Number, T> converter) {
@@ -26,6 +26,12 @@ public abstract class Spatial<T extends Number> {
 
     public void print() {
         System.out.println((x.toString() + ", " + y.toString()));
+    }
+
+    public double magnitude() {
+        float x = getX().floatValue();
+        float y = getY().floatValue();
+        return Math.sqrt(x*x + y*y);
     }
 
 }
