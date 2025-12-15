@@ -4,5 +4,6 @@ public enum ButtonType {
     PLAY,
     CONFIG,
     CREDITS,
-    EXIT
+    EXIT,
+    VOLUME
 }

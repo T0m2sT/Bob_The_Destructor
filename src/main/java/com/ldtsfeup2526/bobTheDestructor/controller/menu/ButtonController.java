@@ -8,7 +8,9 @@ import com.ldtsfeup2526.bobTheDestructor.model.game.scene.SceneBuilder;
 import com.ldtsfeup2526.bobTheDestructor.model.game.scene.SceneManager;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.ButtonType;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.Menu;
+import com.ldtsfeup2526.bobTheDestructor.model.menu.SettingsMenu;
 import com.ldtsfeup2526.bobTheDestructor.states.game.GameState;
+import com.ldtsfeup2526.bobTheDestructor.states.game.SettingsMenuState;
 import com.ldtsfeup2526.bobTheDestructor.view.SpriteLoader;
 
 import java.io.IOException;
@@ -31,7 +33,11 @@ public class ButtonController extends Controller<Menu> {
                     }
                     break;
                 case CONFIG:
-                    // TODO
+                    if (action == Action.SELECT) {
+                        SpriteLoader spriteLoader = game.getSpriteLoader();
+                        game.setState(new SettingsMenuState(new SettingsMenu(), spriteLoader));
+                        getModel().getSoundPlayer().stop();
+                    }
                     break;
                 case CREDITS:
                     // TODO

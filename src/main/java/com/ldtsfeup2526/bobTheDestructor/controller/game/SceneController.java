@@ -4,6 +4,7 @@ import com.ldtsfeup2526.bobTheDestructor.Game;
 import com.ldtsfeup2526.bobTheDestructor.controller.Controller;
 import com.ldtsfeup2526.bobTheDestructor.controller.game.elements.PlayerController;
 import com.ldtsfeup2526.bobTheDestructor.controller.input.Action;
+import com.ldtsfeup2526.bobTheDestructor.model.GameSettings;
 import com.ldtsfeup2526.bobTheDestructor.model.game.scene.SceneManager;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.MainMenu;
 import com.ldtsfeup2526.bobTheDestructor.states.game.MainMenuState;
@@ -23,7 +24,7 @@ public class SceneController extends Controller<SceneManager> {
 
         if (getModel().getScene().getSoundPlayer().getSound().isControlSupported(FloatControl.Type.MASTER_GAIN)) {
             FloatControl gainControl = (FloatControl) getModel().getScene().getSoundPlayer().getSound().getControl(FloatControl.Type.MASTER_GAIN);
-            gainControl.setValue(-5.0f);
+            gainControl.setValue(-5.0f + GameSettings.getInstance().getMasterGain());
         }
         else {
                 System.err.println("VOLUME control not supported on this Clip.");
