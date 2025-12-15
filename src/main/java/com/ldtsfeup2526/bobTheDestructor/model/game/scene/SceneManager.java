@@ -68,7 +68,7 @@ public class SceneManager {
         PlayerModel playerModel = scene.getPlayerModel();
         if (playerModel.getPosition().getY() > Game.resolution.getHeight()) {
             String path = getNextCavePath();
-            System.out.println(path);
+            //System.out.println(path);
             if (Objects.equals(path, null)) {
                 game.setState(new MainMenuState(new MainMenu(), game.getSpriteLoader()));
                 return;
