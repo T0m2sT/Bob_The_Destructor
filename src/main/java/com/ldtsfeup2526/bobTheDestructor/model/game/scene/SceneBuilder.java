@@ -1,7 +1,6 @@
 package com.ldtsfeup2526.bobTheDestructor.model.game.scene;
 
 import com.ldtsfeup2526.bobTheDestructor.model.game.physics.Collider;
-import com.ldtsfeup2526.bobTheDestructor.model.menu.MainMenuSoundtrack;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
 import com.ldtsfeup2526.bobTheDestructor.sounds.BackgroundMusicPlayer;
 import com.ldtsfeup2526.bobTheDestructor.sounds.SoundLoader;

@@ -15,7 +15,6 @@ import java.io.IOException;
 public class GameState extends State<SceneManager> {
     public GameState(SceneManager model, SpriteLoader spriteLoader) throws IOException {
         super(model, spriteLoader);
-        getModel().getScene().getSoundPlayer().start();
     }
 
     public ScreenViewer<SceneManager> createScreenViewer(ViewerProvider viewerProvider) {
