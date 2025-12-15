@@ -71,8 +71,8 @@ public class RigidBody {
         acceleration = new Vector(-speed, acceleration.getY());
     }
 
-    public void jump() {
-        setVelocity(new Vector(velocity.getX(), -4));
+    public void jump(float jumpForce) {
+        setVelocity(new Vector(velocity.getX(), -jumpForce));
     }
 
     public void applyFriction() {

@@ -14,6 +14,7 @@ public class PlayerModel extends ElementModel {
     private final Scene scene;
     private boolean lookRight = true;
     private PlayerState state;
+    private float jumpForce = 3;
 
     public PlayerModel(Position position, Scene scene) {
         super(position);
@@ -97,6 +98,10 @@ public class PlayerModel extends ElementModel {
 
     public void updateState() {
         state = state.getNextState();
+    }
+
+    public float getJumpForce() {
+        return jumpForce;
     }
 }
 

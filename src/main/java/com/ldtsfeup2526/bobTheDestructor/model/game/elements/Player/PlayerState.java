@@ -28,7 +28,7 @@ public abstract class PlayerState {
         Collider blockUnder = playerModel.getCollider().colPosCheck(
                 new Position(playerModel.getPosition().getX(), playerModel.getPosition().getY()+1));
         if (playerModel.getScene().checkCollision(blockUnder)) {
-            playerModel.getRigidBody().jump();
+            playerModel.getRigidBody().jump(playerModel.getJumpForce());
         }
     }
 

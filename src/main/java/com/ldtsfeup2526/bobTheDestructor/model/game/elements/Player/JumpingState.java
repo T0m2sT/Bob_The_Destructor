@@ -2,10 +2,15 @@ package com.ldtsfeup2526.bobTheDestructor.model.game.elements.Player;
 
 import com.ldtsfeup2526.bobTheDestructor.model.game.physics.Collider;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
+import com.ldtsfeup2526.bobTheDestructor.model.spatials.Vector;
 
 public class JumpingState extends PlayerState {
     public JumpingState(PlayerModel playerModel) {
         super(playerModel);
+        playerModel.getRigidBody().setAcceleration(new Vector(
+                playerModel.getRigidBody().getAcceleration().getX(),
+                playerModel.getRigidBody().getGravity()/2
+        ));
     }
 
     public PlayerState getNextState() {
