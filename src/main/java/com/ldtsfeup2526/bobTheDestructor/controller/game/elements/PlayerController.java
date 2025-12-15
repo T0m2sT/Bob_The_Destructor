@@ -25,8 +25,6 @@ public class PlayerController extends Controller<PlayerModel> {
         if (!actions.contains(Action.LEFT) && !actions.contains(Action.RIGHT)) player.applyFriction();
 
         player.update();
-        player.updateState();
-        System.out.println(player.getState().getClass().getName());
     }
 
     public void moveLeft() {

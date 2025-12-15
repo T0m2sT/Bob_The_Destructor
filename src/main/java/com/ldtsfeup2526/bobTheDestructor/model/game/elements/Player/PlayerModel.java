@@ -25,6 +25,11 @@ public class PlayerModel extends ElementModel {
     }
 
     public void update() {
+        physicsUpdate();
+        updateState();
+    }
+
+    public void physicsUpdate() {
         //rigidBody.getVelocity().print();
         rigidBody.update();
         Vector nextPosF = rigidBody.getNextPos();
