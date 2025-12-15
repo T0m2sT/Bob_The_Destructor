@@ -9,7 +9,7 @@ public class RigidBody {
     private Vector velocity = new Vector(0, 0);
     private Vector acceleration;
 
-    private Vector maxVelocity = new Vector(1, 2);
+    private Vector maxVelocity = new Vector(1, 10);
     private float speed = 0.1f;
     private float friction = 0.2f;
     private float gravity = 0.5f;
@@ -69,6 +69,10 @@ public class RigidBody {
             velocity = new Vector(0, velocity.getY());
         }
         acceleration = new Vector(-speed, acceleration.getY());
+    }
+
+    public void jump() {
+        setVelocity(new Vector(velocity.getX(), -4));
     }
 
     public void applyFriction() {

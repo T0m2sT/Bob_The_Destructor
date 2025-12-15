@@ -21,8 +21,7 @@ public class PlayerController extends Controller<PlayerModel> {
 
         if (actions.contains(Action.RIGHT)) player.getRigidBody().moveRight();
         if (actions.contains(Action.LEFT)) player.getRigidBody().moveLeft();
-        if (actions.contains(Action.UP)) moveUp();
-        if (actions.contains(Action.DOWN)) moveDown();
+        if (actions.contains(Action.JUMP)) player.getRigidBody().jump();
 
         if (!actions.contains(Action.LEFT) && !actions.contains(Action.RIGHT)) player.getRigidBody().applyFriction();
 
