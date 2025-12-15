@@ -30,11 +30,11 @@ public class GameViewer extends ScreenViewer<SceneManager> {
         sceneViewer.draw(getModel().getScene(), gui, deltaTime);
         playerViewer.draw(getModel().getScene().getPlayerModel(), gui, deltaTime);
 
-
+        /* Collision Visualizer, only for testing
         for (Collider c : getModel().getScene().getBlockColliders()) {
             gui.drawPixel(c.getPosition(), new TextColor.RGB(255, 255, 255));
         }
-
+        */
 
         gui.refresh();
     }
