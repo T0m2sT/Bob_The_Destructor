@@ -27,6 +27,7 @@ public class SceneController extends Controller<SceneManager> {
     public void update(Game game, List<Action> actions) throws IOException {
         if (actions.contains(Action.QUIT)) {
             game.setState(new MainMenuState(new MainMenu(), game.getSpriteLoader()));
+            getModel().getScene().getSoundPlayer().stop();
         }
         playerController.update(game, actions);
 

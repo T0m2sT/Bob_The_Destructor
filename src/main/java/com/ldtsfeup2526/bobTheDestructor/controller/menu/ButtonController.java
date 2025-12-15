@@ -27,6 +27,7 @@ public class ButtonController extends Controller<Menu> {
                     if (action == Action.SELECT) {
                         SpriteLoader spriteLoader = game.getSpriteLoader();
                         game.setState(new GameState(new SceneManager(new SceneBuilder(spriteLoader)), spriteLoader));
+                        getModel().getSoundPlayer().stop();
                     }
                     break;
                 case CONFIG:
