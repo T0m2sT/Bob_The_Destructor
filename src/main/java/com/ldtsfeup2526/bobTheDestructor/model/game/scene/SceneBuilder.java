@@ -77,7 +77,7 @@ public class SceneBuilder implements ISceneBuilder{
                     }
 
                     mineralModels.add(new MineralModel(new Position(x, y), Integer.toHexString(image.getRGB(x, y)), random.nextInt(0, MineralType.values().length)));
-                    System.out.println(Integer.toHexString(image.getRGB(x, y)));
+                    //System.out.println(Integer.toHexString(image.getRGB(x, y)));
                 }
             }
         }

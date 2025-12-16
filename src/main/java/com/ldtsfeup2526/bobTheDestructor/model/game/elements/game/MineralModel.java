@@ -13,7 +13,7 @@ public class MineralModel extends ElementModel {
         super(position);
         this.direction = directionParser(imageColor);
         this.type = MineralType.values()[mineralType];
-        System.out.println(direction);
+        //System.out.println(direction);
     }
 
     private PointingDirection directionParser(String imageColor) {
