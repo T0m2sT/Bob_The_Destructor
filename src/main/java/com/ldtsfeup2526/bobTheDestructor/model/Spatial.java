@@ -1,5 +1,7 @@
 package com.ldtsfeup2526.bobTheDestructor.model;
 
+import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
+
 import java.lang.reflect.ParameterizedType;
 import java.util.function.Function;
 
@@ -32,6 +34,15 @@ public abstract class Spatial<T extends Number> {
         float x = getX().floatValue();
         float y = getY().floatValue();
         return Math.sqrt(x*x + y*y);
+    }
+
+    public double distance(Position position) {
+        float x1 = getX().floatValue();
+        float y1 = getY().floatValue();
+        float x2 = position.getX().floatValue();
+        float y2 = position.getY().floatValue();
+
+        return Math.sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2));
     }
 
 }
