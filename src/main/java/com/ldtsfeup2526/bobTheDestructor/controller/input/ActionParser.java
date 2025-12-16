@@ -25,7 +25,7 @@ public class ActionParser implements IGameStateObserver {
     public List<Action> get() {
         currentActions.clear();
 
-        List<Integer> inputPressed = inputReader.getInputPressed();
+        List<Integer> inputPressed = new ArrayList<>(inputReader.getInputPressed());
         for (Integer integer : inputPressed) {
             Action action = parseInput(integer);
 
