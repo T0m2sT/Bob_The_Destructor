@@ -7,6 +7,7 @@ public class MineralModel extends ElementModel {
 
     private final MineralType type;
     private final PointingDirection direction;
+    private boolean isSelected = false;
 
     public MineralModel(Position position, String imageColor, int mineralType) {
         super(position);
@@ -31,5 +32,13 @@ public class MineralModel extends ElementModel {
 
     public PointingDirection getDirection() {
         return direction;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }

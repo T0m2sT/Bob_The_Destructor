@@ -18,6 +18,7 @@ public class MineralViewer implements ElementViewer<MineralModel> {
     private final Map<MineralType, Animation[]> spriteMap;
     private final Random random = new Random();
     private final Map<MineralModel, Animation[]> animationPerModel = new HashMap<>();
+    private final Map<MineralType, Sprite> selectedSpriteMap = new HashMap<>();
 
     public MineralViewer(SpriteLoader spriteLoader) throws IOException {
         spriteMap = new HashMap<>();
@@ -81,27 +82,47 @@ public class MineralViewer implements ElementViewer<MineralModel> {
         );
 
         spriteMap.put(MineralType.BLUE, new Animation[] {shineAnim, crackAnim});
+
+        selectedSpriteMap.put(MineralType.PINK, spriteLoader.get("sprites/gems/gem5.png"));
+        selectedSpriteMap.put(MineralType.YELLOW, spriteLoader.get("sprites/gems/gem11.png"));
+        selectedSpriteMap.put(MineralType.BLUE, spriteLoader.get("sprites/gems/gem17.png"));
     }
 
     @Override
     public void draw(MineralModel model, GUI gui, double deltaTime) {
         Animation anim = createAnimForSingleModel(model)[0];
+
         anim.update(deltaTime);
         Sprite sprite = anim.getSprites()[anim.getFrame()];
+        Sprite selectedSprite = selectedSpriteMap.get(model.getType());
+
         switch (model.getDirection()) {
             case PointingDirection.UP:
                 sprite.draw(model.getPosition(), gui);
+                if (model.isSelected()) {
+                    selectedSprite.draw(model.getPosition(), gui);
+                }
                 break;
             case PointingDirection.DOWN:
                 sprite.drawFlipY(model.getPosition(), gui);
+                if (model.isSelected()) {
+                    selectedSprite.drawFlipY(model.getPosition(), gui);
+                }
                 break;
             case PointingDirection.LEFT:
                 sprite.drawRotLeft(model.getPosition(), gui);
+                if (model.isSelected()) {
+                    selectedSprite.drawRotLeft(model.getPosition(), gui);
+                }
                 break;
             case PointingDirection.RIGHT:
                 sprite.drawRotRight(model.getPosition(), gui);
+                if (model.isSelected()) {
+                    selectedSprite.drawRotRight(model.getPosition(), gui);
+                }
                 break;
         }
+
     }
 
     private Animation[] createAnimForSingleModel(MineralModel model) {
