@@ -26,7 +26,7 @@ public class MineralViewer implements ElementViewer<MineralModel> {
                 spriteLoader.get("sprites/gems/gem3.png"),
                 spriteLoader.get("sprites/gems/gem4.png"),
                 spriteLoader.get("sprites/gems/gem5.png")},
-                0.3,
+                3.5,
                 true
         );
 
@@ -35,7 +35,7 @@ public class MineralViewer implements ElementViewer<MineralModel> {
                 spriteLoader.get("sprites/gems/cracked/pink_crack2.png"),
                 spriteLoader.get("sprites/gems/cracked/pink_crack3.png"),
                 spriteLoader.get("sprites/gems/cracked/pink_crack4.png")},
-                0.1,
+                1,
                 false
         );
 
@@ -47,7 +47,7 @@ public class MineralViewer implements ElementViewer<MineralModel> {
                 spriteLoader.get("sprites/gems/gem9.png"),
                 spriteLoader.get("sprites/gems/gem10.png"),
                 spriteLoader.get("sprites/gems/gem11.png")},
-                0.1,
+                3.5,
                 true
         );
 
@@ -56,7 +56,7 @@ public class MineralViewer implements ElementViewer<MineralModel> {
                 spriteLoader.get("sprites/gems/cracked/yellow_crack2.png"),
                 spriteLoader.get("sprites/gems/cracked/yellow_crack3.png"),
                 spriteLoader.get("sprites/gems/cracked/yellow_crack4.png")},
-                0.1,
+                1,
                 false
         );
 
@@ -68,7 +68,7 @@ public class MineralViewer implements ElementViewer<MineralModel> {
                 spriteLoader.get("sprites/gems/gem15.png"),
                 spriteLoader.get("sprites/gems/gem16.png"),
                 spriteLoader.get("sprites/gems/gem17.png")},
-                2.5,
+                3.5,
                 true
         );
 
@@ -77,7 +77,7 @@ public class MineralViewer implements ElementViewer<MineralModel> {
                 spriteLoader.get("sprites/gems/cracked/blue_crack2.png"),
                 spriteLoader.get("sprites/gems/cracked/blue_crack3.png"),
                 spriteLoader.get("sprites/gems/cracked/blue_crack4.png")},
-                0.1,
+                1,
                 false
         );
 
