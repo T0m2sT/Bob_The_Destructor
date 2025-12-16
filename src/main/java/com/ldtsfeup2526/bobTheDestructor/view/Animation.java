@@ -56,4 +56,8 @@ public class Animation {
     public String getAnimName() {
         return name;
     }
+
+    public Animation copy() {
+        return new Animation(name, sprites, frameTime, loop);
+    }
 }
