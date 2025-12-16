@@ -12,8 +12,10 @@ public class Animation {
     private double elapsedTime;
     private int currentFrame;
     private boolean loop;
+    private String name;
 
-    public Animation(Sprite[] sprites, double frameTime, boolean loop) {
+    public Animation(String name, Sprite[] sprites, double frameTime, boolean loop) {
+        this.name = name;
         this.sprites = sprites;
         this.frameTime = frameTime;
         this.loop = loop;
@@ -29,6 +31,7 @@ public class Animation {
                 currentFrame = 0;
             } else {
                 currentFrame = sprites.length-1;
+                isFinished();
             }
         }
     }
@@ -48,5 +51,9 @@ public class Animation {
 
     public boolean isFinished() {
         return !loop && currentFrame == sprites.length - 1;
+    }
+
+    public String getAnimName() {
+        return name;
     }
 }
