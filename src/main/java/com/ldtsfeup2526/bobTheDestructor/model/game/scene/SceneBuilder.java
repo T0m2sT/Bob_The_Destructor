@@ -63,7 +63,8 @@ public class SceneBuilder implements ISceneBuilder{
         for (int y = 0; y < image.getHeight(); y+=8) {
             for (int x = 0; x < image.getWidth(); x+= 8) {
                 if ((image.getRGB(x, y) >> 24) != 0) {
-                    mineralModels.add(new MineralModel(new Position(x, y)));
+                    mineralModels.add(new MineralModel(new Position(x, y), Integer.toHexString(image.getRGB(x, y))));
+                    System.out.println(Integer.toHexString(image.getRGB(x, y)));
                 }
             }
         }

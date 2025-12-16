@@ -3,6 +3,7 @@ package com.ldtsfeup2526.bobTheDestructor.view.game;
 import com.ldtsfeup2526.bobTheDestructor.gui.GUI;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralModel;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralType;
+import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.PointingDirection;
 import com.ldtsfeup2526.bobTheDestructor.view.Animation;
 import com.ldtsfeup2526.bobTheDestructor.view.ElementViewer;
 import com.ldtsfeup2526.bobTheDestructor.view.Sprite;
@@ -88,6 +89,20 @@ public class MineralViewer implements ElementViewer<MineralModel> {
     public void draw(MineralModel model, GUI gui, double deltaTime) {
         Animation anim = spriteMap.get(model.getType())[0];
         anim.update(deltaTime);
-        anim.getSprites()[anim.getFrame()].draw(model.getPosition(), gui);
+        Sprite sprite = anim.getSprites()[anim.getFrame()];
+        switch (model.getDirection()) {
+            case PointingDirection.UP:
+                sprite.draw(model.getPosition(), gui);
+                break;
+            case PointingDirection.DOWN:
+                sprite.drawFlipY(model.getPosition(), gui);
+                break;
+            case PointingDirection.LEFT:
+                sprite.drawRotLeft(model.getPosition(), gui);
+                break;
+            case PointingDirection.RIGHT:
+                sprite.drawRotRight(model.getPosition(), gui);
+                break;
+        }
     }
 }
