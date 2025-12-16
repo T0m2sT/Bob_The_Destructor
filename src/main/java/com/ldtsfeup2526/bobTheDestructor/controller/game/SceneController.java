@@ -5,10 +5,12 @@ import com.ldtsfeup2526.bobTheDestructor.controller.Controller;
 import com.ldtsfeup2526.bobTheDestructor.controller.game.elements.MineralsController;
 import com.ldtsfeup2526.bobTheDestructor.controller.game.elements.PlayerController;
 import com.ldtsfeup2526.bobTheDestructor.controller.input.Action;
+import com.ldtsfeup2526.bobTheDestructor.model.GameSettings;
 import com.ldtsfeup2526.bobTheDestructor.model.game.scene.SceneManager;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.MainMenu;
 import com.ldtsfeup2526.bobTheDestructor.states.MainMenuState;
 
+import javax.sound.sampled.FloatControl;
 import java.io.IOException;
 import java.util.List;
 
@@ -19,7 +21,16 @@ public class SceneController extends Controller<SceneManager> {
     public SceneController(SceneManager sceneManager) {
         super(sceneManager);
         this.playerController = new PlayerController(getModel().getScene().getPlayerModel());
-        this.mineralsController = new MineralsController(getModel().getScene().getMineralModels());
+        this.mineralsController = new MineralsController(getModel().getScene().getMineralsModel());
+
+        if (getModel().getScene().getSoundPlayer().getSound().isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+            FloatControl gainControl = (FloatControl) getModel().getScene().getSoundPlayer().getSound().getControl(FloatControl.Type.MASTER_GAIN);
+            gainControl.setValue(-5.0f + GameSettings.getInstance().getMasterGain());
+        }
+        else {
+                System.err.println("VOLUME control not supported on this Clip.");
+        }
+        getModel().getScene().getSoundPlayer().start();
     }
 
     @Override
@@ -28,9 +39,10 @@ public class SceneController extends Controller<SceneManager> {
 
         if (actions.contains(Action.QUIT)) {
             game.setState(new MainMenuState(new MainMenu(), game.getSpriteLoader()));
+            getModel().getScene().getSoundPlayer().stop();
         }
-
         playerController.update(game, actions);
+
         mineralsController.update(getModel().getScene().getPlayerModel().getPosition(), actions);
     }
 }

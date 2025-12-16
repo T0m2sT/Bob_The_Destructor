@@ -3,10 +3,13 @@ package com.ldtsfeup2526.bobTheDestructor.controller.menu;
 import com.ldtsfeup2526.bobTheDestructor.Game;
 import com.ldtsfeup2526.bobTheDestructor.controller.Controller;
 import com.ldtsfeup2526.bobTheDestructor.controller.input.Action;
+import com.ldtsfeup2526.bobTheDestructor.model.game.scene.Scene;
 import com.ldtsfeup2526.bobTheDestructor.model.game.scene.SceneBuilder;
 import com.ldtsfeup2526.bobTheDestructor.model.game.scene.SceneManager;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.ButtonType;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.Menu;
+import com.ldtsfeup2526.bobTheDestructor.model.menu.SettingsMenu;
+import com.ldtsfeup2526.bobTheDestructor.states.game.SettingsMenuState;
 import com.ldtsfeup2526.bobTheDestructor.states.GameState;
 import com.ldtsfeup2526.bobTheDestructor.view.SpriteLoader;
 
@@ -26,10 +29,15 @@ public class ButtonController extends Controller<Menu> {
                     if (action == Action.SELECT) {
                         SpriteLoader spriteLoader = game.getSpriteLoader();
                         game.setState(new GameState(new SceneManager(new SceneBuilder(spriteLoader)), spriteLoader));
+                        getModel().getSoundPlayer().stop();
                     }
                     break;
                 case CONFIG:
-                    // TODO
+                    if (action == Action.SELECT) {
+                        SpriteLoader spriteLoader = game.getSpriteLoader();
+                        game.setState(new SettingsMenuState(new SettingsMenu(), spriteLoader));
+                        getModel().getSoundPlayer().stop();
+                    }
                     break;
                 case CREDITS:
                     // TODO
