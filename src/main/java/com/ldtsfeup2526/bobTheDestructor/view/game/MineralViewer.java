@@ -36,7 +36,7 @@ public class MineralViewer implements ElementViewer<MineralModel> {
                 spriteLoader.get("sprites/gems/cracked/pink_crack2.png"),
                 spriteLoader.get("sprites/gems/cracked/pink_crack3.png"),
                 spriteLoader.get("sprites/gems/cracked/pink_crack4.png")},
-                0.25,
+                0.05,
                 false
         );
 
@@ -56,7 +56,7 @@ public class MineralViewer implements ElementViewer<MineralModel> {
                 spriteLoader.get("sprites/gems/cracked/yellow_crack2.png"),
                 spriteLoader.get("sprites/gems/cracked/yellow_crack3.png"),
                 spriteLoader.get("sprites/gems/cracked/yellow_crack4.png")},
-                0.25,
+                0.05,
                 false
         );
 
@@ -76,7 +76,7 @@ public class MineralViewer implements ElementViewer<MineralModel> {
                 spriteLoader.get("sprites/gems/cracked/blue_crack2.png"),
                 spriteLoader.get("sprites/gems/cracked/blue_crack3.png"),
                 spriteLoader.get("sprites/gems/cracked/blue_crack4.png")},
-                0.25,
+                0.05,
                 false
         );
 
