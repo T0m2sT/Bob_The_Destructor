@@ -95,7 +95,6 @@ public class PlayerModel extends ElementModel {
     }
 
     public void mine() {
-        System.out.println("a");
         state = new MiningState(this);
     }
 
