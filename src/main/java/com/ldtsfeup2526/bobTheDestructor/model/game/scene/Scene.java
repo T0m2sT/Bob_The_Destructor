@@ -5,6 +5,7 @@ import com.ldtsfeup2526.bobTheDestructor.model.game.physics.Collider;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.Button;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.Player.PlayerModel;
+import com.ldtsfeup2526.bobTheDestructor.sounds.NullSoundPlayer;
 import com.ldtsfeup2526.bobTheDestructor.sounds.SoundPlayer;
 
 import java.util.ArrayList;
@@ -34,7 +35,12 @@ public class Scene {
 
     public void setSoundPlayer(SoundPlayer soundPlayer) {this.soundPlayer = soundPlayer;}
 
-    public SoundPlayer getSoundPlayer() {return soundPlayer;}
+    public SoundPlayer getSoundPlayer() {
+        if (soundPlayer == null) {
+            soundPlayer = new NullSoundPlayer();
+        }
+        return soundPlayer;
+    }
 
     public void setBlockColliders(List<Collider> blockColliders) {
         this.blockColliders = blockColliders;
