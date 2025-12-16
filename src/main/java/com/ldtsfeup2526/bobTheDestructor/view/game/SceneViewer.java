@@ -21,7 +21,7 @@ public class SceneViewer implements ElementViewer<Scene> {
     public SceneViewer(SpriteLoader spriteLoader) throws IOException {
         this.spriteLoader = spriteLoader;
 
-        backgroundAnim = new Animation(new Sprite[] {
+        backgroundAnim = new Animation("BackgroundAnim", new Sprite[] {
                 spriteLoader.get("caves/background/bg1.png"),
                 spriteLoader.get("caves/background/bg2.png"),
                 spriteLoader.get("caves/background/bg3.png")},
