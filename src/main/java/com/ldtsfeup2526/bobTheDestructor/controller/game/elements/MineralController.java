@@ -15,8 +15,4 @@ public class MineralController extends Controller<MineralModel> {
     @Override
     public void update(Game game, List<Action> actions) {
     }
-
-    public void decreaseHealth(){
-        getModel().setHealth(getModel().getHealth() - 1);
-    }
 }
