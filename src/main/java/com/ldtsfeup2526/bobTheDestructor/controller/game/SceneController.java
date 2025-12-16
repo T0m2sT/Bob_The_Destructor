@@ -24,14 +24,15 @@ public class SceneController extends Controller<SceneManager> {
         this.playerController = new PlayerController(getModel().getScene().getPlayerModel());
         this.mineralsController = new MineralsController(getModel().getScene().getMineralModels());
 
-        if (getModel().getScene().getSoundtrackPlayer().getSound().isControlSupported(FloatControl.Type.MASTER_GAIN)) {
-            FloatControl gainControl = (FloatControl) getModel().getScene().getSoundtrackPlayer().getSound().getControl(FloatControl.Type.MASTER_GAIN);
-            gainControl.setValue(-5.0f + GameSettings.getInstance().getMasterGain());
-        }
-        else {
+        if (getModel().getScene().getSoundPlayer().getSound() != null) {
+            if (getModel().getScene().getSoundPlayer().getSound().isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+                FloatControl gainControl = (FloatControl) getModel().getScene().getSoundPlayer().getSound().getControl(FloatControl.Type.MASTER_GAIN);
+                gainControl.setValue(-5.0f + GameSettings.getInstance().getMasterGain());
+            } else {
                 System.err.println("VOLUME control not supported on this Clip.");
+            }
+            getModel().getScene().getSoundPlayer().start();
         }
-        getModel().getScene().getSoundtrackPlayer().start();
     }
 
     @Override
@@ -40,7 +41,7 @@ public class SceneController extends Controller<SceneManager> {
 
         if (actions.contains(Action.QUIT)) {
             game.setState(new MainMenuState(new MainMenu(), game.getSpriteLoader()));
-            getModel().getScene().getSoundtrackPlayer().stop();
+            if (getModel().getScene().getSoundPlayer().getSound() != null) getModel().getScene().getSoundPlayer().stop();
         }
         if (actions.contains(Action.JUMP)) getModel().getScene().getJumpingSoundPlayer().start();
         if (actions.contains(Action.MINE)) getModel().getScene().getMiningSoundPlayer().start();

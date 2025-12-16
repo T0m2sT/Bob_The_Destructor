@@ -3,6 +3,7 @@ package com.ldtsfeup2526.bobTheDestructor.model.game.scene;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralModel;
 import com.ldtsfeup2526.bobTheDestructor.model.game.physics.Collider;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.Player.PlayerModel;
+import com.ldtsfeup2526.bobTheDestructor.sounds.NullSoundPlayer;
 import com.ldtsfeup2526.bobTheDestructor.sounds.SoundPlayer;
 
 import java.util.List;
@@ -42,6 +43,12 @@ public class Scene {
 
     public void setMiningSoundPlayer(SoundPlayer miningSoundPlayer) {this.miningSoundPlayer = miningSoundPlayer;}
 
+    public SoundPlayer getSoundPlayer() {
+        if (soundPlayer == null) {
+            soundPlayer = new NullSoundPlayer();
+        }
+        return soundPlayer;
+    }
     public SoundPlayer getMiningSoundPlayer() {return miningSoundPlayer;}
 
     public void setJumpingSoundPlayer(SoundPlayer jumpingSoundPlayer) {this.jumpingSoundPlayer = jumpingSoundPlayer;}

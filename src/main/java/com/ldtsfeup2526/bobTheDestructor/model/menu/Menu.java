@@ -1,12 +1,13 @@
 package com.ldtsfeup2526.bobTheDestructor.model.menu;
 
+import com.ldtsfeup2526.bobTheDestructor.sounds.NullSoundPlayer;
 import com.ldtsfeup2526.bobTheDestructor.sounds.SoundPlayer;
 
 import java.util.List;
 
 public abstract class Menu {
     private final List<Button> buttons;
-    private final SoundPlayer soundPlayer;
+    private SoundPlayer soundPlayer;
     private int currentButton = 0;
 
     public Menu() {
@@ -22,7 +23,12 @@ public abstract class Menu {
         return buttons;
     }
 
-    public SoundPlayer getSoundPlayer() {return soundPlayer;}
+    public SoundPlayer getSoundPlayer() {
+        if (soundPlayer == null){
+            soundPlayer = new NullSoundPlayer();
+        }
+        return soundPlayer;
+    }
 
     public int getNumberOfButtons() {
         return buttons.size();
