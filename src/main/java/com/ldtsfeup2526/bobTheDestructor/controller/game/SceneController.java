@@ -17,6 +17,7 @@ import java.util.List;
 public class SceneController extends Controller<SceneManager> {
     private final PlayerController playerController;
     private final MineralsController mineralsController;
+    int walkTimer = 0;
 
     public SceneController(SceneManager sceneManager) {
         super(sceneManager);
@@ -43,7 +44,10 @@ public class SceneController extends Controller<SceneManager> {
         }
         if (actions.contains(Action.JUMP)) getModel().getScene().getJumpingSoundPlayer().start();
         if (actions.contains(Action.MINE)) getModel().getScene().getMiningSoundPlayer().start();
-        if (actions.contains(Action.LEFT) || actions.contains(Action.RIGHT)) getModel().getScene().getWalkingSoundPlayer().start();
+        if (actions.contains(Action.LEFT) || actions.contains(Action.RIGHT)) {
+            if (walkTimer % 14 == 0) getModel().getScene().getWalkingSoundPlayer().start();
+            walkTimer++;
+        }
         playerController.update(game, actions);
 
         mineralsController.update(getModel().getScene().getPlayerModel().getPosition(), actions);
