@@ -11,9 +11,12 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class SceneBuilder implements ISceneBuilder{
     private final SpriteLoader spriteLoader;
+    private final Random random = new Random();
+    private final float probabilityOfMineralSpawn = 0.4f;
 
     public SceneBuilder(SpriteLoader spriteLoader) {
         this.spriteLoader = spriteLoader;
@@ -63,6 +66,10 @@ public class SceneBuilder implements ISceneBuilder{
         for (int y = 0; y < image.getHeight(); y+=8) {
             for (int x = 0; x < image.getWidth(); x+= 8) {
                 if ((image.getRGB(x, y) >> 24) != 0) {
+                    if (random.nextFloat() > probabilityOfMineralSpawn) {
+                        continue;
+                    }
+
                     mineralModels.add(new MineralModel(new Position(x, y), Integer.toHexString(image.getRGB(x, y))));
                     System.out.println(Integer.toHexString(image.getRGB(x, y)));
                 }
