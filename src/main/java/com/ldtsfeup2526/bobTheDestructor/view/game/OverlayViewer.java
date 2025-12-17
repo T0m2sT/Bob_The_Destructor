@@ -30,11 +30,11 @@ public class OverlayViewer implements ElementViewer<SceneManager> {
         //System.out.println(model.getCurrentCavePathIndex());
         marker.draw(new Position(157, 20 + model.getCurrentCavePathIndex() * 15), gui);
 
-        for (Sprite sprite : numberParsers[0].get("10")) {
+        for (Sprite sprite : numberParsers[0].get(String.valueOf(model.getTotalMineralsCollected()))) {
             sprite.draw(new Position(8, 2), gui);
         }
 
-        for (Sprite sprite : numberParsers[1].get("10")) {
+        for (Sprite sprite : numberParsers[1].get(String.valueOf(model.getScene().getCurrentMineralsCollected()))) {
             sprite.draw(new Position(5, 8), gui);
         }
     }

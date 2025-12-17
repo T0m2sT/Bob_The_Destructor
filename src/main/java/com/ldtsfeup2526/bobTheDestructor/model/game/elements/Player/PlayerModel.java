@@ -167,8 +167,10 @@ public class PlayerModel extends ElementModel {
     public void notifyWhenPickaxeHit() {
         if (state.getMineral() != null) {
             state.getMineral().setState(MineralState.DESTROYED);
+            scene.incrementCurrentMineralsCollected();
         } else if (mineralSelected != null) {
             mineralSelected.setState(MineralState.DESTROYED);
+            scene.incrementCurrentMineralsCollected();
         }
     }
 

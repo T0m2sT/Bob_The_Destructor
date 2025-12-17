@@ -21,6 +21,7 @@ public class SceneManager {
     private final List<String> cavesPathChosen;
     private int currentCavePathIndex;
     private final PlayerModel playerModel;
+    private int totalMineralsCollected = 0;
 
     public SceneManager (SceneBuilder sceneBuilder) throws IOException {
         cavesPathChosen = chooseCaves();
@@ -67,6 +68,7 @@ public class SceneManager {
     public void update(Game game) throws IOException {
         PlayerModel playerModel = scene.getPlayerModel();
         if (playerModel.getPosition().getY() > Game.resolution.getHeight()) {
+            totalMineralsCollected += scene.getCurrentMineralsCollected();
             String path = getNextCavePath();
             //System.out.println(path);
             if (Objects.equals(path, null)) {
@@ -79,5 +81,9 @@ public class SceneManager {
 
     public int getCurrentCavePathIndex(){
         return currentCavePathIndex-1;
+    }
+
+    public int getTotalMineralsCollected() {
+        return totalMineralsCollected;
     }
 }

@@ -17,6 +17,7 @@ public class Scene {
     private List<Collider> blockColliders;
     private final List<MineralModel> mineralModels;
     private SoundPlayer soundPlayer;
+    private int currentMineralsCollected = 0;
 
     public Scene(String caveFilePath, PlayerModel playerModel, List<MineralModel> mineralModels) {
         this.caveFilePath = caveFilePath;
@@ -61,5 +62,17 @@ public class Scene {
 
     public List<MineralModel> getMineralModels() {
         return mineralModels;
+    }
+
+    public int getCurrentMineralsCollected() {
+        return currentMineralsCollected;
+    }
+
+    public void setCurrentMineralsCollected(int currentMineralsCollected) {
+        this.currentMineralsCollected = currentMineralsCollected;
+    }
+
+    public void incrementCurrentMineralsCollected() {
+        this.currentMineralsCollected++;
     }
 }
