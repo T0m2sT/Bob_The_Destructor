@@ -1,4 +1,4 @@
-package com.ldtsfeup2526.bobTheDestructor.states.game;
+package com.ldtsfeup2526.bobTheDestructor.states;
 
 import com.ldtsfeup2526.bobTheDestructor.controller.Controller;
 import com.ldtsfeup2526.bobTheDestructor.controller.menu.SettingsMenuController;

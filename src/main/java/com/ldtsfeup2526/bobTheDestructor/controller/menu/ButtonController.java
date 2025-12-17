@@ -9,7 +9,7 @@ import com.ldtsfeup2526.bobTheDestructor.model.game.scene.SceneManager;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.ButtonType;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.Menu;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.SettingsMenu;
-import com.ldtsfeup2526.bobTheDestructor.states.game.SettingsMenuState;
+import com.ldtsfeup2526.bobTheDestructor.states.SettingsMenuState;
 import com.ldtsfeup2526.bobTheDestructor.states.GameState;
 import com.ldtsfeup2526.bobTheDestructor.view.SpriteLoader;
 
