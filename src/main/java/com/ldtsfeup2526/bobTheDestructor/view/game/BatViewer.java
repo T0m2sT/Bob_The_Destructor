@@ -20,6 +20,17 @@ public class BatViewer implements ElementViewer<BatModel> {
     public BatViewer(SpriteLoader spriteLoader) throws IOException {
         spriteMap.put(BatState.SLEEPING, new Animation("Sleep",
                 new Sprite[] {
+                        spriteLoader.get("sprites/bat/bat_sleep1.png"),
+                        spriteLoader.get("sprites/bat/bat_sleep2.png"),
+                        spriteLoader.get("sprites/bat/bat_sleep3.png"),
+                        spriteLoader.get("sprites/bat/bat_sleep4.png")
+                },
+                0.1,
+                true
+                ));
+
+        spriteMap.put(BatState.FLAPPING, new Animation("Flapping",
+                new Sprite[] {
                         spriteLoader.get("sprites/bat/bat_flap1.png"),
                         spriteLoader.get("sprites/bat/bat_flap2.png"),
                         spriteLoader.get("sprites/bat/bat_flap3.png"),
@@ -27,7 +38,7 @@ public class BatViewer implements ElementViewer<BatModel> {
                 },
                 0.1,
                 true
-                ));
+        ));
     }
 
     @Override
