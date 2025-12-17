@@ -3,6 +3,7 @@ package com.ldtsfeup2526.bobTheDestructor.controller.menu;
 import com.ldtsfeup2526.bobTheDestructor.Game;
 import com.ldtsfeup2526.bobTheDestructor.controller.Controller;
 import com.ldtsfeup2526.bobTheDestructor.controller.input.Action;
+import com.ldtsfeup2526.bobTheDestructor.model.GameSettings;
 import com.ldtsfeup2526.bobTheDestructor.model.game.scene.Scene;
 import com.ldtsfeup2526.bobTheDestructor.model.game.scene.SceneBuilder;
 import com.ldtsfeup2526.bobTheDestructor.model.game.scene.SceneManager;
@@ -45,6 +46,16 @@ public class ButtonController extends Controller<Menu> {
                 case EXIT:
                     if (action == Action.SELECT) {
                         game.setState(null);
+                    }
+                    break;
+                case VOLUME_UP:
+                    if (action == Action.SELECT) {
+                        GameSettings.getInstance().setMasterGain(GameSettings.getInstance().getMasterGain() + 10.0f);
+                    }
+                    break;
+                case VOLUME_DOWN:
+                    if (action == Action.SELECT) {
+                        GameSettings.getInstance().setMasterGain(GameSettings.getInstance().getMasterGain() - 10.0f);
                     }
                     break;
             }

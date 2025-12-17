@@ -5,5 +5,6 @@ public enum ButtonType {
     CONFIG,
     CREDITS,
     EXIT,
-    VOLUME
+    VOLUME_UP,
+    VOLUME_DOWN
 }
