@@ -41,7 +41,7 @@ public class SceneController extends Controller<SceneManager> {
 
         if (actions.contains(Action.QUIT)) {
             game.setState(new MainMenuState(new MainMenu(), game.getSpriteLoader()));
-            if (getModel().getScene().getSoundPlayer().getSound() != null) getModel().getScene().getSoundPlayer().stop();
+            getModel().getScene().getSoundPlayer().stop();
         }
         if (actions.contains(Action.JUMP)) getModel().getScene().getJumpingSoundPlayer().start();
         if (actions.contains(Action.MINE)) getModel().getScene().getMiningSoundPlayer().start();

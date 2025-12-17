@@ -70,6 +70,7 @@ public class SceneManager {
             String path = getNextCavePath();
             //System.out.println(path);
             if (Objects.equals(path, null)) {
+                getScene().getSoundPlayer().stop();
                 game.setState(new MainMenuState(new MainMenu(), game.getSpriteLoader()));
                 return;
             }
