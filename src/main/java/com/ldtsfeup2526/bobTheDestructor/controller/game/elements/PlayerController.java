@@ -21,7 +21,7 @@ public class PlayerController extends Controller<PlayerModel> {
 
         if (actions.contains(Action.RIGHT)) player.moveRight();
         if (actions.contains(Action.LEFT)) player.moveLeft();
-        if (actions.contains(Action.JUMP)) player.jump();
+        if (actions.contains(Action.JUMP) || actions.contains(Action.UP)) player.jump();
         if (actions.contains(Action.MINE) && player.getState().getClass() != MiningState.class) player.mine();
 
         if (!actions.contains(Action.LEFT) && !actions.contains(Action.RIGHT)) player.applyFriction();

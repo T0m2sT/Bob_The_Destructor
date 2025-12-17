@@ -46,9 +46,11 @@ public class ActionParser implements IGameStateObserver {
         switch (input) {
             case KeyEvent.VK_UP:
             case KeyEvent.VK_W:
+                inputReader.addInputFinished(input);
                 return Action.UP;
             case KeyEvent.VK_DOWN:
             case KeyEvent.VK_S:
+                inputReader.addInputFinished(input);
                 return Action.DOWN;
             case KeyEvent.VK_LEFT:
             case  KeyEvent.VK_A:
