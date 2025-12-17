@@ -22,9 +22,9 @@ public class SceneViewer implements ElementViewer<Scene> {
         this.spriteLoader = spriteLoader;
 
         backgroundAnim = new Animation("BackgroundAnim", new Sprite[] {
-                spriteLoader.get("caves/background/bg1.png"),
-                spriteLoader.get("caves/background/bg2.png"),
-                spriteLoader.get("caves/background/bg3.png")},
+                spriteLoader.get("background/bg1.png"),
+                spriteLoader.get("background/bg2.png"),
+                spriteLoader.get("background/bg3.png")},
                 0.125f,
                 true
         );

@@ -21,7 +21,7 @@ import java.util.Random;
 public class SceneBuilder implements ISceneBuilder{
     private final SpriteLoader spriteLoader;
     private final Random random = new Random();
-    private final float probabilityOfMineralSpawn = 0.4f;
+    private final float probabilityOfMineralSpawn = 1f;
 
     public SceneBuilder(SpriteLoader spriteLoader) {
         this.spriteLoader = spriteLoader;
