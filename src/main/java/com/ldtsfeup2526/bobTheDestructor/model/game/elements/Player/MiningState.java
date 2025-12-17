@@ -26,7 +26,8 @@ public class MiningState extends PlayerState{
         return this;
     }
 
-    public MineralModel getMineralSelected() {
+    @Override
+    public MineralModel getMineral() {
         return mineralSelected;
     }
 }

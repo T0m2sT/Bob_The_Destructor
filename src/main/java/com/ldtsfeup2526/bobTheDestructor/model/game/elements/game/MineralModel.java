@@ -3,6 +3,8 @@ package com.ldtsfeup2526.bobTheDestructor.model.game.elements.game;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.ElementModel;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
 
+import java.util.Objects;
+
 public class MineralModel extends ElementModel {
 
     private final MineralType type;
@@ -40,5 +42,11 @@ public class MineralModel extends ElementModel {
 
     public void setState(MineralState state) {
         this.state = state;
+    }
+
+    public void notifyWhenAnimFinished(String name) {
+        if (Objects.equals(name,"CrackAnim")) {
+            setState(MineralState.CLEANUP);
+        }
     }
 }

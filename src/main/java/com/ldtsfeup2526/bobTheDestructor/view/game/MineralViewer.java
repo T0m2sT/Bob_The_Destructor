@@ -91,7 +91,12 @@ public class MineralViewer implements ElementViewer<MineralModel> {
 
     @Override
     public void draw(MineralModel model, GUI gui, double deltaTime) {
-        Animation anim = createAnimForSingleModel(model)[0];
+        Animation anim;
+        if (model.getState() == MineralState.DESTROYED) {
+            anim = createAnimForSingleModel(model)[1];
+        } else {
+            anim = createAnimForSingleModel(model)[0];
+        }
 
         anim.update(deltaTime);
         Sprite sprite = anim.getSprites()[anim.getFrame()];
@@ -122,6 +127,11 @@ public class MineralViewer implements ElementViewer<MineralModel> {
                     selectedSprite.drawRotRight(model.getPosition(), gui);
                 }
                 break;
+        }
+
+
+        if (anim.isFinished()) {
+            model.notifyWhenAnimFinished(anim.getAnimName());
         }
 
     }

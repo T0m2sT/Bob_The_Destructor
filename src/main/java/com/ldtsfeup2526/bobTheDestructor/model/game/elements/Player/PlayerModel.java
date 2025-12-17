@@ -10,6 +10,7 @@ import com.ldtsfeup2526.bobTheDestructor.model.game.elements.ElementModel;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Size;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Vector;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class PlayerModel extends ElementModel {
@@ -20,7 +21,7 @@ public class PlayerModel extends ElementModel {
     private PlayerState state;
     private float jumpForce = 2.6f;
     private MineralModel mineralSelected = null;
-    private float miningDistance = 8;
+    private float miningDistance = 10;
 
     public PlayerModel(Position position) {
         super(position);
@@ -30,6 +31,7 @@ public class PlayerModel extends ElementModel {
     }
 
     public void update() {
+        cleanupMinerals();
         physicsUpdate();
         updateState();
         findMineralInReach();
@@ -130,7 +132,9 @@ public class PlayerModel extends ElementModel {
     }
 
     public void findMineralInReach() {
-        if (mineralSelected != null) {
+        if (mineralSelected != null && mineralSelected.getState() == MineralState.DESTROYED) {
+            mineralSelected = null;
+        } else if (mineralSelected != null) {
             double distanceFromPlayer = getPosition().distance(mineralSelected.getPosition());
             if (distanceFromPlayer > miningDistance) {
                 mineralSelected.setState(MineralState.UNSELECTED);
@@ -139,6 +143,11 @@ public class PlayerModel extends ElementModel {
         }
 
         for (MineralModel mineralModel : scene.getMineralModels()) {
+
+            if (mineralModel.getState() == MineralState.DESTROYED) {
+                continue;
+            }
+
             Position mineralPos = mineralModel.getPosition();
             double distanceFromPlayer = getPosition().distance(mineralPos);
             if (distanceFromPlayer <= miningDistance) {
@@ -151,6 +160,22 @@ public class PlayerModel extends ElementModel {
                     mineralSelected = mineralModel;
                 }
 
+            }
+        }
+    }
+
+    public void notifyWhenPickaxeHit() {
+        if (state.getMineral() != null) {
+            state.getMineral().setState(MineralState.DESTROYED);
+        } else if (mineralSelected != null) {
+            mineralSelected.setState(MineralState.DESTROYED);
+        }
+    }
+
+    public void cleanupMinerals() {
+        for (MineralModel mineralModel : new ArrayList<>(scene.getMineralModels())) {
+            if (mineralModel.getState() == MineralState.CLEANUP) {
+                scene.getMineralModels().remove(mineralModel);
             }
         }
     }

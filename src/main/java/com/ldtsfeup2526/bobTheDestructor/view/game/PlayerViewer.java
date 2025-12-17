@@ -10,6 +10,7 @@ import com.ldtsfeup2526.bobTheDestructor.view.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class PlayerViewer implements ElementViewer<PlayerModel> {
     private final Map<Class<?>, Animation> spriteMap;
@@ -87,6 +88,11 @@ public class PlayerViewer implements ElementViewer<PlayerModel> {
             anim.getSprites()[anim.getFrame()].draw(model.getPosition(), gui);
         } else {
             anim.getSprites()[anim.getFrame()].drawFlipX(model.getPosition(), gui);
+        }
+
+        if (Objects.equals(anim.getAnimName(), "MineAnim") && anim.getFrame() == 2) {
+            // CODE SMELL: calling model methods
+            model.notifyWhenPickaxeHit();
         }
 
         if (anim.isFinished()) {
