@@ -71,6 +71,7 @@ public class SceneManager {
             //System.out.println(path);
             if (Objects.equals(path, null)) {
                 game.setState(new MainMenuState(new MainMenu(), game.getSpriteLoader()));
+                getScene().getSoundPlayer().stop();
                 return;
             }
             this.scene = sceneBuilder.createScene(path, playerModel);
