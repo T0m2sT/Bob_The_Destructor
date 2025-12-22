@@ -168,12 +168,8 @@ public class PlayerModel extends ElementModel {
     }
 
     public void notifyWhenPickaxeHit() {
-        if (state.getMineral() != null) {
-            state.getMineral().setState(MineralState.DESTROYED);
-            scene.incrementCurrentMineralsCollected();
-        } else if (mineralSelected != null) {
-            mineralSelected.setState(MineralState.DESTROYED);
-            scene.incrementCurrentMineralsCollected();
+        for (PlayerMiningListener listeners: playerMiningListeners) {
+            listeners.onMiningFinished(this);
         }
     }
 
@@ -191,6 +187,10 @@ public class PlayerModel extends ElementModel {
 
     public void removeMiningListener(PlayerMiningListener listener) {
         playerMiningListeners.remove(listener);
+    }
+
+    public MineralModel getMineralSelected() {
+        return mineralSelected;
     }
 }
 
