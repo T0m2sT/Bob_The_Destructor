@@ -156,7 +156,7 @@ public class PlayerModel extends ElementModel {
                 if (mineralSelected == null) {
                     mineralSelected = mineralModel;
                     mineralModel.setState(MineralState.SELECTED);
-                } else if (distanceFromPlayer < getPosition().distance(mineralModel.getPosition())){
+                } else if (distanceFromPlayer < getPosition().distance(mineralSelected.getPosition())){
                     mineralSelected.setState(MineralState.UNSELECTED);
                     mineralModel.setState(MineralState.SELECTED);
                     mineralSelected = mineralModel;
