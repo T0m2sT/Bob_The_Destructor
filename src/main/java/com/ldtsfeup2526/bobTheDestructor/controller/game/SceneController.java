@@ -25,7 +25,7 @@ public class SceneController extends Controller<SceneManager> implements PlayerM
         this.playerController = new PlayerController(getModel().getScene().getPlayerModel());
         getModel().getScene().getPlayerModel().addMiningListener(this);
 
-        /* Not Working
+
         if (getModel().getScene().getSoundPlayer().getSound() != null) {
             if (getModel().getScene().getSoundPlayer().getSound().isControlSupported(FloatControl.Type.MASTER_GAIN)) {
                 FloatControl gainControl = (FloatControl) getModel().getScene().getSoundPlayer().getSound().getControl(FloatControl.Type.MASTER_GAIN);
@@ -34,7 +34,7 @@ public class SceneController extends Controller<SceneManager> implements PlayerM
                 System.err.println("VOLUME control not supported on this Clip.");
             }
             getModel().getScene().getSoundPlayer().start();
-        }*/
+        }
     }
 
     @Override
