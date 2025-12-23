@@ -84,4 +84,8 @@ public class Scene implements CollisionChecker {
             }
         }
     }
+
+    public void cleanupMinerals() {
+        getMineralModels().removeIf(mineralModel -> mineralModel.getState() == MineralState.CLEANUP);
+    }
 }

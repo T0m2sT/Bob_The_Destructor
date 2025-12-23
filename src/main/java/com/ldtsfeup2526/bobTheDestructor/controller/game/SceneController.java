@@ -68,16 +68,8 @@ public class SceneController extends Controller<SceneManager> implements PlayerM
         }
     }
 
-    public void cleanupMinerals() {
-        for (MineralModel mineralModel : new ArrayList<>(getModel().getScene().getMineralModels())) {
-            if (mineralModel.getState() == MineralState.CLEANUP) {
-                getModel().getScene().getMineralModels().remove(mineralModel);
-            }
-        }
-    }
-
     public void updateMining() {
-        cleanupMinerals();
+        getModel().getScene().cleanupMinerals();
         playerController.getModel().updateSelectedMineral(getModel().getScene().getMineralModels());
         getModel().getScene().unselectAllMinerals();
         if (playerController.getModel().getMineralSelected() != null) {
