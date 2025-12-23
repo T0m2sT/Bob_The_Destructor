@@ -1,8 +1,6 @@
 package com.ldtsfeup2526.bobTheDestructor.model.game.elements.Player;
 
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralModel;
-import com.ldtsfeup2526.bobTheDestructor.model.game.physics.Collider;
-import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Vector;
 
 public class FallingState extends PlayerState {

@@ -6,7 +6,6 @@ import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralState;
 import com.ldtsfeup2526.bobTheDestructor.model.game.physics.Collider;
 import com.ldtsfeup2526.bobTheDestructor.model.game.physics.CollisionChecker;
 import com.ldtsfeup2526.bobTheDestructor.model.game.physics.RigidBody;
-import com.ldtsfeup2526.bobTheDestructor.model.game.scene.Scene;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.ElementModel;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Size;

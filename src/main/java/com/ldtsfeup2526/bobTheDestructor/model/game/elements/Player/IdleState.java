@@ -1,8 +1,6 @@
 package com.ldtsfeup2526.bobTheDestructor.model.game.elements.Player;
 
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralModel;
-import com.ldtsfeup2526.bobTheDestructor.model.game.physics.Collider;
-import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
 
 public class IdleState extends PlayerState {
     public IdleState(PlayerModel playerModel) {
