@@ -7,9 +7,7 @@ import com.ldtsfeup2526.bobTheDestructor.model.GameSettings;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.Menu;
 
 import javax.sound.sampled.FloatControl;
-import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 public abstract class MenuController<T extends Menu> extends Controller<T> {

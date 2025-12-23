@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InputReader implements KeyListener {
-    private List<Integer> inputPressed = new ArrayList<>();
-    private List<Integer> inputFinished = new ArrayList<>();
+    private final List<Integer> inputPressed = new ArrayList<>();
+    private final List<Integer> inputFinished = new ArrayList<>();
 
     public List<Integer> getInputPressed() {
         return inputPressed;
@@ -30,9 +30,7 @@ public class InputReader implements KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-        return;
-    }
+    public void keyTyped(KeyEvent e) {}
 
     @Override
     public void keyPressed(KeyEvent e) {

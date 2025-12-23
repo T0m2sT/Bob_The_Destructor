@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ActionParser implements IGameStateObserver {
     private final InputReader inputReader = new InputReader();
-    private List<Action> currentActions = new ArrayList<>();
+    private final List<Action> currentActions = new ArrayList<>();
     private boolean allowKeyHold = false;
 
     public InputReader getInputReader() {
