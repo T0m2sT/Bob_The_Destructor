@@ -36,7 +36,6 @@ public class PlayerModel extends ElementModel {
     public void update() {
         physicsUpdate();
         updateState();
-        findMineralInReach();
     }
 
     public void physicsUpdate() {
@@ -133,37 +132,21 @@ public class PlayerModel extends ElementModel {
         }
     }
 
-    public void findMineralInReach() {
-        if (mineralSelected != null && mineralSelected.getState() == MineralState.DESTROYED) {
-            mineralSelected = null;
-        } else if (mineralSelected != null) {
-            double distanceFromPlayer = getPosition().distance(mineralSelected.getPosition());
-            if (distanceFromPlayer > miningDistance) {
-                mineralSelected.setState(MineralState.UNSELECTED);
-                mineralSelected = null;
+    public void updateSelectedMineral(List<MineralModel> nearbyMinerals) {
+        MineralModel closest = null;
+        double minDistance = miningDistance; // max reach
+
+        for (MineralModel mineral : nearbyMinerals) {
+            if (mineral.getState() == MineralState.DESTROYED) continue;
+
+            double distance = getPosition().distance(mineral.getPosition());
+            if (distance <= minDistance) {
+                minDistance = distance;
+                closest = mineral;
             }
         }
 
-        for (MineralModel mineralModel : scene.getMineralModels()) {
-
-            if (mineralModel.getState() == MineralState.DESTROYED) {
-                continue;
-            }
-
-            Position mineralPos = mineralModel.getPosition();
-            double distanceFromPlayer = getPosition().distance(mineralPos);
-            if (distanceFromPlayer <= miningDistance) {
-                if (mineralSelected == null) {
-                    mineralSelected = mineralModel;
-                    mineralModel.setState(MineralState.SELECTED);
-                } else if (distanceFromPlayer < getPosition().distance(mineralSelected.getPosition())){
-                    mineralSelected.setState(MineralState.UNSELECTED);
-                    mineralModel.setState(MineralState.SELECTED);
-                    mineralSelected = mineralModel;
-                }
-
-            }
-        }
+        this.mineralSelected = closest;
     }
 
     public void notifyWhenPickaxeHit() {

@@ -39,7 +39,6 @@ public class SceneController extends Controller<SceneManager> implements PlayerM
 
     @Override
     public void update(Game game, List<Action> actions) throws IOException {
-        cleanupMinerals();
         getModel().update(game);
 
         if (actions.contains(Action.QUIT)) {
@@ -47,6 +46,7 @@ public class SceneController extends Controller<SceneManager> implements PlayerM
             if (getModel().getScene().getSoundPlayer().getSound() != null) getModel().getScene().getSoundPlayer().stop();
         }
         playerController.update(game, actions);
+        updateMining();
 
     }
 
@@ -67,6 +67,15 @@ public class SceneController extends Controller<SceneManager> implements PlayerM
             if (mineralModel.getState() == MineralState.CLEANUP) {
                 getModel().getScene().getMineralModels().remove(mineralModel);
             }
+        }
+    }
+
+    public void updateMining() {
+        cleanupMinerals();
+        playerController.getModel().updateSelectedMineral(getModel().getScene().getMineralModels());
+        getModel().getScene().unselectAllMinerals();
+        if (playerController.getModel().getMineralSelected() != null) {
+            playerController.getModel().getMineralSelected().setState(MineralState.SELECTED);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.ldtsfeup2526.bobTheDestructor.model.game.scene;
 
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralModel;
+import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralState;
 import com.ldtsfeup2526.bobTheDestructor.model.game.physics.Collider;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.Button;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
@@ -74,5 +75,13 @@ public class Scene {
 
     public void incrementCurrentMineralsCollected() {
         this.currentMineralsCollected++;
+    }
+
+    public void unselectAllMinerals() {
+        for (MineralModel mineralModel : getMineralModels()) {
+            if (mineralModel.getState() == MineralState.SELECTED) {
+                mineralModel.setState(MineralState.UNSELECTED);
+            }
+        }
     }
 }
