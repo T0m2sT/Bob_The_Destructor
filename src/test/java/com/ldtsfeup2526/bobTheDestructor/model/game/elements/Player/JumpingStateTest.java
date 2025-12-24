@@ -34,13 +34,7 @@ public class JumpingStateTest {
     @Test
     void testGetNextStateStillJumping() {
         JumpingState state = new JumpingState(player);
-        Collider col = mock(Collider.class);
-        when(player.getCollider()).thenReturn(col);
-        when(player.getPosition()).thenReturn(new Position(0, 0));
-        when(col.colPosCheck(any())).thenReturn(mock(Collider.class));
-        Scene scene = mock(Scene.class);
-        when(player.getScene()).thenReturn(scene);
-        when(scene.checkCollision(any())).thenReturn(false);
+        when(player.isGrounded()).thenReturn(false);
         when(rb.getVelocity()).thenReturn(new Vector(0, -0.5f));
 
         PlayerState next = state.getNextState();
@@ -55,14 +49,8 @@ public class JumpingStateTest {
         assertInstanceOf(FallingState.class, state.getNextState());
         
         when(rb.getVelocity()).thenReturn(new Vector(0, 0.499f));
-        // Also need to mock collision to not land
-        Collider col = mock(Collider.class);
-        when(player.getCollider()).thenReturn(col);
-        when(player.getPosition()).thenReturn(new Position(0, 0));
-        when(col.colPosCheck(any())).thenReturn(mock(Collider.class));
-        Scene scene = mock(Scene.class);
-        when(player.getScene()).thenReturn(scene);
-        when(scene.checkCollision(any())).thenReturn(false);
+        // Also need to mock grounded to not land
+        when(player.isGrounded()).thenReturn(false);
         assertSame(state, state.getNextState());
     }
 
@@ -70,13 +58,7 @@ public class JumpingStateTest {
     void testGetNextStateLands() {
         JumpingState state = new JumpingState(player);
         when(rb.getVelocity()).thenReturn(new Vector(0, 0.1f));
-        Collider col = mock(Collider.class);
-        when(player.getCollider()).thenReturn(col);
-        when(player.getPosition()).thenReturn(new Position(0, 0));
-        when(col.colPosCheck(any())).thenReturn(mock(Collider.class));
-        Scene scene = mock(Scene.class);
-        when(player.getScene()).thenReturn(scene);
-        when(scene.checkCollision(any())).thenReturn(true);
+        when(player.isGrounded()).thenReturn(true);
 
         PlayerState next = state.getNextState();
         assertInstanceOf(IdleState.class, next);

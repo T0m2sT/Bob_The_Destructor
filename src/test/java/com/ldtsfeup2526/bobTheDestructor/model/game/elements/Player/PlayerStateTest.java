@@ -57,13 +57,7 @@ public class PlayerStateTest {
 
     @Test
     void testJumpSuccess() {
-        Collider collider = mock(Collider.class);
-        when(player.getCollider()).thenReturn(collider);
-        when(player.getPosition()).thenReturn(new Position(10, 10));
-        when(collider.colPosCheck(any())).thenReturn(mock(Collider.class));
-        Scene scene = mock(Scene.class);
-        when(player.getScene()).thenReturn(scene);
-        when(scene.checkCollision(any())).thenReturn(true);
+        when(player.isGrounded()).thenReturn(true);
         when(player.getJumpForce()).thenReturn(2.6f);
 
         state.jump();
@@ -73,13 +67,7 @@ public class PlayerStateTest {
 
     @Test
     void testJumpFailure() {
-        Collider collider = mock(Collider.class);
-        when(player.getCollider()).thenReturn(collider);
-        when(player.getPosition()).thenReturn(new Position(10, 10));
-        when(collider.colPosCheck(any())).thenReturn(mock(Collider.class));
-        Scene scene = mock(Scene.class);
-        when(player.getScene()).thenReturn(scene);
-        when(scene.checkCollision(any())).thenReturn(false);
+        when(player.isGrounded()).thenReturn(false);
 
         state.jump();
 

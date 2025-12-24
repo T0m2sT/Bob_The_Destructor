@@ -28,13 +28,7 @@ public class WalkingStateTest {
     @Test
     void testGetNextStateStillWalking() {
         WalkingState state = new WalkingState(player);
-        Collider col = mock(Collider.class);
-        when(player.getCollider()).thenReturn(col);
-        when(player.getPosition()).thenReturn(new Position(0, 0));
-        when(col.colPosCheck(any())).thenReturn(mock(Collider.class));
-        Scene scene = mock(Scene.class);
-        when(player.getScene()).thenReturn(scene);
-        when(scene.checkCollision(any())).thenReturn(true);
+        when(player.isGrounded()).thenReturn(true);
         when(rb.getVelocity()).thenReturn(new Vector(0.5f, 0));
 
         PlayerState next = state.getNextState();
@@ -54,13 +48,7 @@ public class WalkingStateTest {
     void testGetNextStateToFalling() {
         WalkingState state = new WalkingState(player);
         when(rb.getVelocity()).thenReturn(new Vector(0.5f, 0));
-        Collider col = mock(Collider.class);
-        when(player.getCollider()).thenReturn(col);
-        when(player.getPosition()).thenReturn(new Position(0, 0));
-        when(col.colPosCheck(any())).thenReturn(mock(Collider.class));
-        Scene scene = mock(Scene.class);
-        when(player.getScene()).thenReturn(scene);
-        when(scene.checkCollision(any())).thenReturn(false);
+        when(player.isGrounded()).thenReturn(false);
 
         PlayerState next = state.getNextState();
         assertInstanceOf(FallingState.class, next);
@@ -71,13 +59,7 @@ public class WalkingStateTest {
         WalkingState state = new WalkingState(player);
         // < 0.2
         when(rb.getVelocity()).thenReturn(new Vector(0.199f, 0));
-        Collider col = mock(Collider.class);
-        when(player.getCollider()).thenReturn(col);
-        when(player.getPosition()).thenReturn(new Position(0, 0));
-        when(col.colPosCheck(any())).thenReturn(mock(Collider.class));
-        Scene scene = mock(Scene.class);
-        when(player.getScene()).thenReturn(scene);
-        when(scene.checkCollision(any())).thenReturn(true);
+        when(player.isGrounded()).thenReturn(true);
 
         assertInstanceOf(IdleState.class, state.getNextState());
         

@@ -33,13 +33,7 @@ public class FallingStateTest {
     @Test
     void testGetNextStateStillFalling() {
         FallingState state = new FallingState(player);
-        Collider col = mock(Collider.class);
-        when(player.getCollider()).thenReturn(col);
-        when(player.getPosition()).thenReturn(new Position(0, 0));
-        when(col.colPosCheck(any())).thenReturn(mock(Collider.class));
-        Scene scene = mock(Scene.class);
-        when(player.getScene()).thenReturn(scene);
-        when(scene.checkCollision(any())).thenReturn(false);
+        when(player.isGrounded()).thenReturn(false);
 
         PlayerState next = state.getNextState();
         assertSame(state, next);
@@ -48,13 +42,7 @@ public class FallingStateTest {
     @Test
     void testGetNextStateLands() {
         FallingState state = new FallingState(player);
-        Collider col = mock(Collider.class);
-        when(player.getCollider()).thenReturn(col);
-        when(player.getPosition()).thenReturn(new Position(0, 0));
-        when(col.colPosCheck(any())).thenReturn(mock(Collider.class));
-        Scene scene = mock(Scene.class);
-        when(player.getScene()).thenReturn(scene);
-        when(scene.checkCollision(any())).thenReturn(true);
+        when(player.isGrounded()).thenReturn(true);
 
         PlayerState next = state.getNextState();
         assertInstanceOf(IdleState.class, next);

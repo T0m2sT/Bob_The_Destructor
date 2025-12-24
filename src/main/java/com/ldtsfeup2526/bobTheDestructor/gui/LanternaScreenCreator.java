@@ -16,10 +16,18 @@ import java.net.URL;
 import java.util.Objects;
 
 public class LanternaScreenCreator implements ScreenCreator {
+    private final DefaultTerminalFactory terminalFactory;
+
+    public LanternaScreenCreator() {
+        this(new DefaultTerminalFactory());
+    }
+
+    public LanternaScreenCreator(DefaultTerminalFactory terminalFactory) {
+        this.terminalFactory = terminalFactory;
+    }
 
     public Screen createScreen(Resolution resolution, int fontSize, String title, KeyListener keyListener) throws URISyntaxException, IOException, FontFormatException {
         TerminalSize terminalSize = new TerminalSize(resolution.width(), resolution.height());
-        DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
         terminalFactory.setInitialTerminalSize(terminalSize);
         terminalFactory.setForceAWTOverSwing(true);
 

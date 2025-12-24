@@ -14,9 +14,10 @@ public class NumberParserTest {
         when(loader.get(anyString())).thenReturn(s1);
         
         NumberParser parser = new NumberParser(loader, "font/");
-        List<Sprite> sprites = parser.get("12");
+        List<SpriteInstance> sprites = parser.get("12");
         
         assertEquals(2, sprites.size());
-        verify(s1, times(2)).setOffset(any());
+        assertEquals(s1, sprites.get(0).sprite());
+        assertEquals(s1, sprites.get(1).sprite());
     }
 }

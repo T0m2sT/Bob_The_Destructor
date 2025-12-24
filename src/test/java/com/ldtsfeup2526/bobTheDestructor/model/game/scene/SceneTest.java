@@ -32,7 +32,6 @@ public class SceneTest {
         assertEquals(caveFilePath, scene.getCaveFilePath());
         assertEquals(playerModel, scene.getPlayerModel());
         assertEquals(mineralModels, scene.getMineralModels());
-        verify(playerModel).setScene(scene);
     }
 
     @Test
@@ -59,10 +58,10 @@ public class SceneTest {
         when(c1.isColliderOver(testCollider)).thenReturn(false);
         when(c2.isColliderOver(testCollider)).thenReturn(true);
 
-        assertTrue(scene.checkCollision(testCollider));
+        assertTrue(scene.check(testCollider));
 
         when(c2.isColliderOver(testCollider)).thenReturn(false);
-        assertFalse(scene.checkCollision(testCollider));
+        assertFalse(scene.check(testCollider));
     }
 
     @Test

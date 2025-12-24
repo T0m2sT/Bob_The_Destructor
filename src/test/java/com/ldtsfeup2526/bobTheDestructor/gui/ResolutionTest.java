@@ -7,7 +7,7 @@ public class ResolutionTest {
     @Test
     void testGetters() {
         Resolution res = new Resolution(100, 200);
-        assertEquals(100, res.getWidth());
-        assertEquals(200, res.getHeight());
+        assertEquals(100, res.width());
+        assertEquals(200, res.height());
     }
 }
