@@ -49,6 +49,29 @@ public class PlayerControllerTest {
     }
 
     @Test
+    void testJumpUp() {
+        controller.update(game, List.of(Action.UP));
+        verify(player).jump();
+    }
+
+    @Test
+    void testMineWhenAlreadyMining() {
+        com.ldtsfeup2526.bobTheDestructor.model.game.elements.Player.MiningState miningState = mock(com.ldtsfeup2526.bobTheDestructor.model.game.elements.Player.MiningState.class);
+        when(player.getState()).thenReturn(miningState);
+        controller.update(game, List.of(Action.MINE));
+        verify(player, never()).mine();
+    }
+
+    @Test
+    void testNoApplyFrictionWhenMoving() {
+        controller.update(game, List.of(Action.RIGHT));
+        verify(player, never()).applyFriction();
+        
+        controller.update(game, List.of(Action.LEFT));
+        verify(player, never()).applyFriction();
+    }
+
+    @Test
     void testApplyFriction() {
         controller.update(game, List.of());
         verify(player).applyFriction();

@@ -48,12 +48,22 @@ public class JumpingStateTest {
     }
 
     @Test
-    void testGetNextStateToFalling() {
+    void testGetNextStateToFallingBoundary() {
         JumpingState state = new JumpingState(player);
-        when(rb.getVelocity()).thenReturn(new Vector(0, 0.6f));
-
-        PlayerState next = state.getNextState();
-        assertInstanceOf(FallingState.class, next);
+        // > 0.5
+        when(rb.getVelocity()).thenReturn(new Vector(0, 0.501f));
+        assertInstanceOf(FallingState.class, state.getNextState());
+        
+        when(rb.getVelocity()).thenReturn(new Vector(0, 0.499f));
+        // Also need to mock collision to not land
+        Collider col = mock(Collider.class);
+        when(player.getCollider()).thenReturn(col);
+        when(player.getPosition()).thenReturn(new Position(0, 0));
+        when(col.colPosCheck(any())).thenReturn(mock(Collider.class));
+        Scene scene = mock(Scene.class);
+        when(player.getScene()).thenReturn(scene);
+        when(scene.checkCollision(any())).thenReturn(false);
+        assertSame(state, state.getNextState());
     }
 
     @Test

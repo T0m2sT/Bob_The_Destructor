@@ -42,6 +42,9 @@ public class SceneTest {
         SoundPlayer soundPlayer = mock(SoundPlayer.class);
         scene.setSoundPlayer(soundPlayer);
         assertEquals(soundPlayer, scene.getSoundPlayer());
+        
+        scene.setSoundPlayer(null);
+        assertNotNull(scene.getSoundPlayer());
     }
 
     @Test

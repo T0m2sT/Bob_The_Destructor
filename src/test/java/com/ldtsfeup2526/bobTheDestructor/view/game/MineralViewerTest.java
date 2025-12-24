@@ -50,16 +50,37 @@ public class MineralViewerTest {
     }
 
     @Test
-    void testDrawSelected() {
+    void testDrawDirections() throws IOException {
         MineralModel model = mock(MineralModel.class);
         when(model.getType()).thenReturn(MineralType.PINK);
         when(model.getState()).thenReturn(MineralState.SELECTED);
         when(model.getPosition()).thenReturn(new Position(0, 0));
-        when(model.getDirection()).thenReturn(PointingDirection.UP);
-        
         GUI gui = mock(GUI.class);
+        Sprite sprite = spriteLoader.get(""); // cached mock
+
+        when(model.getDirection()).thenReturn(PointingDirection.DOWN);
         viewer.draw(model, gui, 0.1);
+        verify(sprite, atLeastOnce()).drawFlipY(any(), any());
+
+        when(model.getDirection()).thenReturn(PointingDirection.LEFT);
+        viewer.draw(model, gui, 0.1);
+        verify(sprite, atLeastOnce()).drawRotLeft(any(), any());
+
+        when(model.getDirection()).thenReturn(PointingDirection.RIGHT);
+        viewer.draw(model, gui, 0.1);
+        verify(sprite, atLeastOnce()).drawRotRight(any(), any());
+    }
+
+    @Test
+    void testDrawDestroyed() {
+        MineralModel model = mock(MineralModel.class);
+        when(model.getType()).thenReturn(MineralType.PINK);
+        when(model.getState()).thenReturn(MineralState.DESTROYED);
+        when(model.getPosition()).thenReturn(new Position(0, 0));
+        when(model.getDirection()).thenReturn(PointingDirection.UP);
+        GUI gui = mock(GUI.class);
         
-        verify(gui, atLeastOnce()).drawPixel(any(), any());
+        viewer.draw(model, gui, 1.0); // Large deltaTime to finish animation
+        verify(model, atLeastOnce()).notifyWhenAnimFinished(eq("CrackAnim"));
     }
 }

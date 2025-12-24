@@ -41,14 +41,19 @@ public class ColliderTest {
 
     @Test
     void testIsColliderOver() {
+        // Overlap cases
         assertTrue(collider.isColliderOver(new Collider(new Position(11, 11), new Size(2, 2))));
-
         assertTrue(collider.isColliderOver(new Collider(new Position(8, 8), new Size(4, 4))));
-
         assertTrue(collider.isColliderOver(new Collider(new Position(15, 10), new Size(2, 2))));
+        
+        // Exact boundary overlap
+        assertTrue(collider.isColliderOver(new Collider(new Position(5, 5), new Size(5, 5)))); // Touching at (10,10)
+        assertTrue(collider.isColliderOver(new Collider(new Position(15, 15), new Size(5, 5)))); // Touching at (15,15)
 
+        // No overlap
         assertFalse(collider.isColliderOver(new Collider(new Position(16, 10), new Size(2, 2))));
         assertFalse(collider.isColliderOver(new Collider(new Position(10, 16), new Size(2, 2))));
+        assertFalse(collider.isColliderOver(new Collider(new Position(0, 0), new Size(5, 5))));
     }
 
     @Test

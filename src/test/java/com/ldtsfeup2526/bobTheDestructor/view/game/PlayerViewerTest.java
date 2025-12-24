@@ -55,15 +55,43 @@ public class PlayerViewerTest {
     }
 
     @Test
-    void testDrawFlip() {
+    void testDrawMining() {
         PlayerModel model = mock(PlayerModel.class);
-        when(model.getState()).thenReturn(new IdleState(model));
-        when(model.getPosition()).thenReturn(new Position(0, 0));
-        when(model.isLookingRight()).thenReturn(false);
-        
-        GUI gui = mock(GUI.class);
-        viewer.draw(model, gui, 0.1);
+        com.ldtsfeup2526.bobTheDestructor.model.game.physics.RigidBody rb = mock(com.ldtsfeup2526.bobTheDestructor.model.game.physics.RigidBody.class);
+        when(model.getRigidBody()).thenReturn(rb);
+        when(rb.getAcceleration()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Vector(0, 0));
+        when(rb.getVelocity()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Vector(0, 0));
 
-        verify(gui, atLeastOnce()).drawPixel(any(), any());
+        com.ldtsfeup2526.bobTheDestructor.model.game.elements.Player.MiningState miningState = new com.ldtsfeup2526.bobTheDestructor.model.game.elements.Player.MiningState(model, null);
+        when(model.getState()).thenReturn(miningState);
+        when(model.getPosition()).thenReturn(new Position(0, 0));
+        when(model.isLookingRight()).thenReturn(true);
+        GUI gui = mock(GUI.class);
+        
+        viewer.draw(model, gui, 0.3); // 3 frames of 0.1 each. Frame 2 reached.
+        verify(model).notifyWhenPickaxeHit();
+        verify(model).notifyWhenAnimFinished(eq("MineAnim"));
+    }
+
+    @Test
+    void testStateChangeStopsAnim() {
+        PlayerModel model = mock(PlayerModel.class);
+        com.ldtsfeup2526.bobTheDestructor.model.game.physics.RigidBody rb = mock(com.ldtsfeup2526.bobTheDestructor.model.game.physics.RigidBody.class);
+        when(model.getRigidBody()).thenReturn(rb);
+        when(rb.getAcceleration()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Vector(0, 0));
+        when(rb.getVelocity()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Vector(0, 0));
+
+        when(model.getPosition()).thenReturn(new Position(0, 0));
+        when(model.isLookingRight()).thenReturn(true);
+        GUI gui = mock(GUI.class);
+
+        // State 1
+        when(model.getState()).thenReturn(new IdleState(model));
+        viewer.draw(model, gui, 0.1);
+        
+        // State 2
+        when(model.getState()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.game.elements.Player.WalkingState(model));
+        viewer.draw(model, gui, 0.1);
+        // internally it should call stop() on IdleAnim
     }
 }

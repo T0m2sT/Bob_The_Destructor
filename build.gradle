@@ -26,7 +26,16 @@ dependencies {
 }
 
 pitest {
-    junit5PluginVersion = '1.0.0'
+    junit5PluginVersion = '1.2.1'
+
+    targetClasses = ['com.ldtsfeup2526.bobTheDestructor.*']
+    targetTests   = ['com.ldtsfeup2526.bobTheDestructor.*']
+
+    threads = 4
+    outputFormats = ['HTML']
+    timestampedReports = false
+
+    failWhenNoMutations = false
 }
 
 test {

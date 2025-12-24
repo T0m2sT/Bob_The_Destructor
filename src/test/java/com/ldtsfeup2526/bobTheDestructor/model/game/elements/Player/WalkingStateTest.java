@@ -67,9 +67,10 @@ public class WalkingStateTest {
     }
 
     @Test
-    void testGetNextStateToIdle() {
+    void testGetNextStateToIdleBoundary() {
         WalkingState state = new WalkingState(player);
-        when(rb.getVelocity()).thenReturn(new Vector(0.1f, 0));
+        // < 0.2
+        when(rb.getVelocity()).thenReturn(new Vector(0.199f, 0));
         Collider col = mock(Collider.class);
         when(player.getCollider()).thenReturn(col);
         when(player.getPosition()).thenReturn(new Position(0, 0));
@@ -78,8 +79,10 @@ public class WalkingStateTest {
         when(player.getScene()).thenReturn(scene);
         when(scene.checkCollision(any())).thenReturn(true);
 
-        PlayerState next = state.getNextState();
-        assertInstanceOf(IdleState.class, next);
+        assertInstanceOf(IdleState.class, state.getNextState());
+        
+        when(rb.getVelocity()).thenReturn(new Vector(0.201f, 0));
+        assertSame(state, state.getNextState());
     }
 
     @Test

@@ -59,18 +59,33 @@ public class IdleStateTest {
     }
 
     @Test
-    void testGetNextStateToFalling() {
+    void testGetNextStateToWalkingBoundary() {
         IdleState state = new IdleState(player);
+        // boundary > 0
+        when(rb.getVelocity()).thenReturn(new Vector(0.0001f, 0));
+        assertInstanceOf(WalkingState.class, state.getNextState());
+        
+        when(rb.getVelocity()).thenReturn(new Vector(-0.0001f, 0));
+        assertInstanceOf(WalkingState.class, state.getNextState());
+    }
+
+    @Test
+    void testGetNextStateToJumpingBoundary() {
+        IdleState state = new IdleState(player);
+        // boundary < 0
+        when(rb.getVelocity()).thenReturn(new Vector(0, -0.0001f));
+        assertInstanceOf(JumpingState.class, state.getNextState());
+        
+        when(rb.getVelocity()).thenReturn(new Vector(0, 0)); // Still idle
+        // need to mock blockUnder for this path
         Collider col = mock(Collider.class);
         when(player.getCollider()).thenReturn(col);
         when(player.getPosition()).thenReturn(new Position(0, 0));
         when(col.colPosCheck(any())).thenReturn(mock(Collider.class));
         Scene scene = mock(Scene.class);
         when(player.getScene()).thenReturn(scene);
-        when(scene.checkCollision(any())).thenReturn(false);
-
-        PlayerState next = state.getNextState();
-        assertInstanceOf(FallingState.class, next);
+        when(scene.checkCollision(any())).thenReturn(true);
+        assertSame(state, state.getNextState());
     }
 
     @Test

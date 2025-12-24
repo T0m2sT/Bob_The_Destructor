@@ -55,8 +55,9 @@ public class SceneManagerTest {
     }
 
     @Test
-    void testUpdateNewScene() throws IOException {
-        when(playerModel.getPosition()).thenReturn(new Position(0, 100)); // Below resolution
+    void testUpdateNewSceneBoundary() throws IOException {
+        // resolution height is 160
+        when(playerModel.getPosition()).thenReturn(new Position(0, 161));
         when(scene.getCurrentMineralsCollected()).thenReturn(5);
 
         Scene newScene = mock(Scene.class);
@@ -67,6 +68,13 @@ public class SceneManagerTest {
 
         assertEquals(newScene, sceneManager.getScene());
         assertEquals(5, sceneManager.getTotalMineralsCollected());
+    }
+
+    @Test
+    void testChooseCavesUniqueness() throws IOException {
+        List<String> paths = sceneManager.getCavesPathChosen();
+        assertEquals(5, paths.size());
+        assertEquals(5, paths.stream().distinct().count());
     }
 
     @Test

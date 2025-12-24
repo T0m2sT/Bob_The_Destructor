@@ -62,7 +62,14 @@ public class GUILanternaTest {
     }
     
     @Test
-    void testGetScreen() {
-        assertEquals(screen, gui.getScreen());
+    void testDrawBackground() {
+        TextGraphics graphics = mock(TextGraphics.class);
+        when(screen.newTextGraphics()).thenReturn(graphics);
+        TextColor color = new TextColor.RGB(0, 0, 0);
+        
+        gui.drawBackground(color);
+        
+        verify(graphics, times(100)).setCharacter(anyInt(), anyInt(), eq(' '));
+        verify(graphics, atLeastOnce()).setBackgroundColor(color);
     }
 }

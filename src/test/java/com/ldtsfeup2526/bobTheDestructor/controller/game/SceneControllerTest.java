@@ -3,6 +3,7 @@ package com.ldtsfeup2526.bobTheDestructor.controller.game;
 import com.ldtsfeup2526.bobTheDestructor.Game;
 import com.ldtsfeup2526.bobTheDestructor.controller.input.Action;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.Player.PlayerModel;
+import com.ldtsfeup2526.bobTheDestructor.model.game.elements.Player.PlayerState;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralModel;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralState;
 import com.ldtsfeup2526.bobTheDestructor.model.game.scene.Scene;
@@ -47,8 +48,67 @@ public class SceneControllerTest {
         when(spriteLoader.get(anyString())).thenReturn(sprite);
         when(sprite.getSize()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Size(1, 1));
         
+        SoundPlayer soundPlayer = mock(SoundPlayer.class);
+        when(scene.getSoundPlayer()).thenReturn(soundPlayer);
+        when(soundPlayer.getSound()).thenReturn(mock(javax.sound.sampled.Clip.class));
+
         controller.update(game, List.of(Action.QUIT));
         verify(game).setState(any(MainMenuState.class));
+        verify(soundPlayer).stop();
+    }
+
+    @Test
+    void testUpdateRegular() throws IOException {
+        controller.update(game, List.of(Action.LEFT));
+        verify(sceneManager).update(game);
+        // cleanupMinerals is called
+        verify(scene, atLeastOnce()).getMineralModels();
+        // playerController.update is called
+        verify(player).moveLeft();
+    }
+
+    @Test
+    void testCleanupMineralsNegated() {
+        MineralModel mineral = mock(MineralModel.class);
+        when(mineral.getState()).thenReturn(MineralState.SELECTED);
+        List<MineralModel> minerals = new ArrayList<>();
+        minerals.add(mineral);
+        when(scene.getMineralModels()).thenReturn(minerals);
+        
+        controller.cleanupMinerals();
+        assert(minerals.size() == 1);
+    }
+
+    @Test
+    void testOnMiningFinishedWithStateMineral() {
+        PlayerState state = mock(PlayerState.class);
+        MineralModel mineral = mock(MineralModel.class);
+        when(player.getState()).thenReturn(state);
+        when(state.getMineral()).thenReturn(mineral);
+        
+        controller.onMiningFinished(player);
+        
+        verify(mineral).setState(MineralState.DESTROYED);
+        verify(scene).incrementCurrentMineralsCollected();
+    }
+
+    @Test
+    void testOnMiningFinishedWithSelectedMineral() {
+        PlayerState state = mock(PlayerState.class);
+        MineralModel mineral = mock(MineralModel.class);
+        when(player.getState()).thenReturn(state);
+        when(state.getMineral()).thenReturn(null);
+        when(player.getMineralSelected()).thenReturn(mineral);
+        
+        controller.onMiningFinished(player);
+        
+        verify(mineral).setState(MineralState.DESTROYED);
+        verify(scene).incrementCurrentMineralsCollected();
+    }
+
+    @Test
+    void testConstructorAddsListener() {
+        verify(player).addMiningListener(controller);
     }
 
     @Test
