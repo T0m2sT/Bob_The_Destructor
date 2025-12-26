@@ -8,30 +8,23 @@ import java.util.Map;
 import java.util.Objects;
 
 public class GameSoundLoader implements SoundLoader{
-    private final Map<String, AudioInputStream> streamMap = new HashMap<>();
+    private final Map<String, Clip> clipMap = new HashMap<>();
 
     @Override
-    public Clip get(String soundFilePath) {
-        AudioInputStream audioInputStream = streamMap.get(soundFilePath);
-
-        Clip clip = null;
-
-        try {
-            if (audioInputStream == null) {
-                URL resource = getClass().getClassLoader().getResource(soundFilePath);
-                audioInputStream = AudioSystem.getAudioInputStream(Objects.requireNonNull(resource));
-                streamMap.put(soundFilePath, audioInputStream);
-            }
-
-            clip = AudioSystem.getClip();
-            AudioInputStream clipStream = AudioSystem.getAudioInputStream(audioInputStream.getFormat(), audioInputStream);
-            clip.open(clipStream);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
+    public Clip get(String soundFilePath) throws LineUnavailableException, IOException, UnsupportedAudioFileException {
+        if (clipMap.containsKey(soundFilePath)) {
+            Clip clip = clipMap.get(soundFilePath);
+            return clip;
         }
 
+        URL resource = getClass().getClassLoader().getResource(soundFilePath);
+
+        AudioInputStream audioIn = AudioSystem.getAudioInputStream(Objects.requireNonNull(resource));
+        Clip clip = AudioSystem.getClip();
+        clip.open(audioIn);
+
+        clipMap.put(soundFilePath, clip);
+        clip.setFramePosition(0);
         return clip;
-
     }
 }
