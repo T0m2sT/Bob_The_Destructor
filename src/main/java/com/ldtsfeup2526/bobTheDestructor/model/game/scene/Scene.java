@@ -18,8 +18,11 @@ public class Scene implements CollisionChecker {
     private final PlayerModel playerModel;
     private List<Collider> blockColliders;
     private final List<MineralModel> mineralModels;
-    private SoundPlayer soundPlayer;
     private int currentMineralsCollected = 0;
+    private SoundPlayer soundtrackPlayer;
+    private SoundPlayer walkingSoundPlayer;
+    private SoundPlayer miningSoundPlayer;
+    private SoundPlayer jumpingSoundPlayer;
 
     public Scene(String caveFilePath, PlayerModel playerModel, List<MineralModel> mineralModels) {
         this.caveFilePath = caveFilePath;
@@ -35,13 +38,40 @@ public class Scene implements CollisionChecker {
         return caveFilePath;
     }
 
-    public void setSoundPlayer(SoundPlayer soundPlayer) {this.soundPlayer = soundPlayer;}
+    public void setSoundtrackPlayer(SoundPlayer soundtrackPlayer) {this.soundtrackPlayer = soundtrackPlayer;}
 
     public SoundPlayer getSoundPlayer() {
-        if (soundPlayer == null) {
-            soundPlayer = new NullSoundPlayer();
+        if (soundtrackPlayer == null) {
+            soundtrackPlayer = new NullSoundPlayer();
         }
-        return soundPlayer;
+        return soundtrackPlayer;
+    }
+
+    public void setWalkingSoundPlayer(SoundPlayer walkingSoundPlayer) {this.walkingSoundPlayer = walkingSoundPlayer;}
+
+    public SoundPlayer getWalkingSoundPlayer() {
+        if (walkingSoundPlayer == null) {
+            walkingSoundPlayer = new NullSoundPlayer();
+        }
+        return walkingSoundPlayer;
+    }
+
+    public void setMiningSoundPlayer(SoundPlayer miningSoundPlayer) {this.miningSoundPlayer = miningSoundPlayer;}
+
+    public SoundPlayer getMiningSoundPlayer() {
+        if (miningSoundPlayer == null) {
+            miningSoundPlayer = new NullSoundPlayer();
+        }
+        return miningSoundPlayer;
+    }
+
+    public void setJumpingSoundPlayer(SoundPlayer jumpingSoundPlayer) {this.jumpingSoundPlayer = jumpingSoundPlayer;}
+
+    public SoundPlayer getJumpingSoundPlayer() {
+        if (jumpingSoundPlayer == null) {
+            jumpingSoundPlayer = new NullSoundPlayer();
+        }
+        return jumpingSoundPlayer;
     }
 
     public void setBlockColliders(List<Collider> blockColliders) {

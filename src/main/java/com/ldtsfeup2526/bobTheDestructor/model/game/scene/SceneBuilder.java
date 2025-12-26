@@ -4,9 +4,11 @@ import com.ldtsfeup2526.bobTheDestructor.model.game.elements.Player.PlayerModel;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralModel;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralType;
 import com.ldtsfeup2526.bobTheDestructor.model.game.physics.Collider;
+import com.ldtsfeup2526.bobTheDestructor.model.game.soundEffects.*;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Vector;
 import com.ldtsfeup2526.bobTheDestructor.sounds.BackgroundMusicPlayer;
+import com.ldtsfeup2526.bobTheDestructor.sounds.SoundEffectsPlayer;
 import com.ldtsfeup2526.bobTheDestructor.sounds.SoundLoader;
 import com.ldtsfeup2526.bobTheDestructor.sounds.SoundPlayer;
 import com.ldtsfeup2526.bobTheDestructor.view.SpriteLoader;
@@ -17,6 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.Callable;
 
 public class SceneBuilder implements ISceneBuilder{
     private final SpriteLoader spriteLoader;
@@ -35,7 +38,6 @@ public class SceneBuilder implements ISceneBuilder{
         playerModel.getRigidBody().setPosition(new Vector(findEntrancePos(enterImage)));
         Scene scene = new Scene(caveFilePath, playerModel, createMinerals(mineralImage));
         scene.setBlockColliders(createColliders(structureImage));
-        scene.setSoundPlayer(createSoundPlayer());
 
         return scene;
     }
@@ -83,16 +85,5 @@ public class SceneBuilder implements ISceneBuilder{
         }
 
         return mineralModels;
-    }
-
-    private SoundPlayer createSoundPlayer() {
-        try {
-            GameSoundtrack soundtrack = new GameSoundtrack();
-            Clip gameClip = new SoundLoader().loadSound(soundtrack.getAudioInput(), soundtrack.getSoundtrackClip());
-            return new BackgroundMusicPlayer(gameClip);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 }

@@ -3,6 +3,9 @@ package com.ldtsfeup2526.bobTheDestructor.controller.menu;
 import com.ldtsfeup2526.bobTheDestructor.Game;
 import com.ldtsfeup2526.bobTheDestructor.controller.Controller;
 import com.ldtsfeup2526.bobTheDestructor.controller.input.Action;
+import com.ldtsfeup2526.bobTheDestructor.model.GameSettings;
+import com.ldtsfeup2526.bobTheDestructor.model.game.scene.Scene;
+import com.ldtsfeup2526.bobTheDestructor.model.game.scene.SceneBuilder;
 import com.ldtsfeup2526.bobTheDestructor.model.game.scene.SceneManager;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.ButtonType;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.Menu;
@@ -43,6 +46,19 @@ public class ButtonController extends Controller<Menu> {
                 case EXIT:
                     if (action == Action.SELECT) {
                         game.setState(null);
+                    }
+                    break;
+                case VOLUME:
+                    if (action == Action.RIGHT) {
+                        if (GameSettings.getInstance().getMasterGain() > 40.0f) break;
+                        GameSettings.getInstance().setMasterGain(GameSettings.getInstance().getMasterGain() + 10.0f);
+                    }
+                    if (action == Action.LEFT) {
+                        if (GameSettings.getInstance().getMasterGain() < -40.0f) break;
+                        GameSettings.getInstance().setMasterGain(GameSettings.getInstance().getMasterGain() - 10.0f);
+                    }
+                    if (action == Action.SELECT) {
+                        GameSettings.getInstance().setMasterGain(-50.f);
                     }
                     break;
             }

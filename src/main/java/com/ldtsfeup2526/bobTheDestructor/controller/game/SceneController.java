@@ -2,6 +2,7 @@ package com.ldtsfeup2526.bobTheDestructor.controller.game;
 
 import com.ldtsfeup2526.bobTheDestructor.Game;
 import com.ldtsfeup2526.bobTheDestructor.controller.Controller;
+import com.ldtsfeup2526.bobTheDestructor.controller.game.PlayerController;
 import com.ldtsfeup2526.bobTheDestructor.controller.input.Action;
 import com.ldtsfeup2526.bobTheDestructor.model.GameSettings;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.Player.PlayerModel;
@@ -11,6 +12,7 @@ import com.ldtsfeup2526.bobTheDestructor.model.game.scene.SceneBuilder;
 import com.ldtsfeup2526.bobTheDestructor.model.game.scene.SceneManager;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.MainMenu;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
+import com.ldtsfeup2526.bobTheDestructor.sounds.SoundPlayer;
 import com.ldtsfeup2526.bobTheDestructor.states.MainMenuState;
 
 import javax.sound.sampled.FloatControl;
@@ -21,6 +23,7 @@ import java.util.Objects;
 public class SceneController extends Controller<SceneManager> implements PlayerMiningListener {
     private final PlayerController playerController;
     private final SceneBuilder sceneBuilder;
+    int walkTimer = 0;
 
     public SceneController(SceneManager sceneManager, SceneBuilder sceneBuilder) throws IOException {
         super(sceneManager);
@@ -29,15 +32,12 @@ public class SceneController extends Controller<SceneManager> implements PlayerM
         this.playerController = new PlayerController(getModel().getScene().getPlayerModel());
         getModel().getScene().getPlayerModel().addMiningListener(this);
 
-
-        if (getModel().getScene().getSoundPlayer().getSound() != null) {
-            if (getModel().getScene().getSoundPlayer().getSound().isControlSupported(FloatControl.Type.MASTER_GAIN)) {
-                FloatControl gainControl = (FloatControl) getModel().getScene().getSoundPlayer().getSound().getControl(FloatControl.Type.MASTER_GAIN);
+        SoundPlayer soundtrack = getModel().getSoundtrackPlayer();
+        if (soundtrack.getSound() != null) {
+            if (soundtrack.getSound().isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+                FloatControl gainControl = (FloatControl) soundtrack.getSound().getControl(FloatControl.Type.MASTER_GAIN);
                 gainControl.setValue(-5.0f + GameSettings.getInstance().getMasterGain());
-            } else {
-                System.err.println("VOLUME control not supported on this Clip.");
             }
-            getModel().getScene().getSoundPlayer().start();
         }
     }
 
@@ -45,10 +45,16 @@ public class SceneController extends Controller<SceneManager> implements PlayerM
     public void update(Game game, List<Action> actions) throws IOException {
         updateSceneState(game, actions);
 
+        if (actions.contains(Action.JUMP)) getModel().getJumpingSoundPlayer().start();
+        if (actions.contains(Action.MINE)) getModel().getMiningSoundPlayer().start();
+        if (actions.contains(Action.LEFT) || actions.contains(Action.RIGHT)) {
+            if (walkTimer % 14 == 0) getModel().getWalkingSoundPlayer().start();
+            walkTimer++;
+        }
+
         playerController.update(game, actions);
         playerController.getModel().physicsUpdate(getModel().getScene());
         updateMining();
-
 
     }
 
@@ -75,8 +81,8 @@ public class SceneController extends Controller<SceneManager> implements PlayerM
 
     public void updateSceneState(Game game, List<Action> actions) throws IOException {
         if (actions.contains(Action.QUIT)) {
+            getModel().getSoundtrackPlayer().stop();
             game.setState(new MainMenuState(new MainMenu(), game.getSpriteLoader()));
-            if (getModel().getScene().getSoundPlayer().getSound() != null) getModel().getScene().getSoundPlayer().stop();
         }
 
         if (getModel().getScene().getPlayerModel().getPosition().getY() > Game.resolution.height()) {
@@ -84,6 +90,7 @@ public class SceneController extends Controller<SceneManager> implements PlayerM
             String path = getModel().getNextCavePath();
 
             if (Objects.isNull(path)) {
+                getModel().getSoundtrackPlayer().stop();
                 game.setState(new MainMenuState(new MainMenu(), game.getSpriteLoader()));
                 return;
             }
