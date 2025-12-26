@@ -5,7 +5,6 @@ import com.ldtsfeup2526.bobTheDestructor.controller.game.SceneController;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.Player.PlayerModel;
 import com.ldtsfeup2526.bobTheDestructor.model.game.scene.Scene;
 import com.ldtsfeup2526.bobTheDestructor.model.game.scene.SceneManager;
-import com.ldtsfeup2526.bobTheDestructor.sounds.NullSoundPlayer;
 import com.ldtsfeup2526.bobTheDestructor.states.GameState;
 import com.ldtsfeup2526.bobTheDestructor.view.Sprite;
 import com.ldtsfeup2526.bobTheDestructor.view.SpriteLoader;
