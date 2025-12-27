@@ -11,8 +11,6 @@ import com.ldtsfeup2526.bobTheDestructor.states.State;
 import com.ldtsfeup2526.bobTheDestructor.states.MainMenuState;
 import com.ldtsfeup2526.bobTheDestructor.view.*;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -27,7 +25,7 @@ public class Game {
     private ActionParser actionParser = new ActionParser();
     private State<?> state;
 
-    public Game() throws IOException, URISyntaxException, FontFormatException, UnsupportedAudioFileException, LineUnavailableException {
+    public Game() throws IOException, URISyntaxException, FontFormatException {
         System.out.println("Starting GUI... ");
         gui = new GUILanterna(actionParser.getInputReader(), resolution, PIXEL_SIZE, "Bob, The Destructor");
 
@@ -44,7 +42,7 @@ public class Game {
         }
     }
 
-    public void run() throws IOException, InterruptedException, UnsupportedAudioFileException, LineUnavailableException {
+    public void run() throws IOException, InterruptedException {
         int FPS = 60;
         long deltaTime = 1000/FPS;
 
@@ -68,7 +66,7 @@ public class Game {
         gui.close();
     }
 
-    public void setState(State<?> state) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    public void setState(State<?> state) throws IOException {
         if (this.state != null) {
             this.state.onExit(this);
         }

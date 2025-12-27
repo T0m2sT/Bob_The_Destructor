@@ -10,8 +10,6 @@ import com.ldtsfeup2526.bobTheDestructor.view.ViewerProvider;
 import com.ldtsfeup2526.bobTheDestructor.view.screens.GameViewer;
 import com.ldtsfeup2526.bobTheDestructor.view.screens.ScreenViewer;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 
 public class GameState extends State<SceneManager> {
@@ -28,7 +26,7 @@ public class GameState extends State<SceneManager> {
     }
 
     @Override
-    public void onEnter(Game game) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    public void onEnter(Game game) {
         game.getSoundManager().playMusic("sounds/gameSoundtrack.wav");
     }
 

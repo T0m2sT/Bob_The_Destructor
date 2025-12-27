@@ -4,5 +4,5 @@ import javax.sound.sampled.*;
 import java.io.IOException;
 
 public interface SoundLoader {
-    Clip get(String soundFilePath) throws UnsupportedAudioFileException, IOException, LineUnavailableException;
+    Clip get(String soundFilePath);
 }

@@ -3,12 +3,8 @@ package com.ldtsfeup2526.bobTheDestructor.controller.menu;
 import com.ldtsfeup2526.bobTheDestructor.Game;
 import com.ldtsfeup2526.bobTheDestructor.controller.Controller;
 import com.ldtsfeup2526.bobTheDestructor.controller.input.Action;
-import com.ldtsfeup2526.bobTheDestructor.model.GameSettings;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.Menu;
 
-import javax.sound.sampled.FloatControl;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.util.List;
 
@@ -21,7 +17,7 @@ public abstract class MenuController<T extends Menu> extends Controller<T> {
     }
 
     @Override
-    public void update(Game game, List<Action> actions) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+    public void update(Game game, List<Action> actions) throws IOException {
         for (Action action : actions) {
             switch (action) {
                 case UP:
@@ -40,5 +36,5 @@ public abstract class MenuController<T extends Menu> extends Controller<T> {
         }
     }
 
-    protected abstract void onQuit(Game game) throws IOException, UnsupportedAudioFileException, LineUnavailableException;
+    protected abstract void onQuit(Game game) throws IOException;
 }

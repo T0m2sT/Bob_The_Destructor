@@ -2,9 +2,6 @@ package com.ldtsfeup2526.bobTheDestructor.sounds;
 
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.IOException;
 
 public abstract class SoundManager implements VolumeControl{
     protected final SoundLoader soundLoader;
@@ -40,9 +37,9 @@ public abstract class SoundManager implements VolumeControl{
     }
 
 
-    public abstract void playMusic(String soundFilePath) throws UnsupportedAudioFileException, LineUnavailableException, IOException;
+    public abstract void playMusic(String soundFilePath);
     public abstract void stopMusic();
 
-    public abstract void playSFX(String soundFilePath) throws UnsupportedAudioFileException, LineUnavailableException, IOException;
+    public abstract void playSFX(String soundFilePath);
 
 }
