@@ -33,7 +33,6 @@ public class PlayerController extends Controller<PlayerModel> implements PlayerS
 
     @Override
     public void onPlayerStateEnter(PlayerState playerState) {
-        soundManager.stopSFX("sounds/soundEffects/walking.wav");
         if (playerState instanceof JumpingState) {
             soundManager.playSFX("sounds/soundEffects/jumping.wav");
         } else if (playerState instanceof FallingState) {
@@ -45,6 +44,8 @@ public class PlayerController extends Controller<PlayerModel> implements PlayerS
 
     @Override
     public void onPlayerStateExit(PlayerState playerState) {
-
+        if (playerState instanceof WalkingState) {
+            soundManager.stopSFX("sounds/soundEffects/walking.wav");
+        }
     }
 }
