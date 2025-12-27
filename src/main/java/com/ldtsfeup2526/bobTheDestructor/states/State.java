@@ -23,9 +23,9 @@ public abstract class State<T> {
     public State(T model, SpriteLoader spriteLoader, SoundManager soundManager) throws IOException {
         this.model = model;
         this.spriteLoader = spriteLoader;
+        this.soundManager = soundManager;
         this.screenViewer = createScreenViewer(new ViewerProvider(spriteLoader));
         this.controller = createController();
-        this.soundManager = soundManager;
     }
 
     public abstract ScreenViewer<T> createScreenViewer(ViewerProvider viewerProvider) throws IOException;
