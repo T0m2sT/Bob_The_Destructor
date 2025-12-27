@@ -25,7 +25,7 @@ public class SceneController extends Controller<SceneManager> implements Pickaxe
         sceneManager.setScene(sceneBuilder.createScene(sceneManager.getNextCavePath(), new PlayerModel(new Position(0, 0))));
         this.sceneBuilder = sceneBuilder;
         this.playerController = new PlayerController(getModel().getScene().getPlayerModel());
-        getModel().getScene().getPlayerModel().addMiningListener(this);
+        getModel().getScene().getPlayerModel().addPickaxeHitEventListener(this);
 
     }
 
