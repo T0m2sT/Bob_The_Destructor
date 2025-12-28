@@ -34,7 +34,7 @@ public class SliderViewer implements ElementViewer<Widget> {
 
         switch (model.getWidgetType()) {
             case VOLUME:
-                value = Objects.toString(GameSettings.getInstance().getMasterGain());
+                value = Objects.toString(GameSettings.getInstance().getMasterVolume());
                 break;
             default:
                 value = "Value Not Found";
