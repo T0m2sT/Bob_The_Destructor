@@ -18,15 +18,15 @@ public class Widget extends ElementModel {
 
     }
 
-    public WidgetState getButtonState() {
+    public WidgetState getWidgetState() {
         return widgetState;
     }
 
-    public void setButtonState(WidgetState widgetState) {
+    public void setWidgetState(WidgetState widgetState) {
         this.widgetState = widgetState;
     }
 
-    public WidgetType getButtonType() {
+    public WidgetType getWidgetType() {
         return widgetType;
     }
 }

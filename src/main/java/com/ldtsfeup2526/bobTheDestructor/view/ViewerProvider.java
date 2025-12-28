@@ -6,12 +6,14 @@ import com.ldtsfeup2526.bobTheDestructor.view.game.OverlayViewer;
 import com.ldtsfeup2526.bobTheDestructor.view.game.PlayerViewer;
 import com.ldtsfeup2526.bobTheDestructor.view.game.SceneViewer;
 import com.ldtsfeup2526.bobTheDestructor.view.menu.ButtonViewer;
+import com.ldtsfeup2526.bobTheDestructor.view.menu.SliderViewer;
 import com.ldtsfeup2526.bobTheDestructor.view.menu.WallpaperViewer;
 
 import java.io.IOException;
 
 public class ViewerProvider {
     private final ButtonViewer buttonViewer;
+    private final SliderViewer sliderViewer;
     private final WallpaperViewer wallpaperViewer;
     private final PlayerViewer playerViewer;
     private final SceneViewer sceneViewer;
@@ -25,6 +27,7 @@ public class ViewerProvider {
         this.sceneViewer = new SceneViewer(spriteLoader);
         this.mineralViewer = new MineralViewer(spriteLoader);
         this.overlayViewer = new OverlayViewer(spriteLoader);
+        this.sliderViewer = new SliderViewer(spriteLoader);
     }
 
     public PlayerViewer getPlayerViewer() {
@@ -49,5 +52,9 @@ public class ViewerProvider {
 
     public OverlayViewer getOverlayViewer() {
         return overlayViewer;
+    }
+
+    public SliderViewer getSliderViewer() {
+        return sliderViewer;
     }
 }

@@ -22,7 +22,7 @@ public class WidgetController extends Controller<Menu> {
     @Override
     public void update(Game game, List<Action> actions) throws IOException {
         for (Action action : actions) {
-            switch (getModel().getCurrentWidget().getButtonType()) {
+            switch (getModel().getCurrentWidget().getWidgetType()) {
                 case WidgetType.PLAY:
                     if (action == Action.SELECT) {
                         SpriteLoader spriteLoader = game.getSpriteLoader();

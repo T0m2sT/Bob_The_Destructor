@@ -42,18 +42,18 @@ public class ButtonViewer implements ElementViewer<Widget> {
     }
 
     public void draw(Widget widget, GUI gui, double deltaTime) {
-        Map<WidgetState, Sprite> buttonTypeSprites = spriteMap.get(widget.getButtonType());
-        Sprite sprite = buttonTypeSprites.get(widget.getButtonState());
+        Map<WidgetState, Sprite> buttonTypeSprites = spriteMap.get(widget.getWidgetType());
+        Sprite sprite = buttonTypeSprites.get(widget.getWidgetState());
 
         sprite.draw(widget.getPosition(), gui);
 
-        iconMap.get(widget.getButtonType()).draw(new Position(
+        iconMap.get(widget.getWidgetType()).draw(new Position(
                 sprite.getSize().getX()/2 + widget.getPosition().getX() + 5,
                 widget.getPosition().getY()),
                 gui
         );
 
-        if (widget.getButtonState() != WidgetState.UNSELECTED) {
+        if (widget.getWidgetState() != WidgetState.UNSELECTED) {
             pickaxeIcon.draw(new Position(
                             widget.getPosition().getX() - sprite.getSize().getX() / 2 - 4,
                             widget.getPosition().getY()),

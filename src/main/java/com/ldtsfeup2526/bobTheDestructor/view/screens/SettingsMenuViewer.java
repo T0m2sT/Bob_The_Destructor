@@ -5,17 +5,18 @@ import com.ldtsfeup2526.bobTheDestructor.gui.GUI;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.SettingsMenu;
 import com.ldtsfeup2526.bobTheDestructor.view.ViewerProvider;
 import com.ldtsfeup2526.bobTheDestructor.view.menu.ButtonViewer;
+import com.ldtsfeup2526.bobTheDestructor.view.menu.SliderViewer;
 import com.ldtsfeup2526.bobTheDestructor.view.menu.WallpaperViewer;
 
 import java.io.IOException;
 
 public class SettingsMenuViewer extends ScreenViewer<SettingsMenu> {
-    private final ButtonViewer buttonViewer;
+    private final SliderViewer sliderViewer;
     private final WallpaperViewer wallpaperViewer;
 
     public SettingsMenuViewer(SettingsMenu model, ViewerProvider viewerProvider) {
         super(model);
-        this.buttonViewer = viewerProvider.getButtonViewer();
+        this.sliderViewer = viewerProvider.getSliderViewer();
         this.wallpaperViewer = viewerProvider.getWallpaperViewer();
     }
 
@@ -23,7 +24,7 @@ public class SettingsMenuViewer extends ScreenViewer<SettingsMenu> {
         //gui.clear();
         gui.drawBackground(new TextColor.RGB(57, 53, 74));
         wallpaperViewer.draw(gui);
-        drawElements(gui, getModel().getWidgets(), buttonViewer, deltaTime);
+        drawElements(gui, getModel().getWidgets(), sliderViewer, deltaTime);
         gui.refresh();
     }
 }
