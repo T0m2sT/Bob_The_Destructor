@@ -4,6 +4,7 @@ import com.ldtsfeup2526.bobTheDestructor.gui.GUI;
 import com.ldtsfeup2526.bobTheDestructor.model.game.scene.SceneManager;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
 import com.ldtsfeup2526.bobTheDestructor.view.*;
+import com.ldtsfeup2526.bobTheDestructor.view.text.NumberParser;
 
 import java.io.IOException;
 
