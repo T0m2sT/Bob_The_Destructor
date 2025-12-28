@@ -30,28 +30,30 @@ public class SliderViewer implements ElementViewer<Widget> {
 
     @Override
     public void draw(Widget model, GUI gui, double deltaTime) {
-        String value;
+        float value;
 
         switch (model.getWidgetType()) {
             case MASTER_VOLUME:
-                value = Objects.toString(GameSettings.getInstance().getMasterVolume());
+                value = GameSettings.getInstance().getMasterVolume();
                 break;
             case MUSIC_VOLUME:
-                value = Objects.toString(GameSettings.getInstance().getMusicVolume());
+                value = GameSettings.getInstance().getMusicVolume();
                 break;
             case SFX_VOLUME:
-                value = Objects.toString(GameSettings.getInstance().getSfxVolume());
+                value = GameSettings.getInstance().getSfxVolume();
                 break;
             default:
-                value = "Value Not Found";
+                value = -1;
         }
+
+        value = Math.round(value*100);
 
         Sprite arrowSprite = spriteMap.get(model.getWidgetState());
 
         List<SpriteInstance> text = stringParser.get(model.getWidgetType().toString().replace("_", " "));
         int halfWidth = text.size() * 5/2;
 
-        List<SpriteInstance> valueText = stringParser.get(value);
+        List<SpriteInstance> valueText = stringParser.get(Objects.toString((int) value));
         int halfValueTextWidth = valueText.size() * 5/2;
 
         Position startTextPos = new Position(model.getPosition().getX() - halfWidth, model.getPosition().getY());
