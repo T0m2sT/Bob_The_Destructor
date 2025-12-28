@@ -1,6 +1,6 @@
 package com.ldtsfeup2526.bobTheDestructor.model.menu;
 
-public enum ButtonState {
+public enum WidgetState {
     UNSELECTED,
     SELECTED,
     CLICKED

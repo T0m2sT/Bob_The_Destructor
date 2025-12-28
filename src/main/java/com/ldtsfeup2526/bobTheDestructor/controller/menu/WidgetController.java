@@ -4,7 +4,7 @@ import com.ldtsfeup2526.bobTheDestructor.Game;
 import com.ldtsfeup2526.bobTheDestructor.controller.Controller;
 import com.ldtsfeup2526.bobTheDestructor.controller.input.Action;
 import com.ldtsfeup2526.bobTheDestructor.model.game.scene.SceneManager;
-import com.ldtsfeup2526.bobTheDestructor.model.menu.ButtonType;
+import com.ldtsfeup2526.bobTheDestructor.model.menu.WidgetType;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.Menu;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.SettingsMenu;
 import com.ldtsfeup2526.bobTheDestructor.states.SettingsMenuState;
@@ -23,7 +23,7 @@ public class WidgetController extends Controller<Menu> {
     public void update(Game game, List<Action> actions) throws IOException {
         for (Action action : actions) {
             switch (getModel().getCurrentButton().getButtonType()) {
-                case ButtonType.PLAY:
+                case WidgetType.PLAY:
                     if (action == Action.SELECT) {
                         SpriteLoader spriteLoader = game.getSpriteLoader();
                         game.setState(new GameState(new SceneManager(), spriteLoader, game.getSoundManager()));

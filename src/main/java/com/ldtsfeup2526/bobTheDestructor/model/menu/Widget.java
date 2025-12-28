@@ -4,29 +4,29 @@ import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.ElementModel;
 
 public class Widget extends ElementModel {
-    private final ButtonType buttonType;
-    private ButtonState buttonState;
+    private final WidgetType widgetType;
+    private WidgetState widgetState;
 
-    public Widget(ButtonType buttonType) {
-        this(buttonType, ButtonState.UNSELECTED, new Position(0, 0));
+    public Widget(WidgetType widgetType) {
+        this(widgetType, WidgetState.UNSELECTED, new Position(0, 0));
     }
 
-    public Widget(ButtonType buttonType, ButtonState buttonState, Position position) {
+    public Widget(WidgetType widgetType, WidgetState widgetState, Position position) {
         super(position);
-        this.buttonState = buttonState;
-        this.buttonType = buttonType;
+        this.widgetState = widgetState;
+        this.widgetType = widgetType;
 
     }
 
-    public ButtonState getButtonState() {
-        return buttonState;
+    public WidgetState getButtonState() {
+        return widgetState;
     }
 
-    public void setButtonState(ButtonState buttonState) {
-        this.buttonState = buttonState;
+    public void setButtonState(WidgetState widgetState) {
+        this.widgetState = widgetState;
     }
 
-    public ButtonType getButtonType() {
-        return buttonType;
+    public WidgetType getButtonType() {
+        return widgetType;
     }
 }

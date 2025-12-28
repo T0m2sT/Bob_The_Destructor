@@ -3,7 +3,7 @@ package com.ldtsfeup2526.bobTheDestructor.controller.menu;
 import com.ldtsfeup2526.bobTheDestructor.Game;
 import com.ldtsfeup2526.bobTheDestructor.controller.input.Action;
 import com.ldtsfeup2526.bobTheDestructor.model.GameSettings;
-import com.ldtsfeup2526.bobTheDestructor.model.menu.ButtonType;
+import com.ldtsfeup2526.bobTheDestructor.model.menu.WidgetType;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.MainMenu;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.SettingsMenu;
 import com.ldtsfeup2526.bobTheDestructor.states.MainMenuState;
@@ -42,7 +42,7 @@ public class SettingsMenuController extends MenuController<SettingsMenu> {
                         }
                         currentVolumeIdx++;
                     }
-                    if (getModel().getCurrentButton().getButtonType() == ButtonType.VOLUME) {
+                    if (getModel().getCurrentButton().getButtonType() == WidgetType.VOLUME) {
                         currentVolumeIdx = (currentVolumeIdx + 1) % levels.length;
                         GameSettings.getInstance().setMasterGain(levels[currentVolumeIdx]);
                     }

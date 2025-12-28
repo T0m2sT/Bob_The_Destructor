@@ -1,6 +1,6 @@
 package com.ldtsfeup2526.bobTheDestructor.model.menu;
 
-public enum ButtonType {
+public enum WidgetType {
     PLAY,
     CONFIG,
     CREDITS,
