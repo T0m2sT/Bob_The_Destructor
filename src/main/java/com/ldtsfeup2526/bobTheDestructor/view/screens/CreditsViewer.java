@@ -15,8 +15,8 @@ public class CreditsViewer extends ScreenViewer<Credits> {
     private final TitleViewer titleViewer;
     private final WallpaperViewer wallpaperViewer;
 
-    public CreditsViewer(Credits credits, ViewerProvider viewerProvider) {
-        super(credits);
+    public CreditsViewer(Credits model, ViewerProvider viewerProvider) {
+        super(model);
         titleViewer = viewerProvider.getTitleViewer();
         wallpaperViewer = viewerProvider.getWallpaperViewer();
     }
