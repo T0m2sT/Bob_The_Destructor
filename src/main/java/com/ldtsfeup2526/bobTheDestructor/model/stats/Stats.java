@@ -9,8 +9,8 @@ public class Stats {
 
     public Stats(SceneManager sceneManager) {
         this.mineralsCollected = sceneManager.getTotalMineralsCollected();
-        this.seconds = (int) ((sceneManager.getTimePassed() / 1000) % 60);
-        this.minutes = (int) ((sceneManager.getTimePassed() / 1000) / 60);
+        this.seconds = (int) ((sceneManager.getTimePassed()) % 60);
+        this.minutes = (int) ((sceneManager.getTimePassed()) / 60);
     }
 
     public int getMineralsCollected() {

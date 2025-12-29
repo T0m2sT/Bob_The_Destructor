@@ -11,6 +11,7 @@ import com.ldtsfeup2526.bobTheDestructor.view.menu.TitleViewer;
 import com.ldtsfeup2526.bobTheDestructor.view.menu.WallpaperViewer;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class EndViewer extends ScreenViewer<Stats> {
     private final WallpaperViewer wallpaperViewer;
@@ -28,7 +29,12 @@ public class EndViewer extends ScreenViewer<Stats> {
 
         wallpaperViewer.draw(gui);
 
+        String timeText = "Time - " + Objects.toString(getModel().getMinutes()) + ":" + String.format("%02d", getModel().getSeconds());
+        String mineralsCollectedText = "Minerals Collected - " + Objects.toString(getModel().getMineralsCollected());
+
         titleViewer.draw(new Position(Game.resolution.width()/2 + 1, 10), "Thank you for playing!", gui);
+        titleViewer.draw(new Position(Game.resolution.width()/2 + 1, Game.resolution.height()/2 - 5), timeText, gui);
+        titleViewer.draw(new Position(Game.resolution.width()/2 + 1, Game.resolution.height()/2 + 5), mineralsCollectedText, gui);
 
         gui.refresh();
     }
