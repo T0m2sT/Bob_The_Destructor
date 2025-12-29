@@ -23,9 +23,11 @@ public abstract class MenuController<T extends Menu> extends Controller<T> {
             switch (action) {
                 case UP:
                     this.getModel().moveUp();
+                    widgetController.updateWidgetState();
                     break;
                 case DOWN:
                     this.getModel().moveDown();
+                    widgetController.updateWidgetState();
                     break;
                 case QUIT:
                     onQuit(game);

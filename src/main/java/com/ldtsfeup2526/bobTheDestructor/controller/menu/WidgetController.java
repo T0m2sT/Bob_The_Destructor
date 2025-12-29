@@ -6,9 +6,7 @@ import com.ldtsfeup2526.bobTheDestructor.controller.input.Action;
 import com.ldtsfeup2526.bobTheDestructor.model.GameSettings;
 import com.ldtsfeup2526.bobTheDestructor.model.credits.Credits;
 import com.ldtsfeup2526.bobTheDestructor.model.game.scene.SceneManager;
-import com.ldtsfeup2526.bobTheDestructor.model.menu.WidgetType;
-import com.ldtsfeup2526.bobTheDestructor.model.menu.Menu;
-import com.ldtsfeup2526.bobTheDestructor.model.menu.SettingsMenu;
+import com.ldtsfeup2526.bobTheDestructor.model.menu.*;
 import com.ldtsfeup2526.bobTheDestructor.sounds.SoundManager;
 import com.ldtsfeup2526.bobTheDestructor.states.CreditsState;
 import com.ldtsfeup2526.bobTheDestructor.states.SettingsMenuState;
@@ -79,5 +77,13 @@ public class WidgetController extends Controller<Menu> {
                     break;
             }
         }
+    }
+
+    public void updateWidgetState() {
+        for (Widget widget : getModel().getWidgets()) {
+            widget.setWidgetState(WidgetState.UNSELECTED);
+        }
+
+        getModel().getCurrentWidget().setWidgetState(WidgetState.SELECTED);
     }
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 public abstract class Menu {
     private final List<Widget> widgets;
-    private int currentButton = 0;
+    private int currentWidget = 0;
 
     public Menu() {
         this.widgets = createWidgets();
@@ -21,20 +21,16 @@ public abstract class Menu {
     }
 
     public void moveDown() {
-        getCurrentWidget().setWidgetState(WidgetState.UNSELECTED);
-        currentButton++;
-        currentButton %= getNumberOfWidgets();
-        getCurrentWidget().setWidgetState(WidgetState.SELECTED);
+        currentWidget++;
+        currentWidget %= getNumberOfWidgets();
     }
 
     public void moveUp() {
-        getCurrentWidget().setWidgetState(WidgetState.UNSELECTED);
-        currentButton += getNumberOfWidgets() - 1;
-        currentButton %= getNumberOfWidgets();
-        getCurrentWidget().setWidgetState(WidgetState.SELECTED);
+        currentWidget += getNumberOfWidgets() - 1;
+        currentWidget %= getNumberOfWidgets();
     }
 
     public Widget getCurrentWidget() {
-        return widgets.get(currentButton);
+        return widgets.get(currentWidget);
     }
 }
