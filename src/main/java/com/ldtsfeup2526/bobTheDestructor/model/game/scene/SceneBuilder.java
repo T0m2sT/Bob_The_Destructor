@@ -6,9 +6,8 @@ import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralType;
 import com.ldtsfeup2526.bobTheDestructor.model.game.physics.Collider;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Vector;
-import com.ldtsfeup2526.bobTheDestructor.view.SpriteLoader;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.SpriteLoader;
 
-import javax.sound.sampled.Clip;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;

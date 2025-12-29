@@ -1,4 +1,4 @@
-package com.ldtsfeup2526.bobTheDestructor.view;
+package com.ldtsfeup2526.bobTheDestructor.view.sprite;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

@@ -6,8 +6,8 @@ import com.ldtsfeup2526.bobTheDestructor.model.menu.Widget;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.WidgetState;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.WidgetType;
 import com.ldtsfeup2526.bobTheDestructor.view.ElementViewer;
-import com.ldtsfeup2526.bobTheDestructor.view.Sprite;
-import com.ldtsfeup2526.bobTheDestructor.view.SpriteLoader;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.SpriteLoader;
 
 import java.io.IOException;
 import java.util.Arrays;

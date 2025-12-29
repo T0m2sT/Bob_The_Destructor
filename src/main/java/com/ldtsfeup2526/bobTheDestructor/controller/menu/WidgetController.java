@@ -11,7 +11,7 @@ import com.ldtsfeup2526.bobTheDestructor.sounds.SoundManager;
 import com.ldtsfeup2526.bobTheDestructor.states.CreditsState;
 import com.ldtsfeup2526.bobTheDestructor.states.SettingsMenuState;
 import com.ldtsfeup2526.bobTheDestructor.states.GameState;
-import com.ldtsfeup2526.bobTheDestructor.view.SpriteLoader;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.SpriteLoader;
 
 import java.io.IOException;
 import java.util.List;

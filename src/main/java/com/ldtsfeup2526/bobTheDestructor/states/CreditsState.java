@@ -4,7 +4,7 @@ import com.ldtsfeup2526.bobTheDestructor.controller.Controller;
 import com.ldtsfeup2526.bobTheDestructor.controller.credits.CreditsController;
 import com.ldtsfeup2526.bobTheDestructor.model.credits.Credits;
 import com.ldtsfeup2526.bobTheDestructor.sounds.SoundManager;
-import com.ldtsfeup2526.bobTheDestructor.view.SpriteLoader;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.SpriteLoader;
 import com.ldtsfeup2526.bobTheDestructor.view.ViewerProvider;
 import com.ldtsfeup2526.bobTheDestructor.view.screens.CreditsViewer;
 import com.ldtsfeup2526.bobTheDestructor.view.screens.ScreenViewer;

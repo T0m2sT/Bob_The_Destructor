@@ -2,10 +2,9 @@ package com.ldtsfeup2526.bobTheDestructor.states;
 
 import com.ldtsfeup2526.bobTheDestructor.controller.Controller;
 import com.ldtsfeup2526.bobTheDestructor.controller.end.EndController;
-import com.ldtsfeup2526.bobTheDestructor.model.credits.Credits;
 import com.ldtsfeup2526.bobTheDestructor.model.stats.Stats;
 import com.ldtsfeup2526.bobTheDestructor.sounds.SoundManager;
-import com.ldtsfeup2526.bobTheDestructor.view.SpriteLoader;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.SpriteLoader;
 import com.ldtsfeup2526.bobTheDestructor.view.ViewerProvider;
 import com.ldtsfeup2526.bobTheDestructor.view.screens.EndViewer;
 import com.ldtsfeup2526.bobTheDestructor.view.screens.ScreenViewer;

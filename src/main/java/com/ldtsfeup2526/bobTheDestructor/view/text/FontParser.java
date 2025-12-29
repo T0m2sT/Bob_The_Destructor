@@ -1,9 +1,9 @@
 package com.ldtsfeup2526.bobTheDestructor.view.text;
 
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
-import com.ldtsfeup2526.bobTheDestructor.view.Sprite;
-import com.ldtsfeup2526.bobTheDestructor.view.SpriteInstance;
-import com.ldtsfeup2526.bobTheDestructor.view.SpriteLoader;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.SpriteInstance;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.SpriteLoader;
 
 import java.io.IOException;
 import java.util.ArrayList;

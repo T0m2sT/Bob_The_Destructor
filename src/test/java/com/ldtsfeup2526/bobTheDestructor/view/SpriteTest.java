@@ -3,6 +3,7 @@ package com.ldtsfeup2526.bobTheDestructor.view;
 import com.googlecode.lanterna.TextColor;
 import com.ldtsfeup2526.bobTheDestructor.gui.GUI;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;

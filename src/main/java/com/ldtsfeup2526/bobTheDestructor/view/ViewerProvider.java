@@ -1,6 +1,5 @@
 package com.ldtsfeup2526.bobTheDestructor.view;
 
-import com.ldtsfeup2526.bobTheDestructor.model.game.scene.Scene;
 import com.ldtsfeup2526.bobTheDestructor.view.game.MineralViewer;
 import com.ldtsfeup2526.bobTheDestructor.view.game.OverlayViewer;
 import com.ldtsfeup2526.bobTheDestructor.view.game.PlayerViewer;
@@ -9,6 +8,7 @@ import com.ldtsfeup2526.bobTheDestructor.view.menu.ButtonViewer;
 import com.ldtsfeup2526.bobTheDestructor.view.menu.SliderViewer;
 import com.ldtsfeup2526.bobTheDestructor.view.menu.TitleViewer;
 import com.ldtsfeup2526.bobTheDestructor.view.menu.WallpaperViewer;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.SpriteLoader;
 
 import java.io.IOException;
 

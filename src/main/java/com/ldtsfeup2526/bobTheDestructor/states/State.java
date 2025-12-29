@@ -5,7 +5,7 @@ import com.ldtsfeup2526.bobTheDestructor.controller.Controller;
 import com.ldtsfeup2526.bobTheDestructor.controller.input.ActionParser;
 import com.ldtsfeup2526.bobTheDestructor.gui.GUI;
 import com.ldtsfeup2526.bobTheDestructor.sounds.SoundManager;
-import com.ldtsfeup2526.bobTheDestructor.view.SpriteLoader;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.SpriteLoader;
 import com.ldtsfeup2526.bobTheDestructor.view.ViewerProvider;
 import com.ldtsfeup2526.bobTheDestructor.view.screens.ScreenViewer;
 

@@ -1,10 +1,6 @@
 package com.ldtsfeup2526.bobTheDestructor.view;
 
-import com.ldtsfeup2526.bobTheDestructor.gui.GUI;
-import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
-import com.sun.jdi.IntegerValue;
-
-import java.util.List;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite;
 
 public class Animation {
     private final String name;

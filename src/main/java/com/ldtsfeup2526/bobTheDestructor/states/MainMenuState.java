@@ -6,7 +6,7 @@ import com.ldtsfeup2526.bobTheDestructor.controller.menu.MainMenuController;
 import com.ldtsfeup2526.bobTheDestructor.controller.menu.WidgetController;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.MainMenu;
 import com.ldtsfeup2526.bobTheDestructor.sounds.SoundManager;
-import com.ldtsfeup2526.bobTheDestructor.view.SpriteLoader;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.SpriteLoader;
 import com.ldtsfeup2526.bobTheDestructor.view.ViewerProvider;
 import com.ldtsfeup2526.bobTheDestructor.view.screens.MainMenuViewer;
 import com.ldtsfeup2526.bobTheDestructor.view.screens.ScreenViewer;

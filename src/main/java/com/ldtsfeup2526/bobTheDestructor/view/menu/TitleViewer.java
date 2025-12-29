@@ -2,8 +2,8 @@ package com.ldtsfeup2526.bobTheDestructor.view.menu;
 
 import com.ldtsfeup2526.bobTheDestructor.gui.GUI;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
-import com.ldtsfeup2526.bobTheDestructor.view.SpriteInstance;
-import com.ldtsfeup2526.bobTheDestructor.view.SpriteLoader;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.SpriteInstance;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.SpriteLoader;
 import com.ldtsfeup2526.bobTheDestructor.view.text.StringParser;
 
 import java.io.IOException;

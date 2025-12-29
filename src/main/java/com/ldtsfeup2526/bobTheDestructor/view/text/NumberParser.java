@@ -1,6 +1,6 @@
 package com.ldtsfeup2526.bobTheDestructor.view.text;
 
-import com.ldtsfeup2526.bobTheDestructor.view.SpriteLoader;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.SpriteLoader;
 
 import java.io.IOException;
 

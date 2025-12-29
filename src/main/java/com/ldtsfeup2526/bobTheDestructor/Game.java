@@ -9,7 +9,8 @@ import com.ldtsfeup2526.bobTheDestructor.sounds.GameSoundManager;
 import com.ldtsfeup2526.bobTheDestructor.sounds.SoundManager;
 import com.ldtsfeup2526.bobTheDestructor.states.State;
 import com.ldtsfeup2526.bobTheDestructor.states.MainMenuState;
-import com.ldtsfeup2526.bobTheDestructor.view.*;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.GameSpriteLoader;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.SpriteLoader;
 
 import java.awt.*;
 import java.io.IOException;
