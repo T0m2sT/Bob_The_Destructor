@@ -62,7 +62,7 @@ public class PlayerController extends Controller<PlayerModel> implements PlayerS
             getModel().updateLastValidPos();
             return;
         }
-        System.out.println("Done");
+
         getModel().setPosition(getModel().getLastValidPos());
 
     }
