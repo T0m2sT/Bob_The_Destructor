@@ -50,12 +50,6 @@ public class Game {
         while (this.state != null) {
             long startTime = System.currentTimeMillis();
 
-            /*
-            List<Action> actions = actionParser.get();
-            if (actions.size() != 0) {
-                System.out.println(actions);
-            }*/
-
             state.update(this, gui, actionParser, 1.0/FPS);
 
             long elapsedTime = System.currentTimeMillis() - startTime;
