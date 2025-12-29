@@ -11,7 +11,9 @@ import com.ldtsfeup2526.bobTheDestructor.model.game.scene.SceneBuilder;
 import com.ldtsfeup2526.bobTheDestructor.model.game.scene.SceneManager;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.MainMenu;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
+import com.ldtsfeup2526.bobTheDestructor.model.stats.Stats;
 import com.ldtsfeup2526.bobTheDestructor.sounds.SoundManager;
+import com.ldtsfeup2526.bobTheDestructor.states.EndState;
 import com.ldtsfeup2526.bobTheDestructor.states.MainMenuState;
 
 import java.io.IOException;
@@ -39,7 +41,7 @@ public class SceneController extends Controller<SceneManager> implements Pickaxe
 
         playerController.update(game, actions);
         playerController.getModel().physicsUpdate(getModel().getScene());
-        //System.out.println(getModel().getScene().check(playerController.getModel().getCollider()));
+
         playerController.positionCorrection(getModel().getScene());
         updateMining();
 
@@ -78,7 +80,7 @@ public class SceneController extends Controller<SceneManager> implements Pickaxe
             String path = getModel().getNextCavePath();
 
             if (Objects.isNull(path)) {
-                game.setState(new MainMenuState(new MainMenu(), game.getSpriteLoader(), game.getSoundManager()));
+                game.setState(new EndState(new Stats(getModel()), game.getSpriteLoader(), soundManager));
                 return;
             }
             getModel().setScene(sceneBuilder.createScene(path, getModel().getScene().getPlayerModel()));

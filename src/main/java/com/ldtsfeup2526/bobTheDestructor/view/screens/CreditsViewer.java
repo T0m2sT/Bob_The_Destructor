@@ -30,12 +30,12 @@ public class CreditsViewer extends ScreenViewer<Credits> {
 
         titleViewer.draw(new Position(Game.resolution.width()/2 + 1, 10), "credits", gui);
 
-        titleViewer.drawOffCenter(new Position(10, Game.resolution.height()/2 - 25), getModel().getCredits()[0], gui);
-        titleViewer.drawOffCenter(new Position(35, Game.resolution.height()/2 - 15), getModel().getCredits()[1], gui);
-        titleViewer.drawOffCenter(new Position(35, Game.resolution.height()/2 - 5), getModel().getCredits()[2], gui);
-        titleViewer.drawOffCenter(new Position(35, Game.resolution.height()/2 + 5), getModel().getCredits()[3], gui);
-        titleViewer.drawOffCenter(new Position(10, Game.resolution.height()/2 + 15), getModel().getCredits()[4], gui);
-        titleViewer.drawOffCenter(new Position(35, Game.resolution.height()/2 + 25), getModel().getCredits()[5], gui);
+        titleViewer.drawAtTextStart(new Position(10, Game.resolution.height()/2 - 25), getModel().getCredits()[0], gui);
+        titleViewer.drawAtTextStart(new Position(35, Game.resolution.height()/2 - 15), getModel().getCredits()[1], gui);
+        titleViewer.drawAtTextStart(new Position(35, Game.resolution.height()/2 - 5), getModel().getCredits()[2], gui);
+        titleViewer.drawAtTextStart(new Position(35, Game.resolution.height()/2 + 5), getModel().getCredits()[3], gui);
+        titleViewer.drawAtTextStart(new Position(10, Game.resolution.height()/2 + 15), getModel().getCredits()[4], gui);
+        titleViewer.drawAtTextStart(new Position(35, Game.resolution.height()/2 + 25), getModel().getCredits()[5], gui);
 
         gui.refresh();
     }

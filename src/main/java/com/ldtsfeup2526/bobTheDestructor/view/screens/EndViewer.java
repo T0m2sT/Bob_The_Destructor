@@ -29,5 +29,7 @@ public class EndViewer extends ScreenViewer<Stats> {
         wallpaperViewer.draw(gui);
 
         titleViewer.draw(new Position(Game.resolution.width()/2 + 1, 10), "Thank you for playing!", gui);
+
+        gui.refresh();
     }
 }
