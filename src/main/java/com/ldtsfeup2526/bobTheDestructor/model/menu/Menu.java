@@ -1,54 +1,36 @@
 package com.ldtsfeup2526.bobTheDestructor.model.menu;
 
-import com.ldtsfeup2526.bobTheDestructor.sounds.NullSoundPlayer;
-import com.ldtsfeup2526.bobTheDestructor.sounds.SoundPlayer;
-
 import java.util.List;
 
 public abstract class Menu {
-    private final List<Button> buttons;
-    private SoundPlayer soundPlayer;
-    private int currentButton = 0;
+    private final List<Widget> widgets;
+    private int currentWidget = 0;
 
     public Menu() {
-        this.buttons = createButtons();
-        this.soundPlayer = createSoundPlayer();
+        this.widgets = createWidgets();
     }
 
-    protected abstract List<Button> createButtons();
+    protected abstract List<Widget> createWidgets();
 
-    protected abstract SoundPlayer createSoundPlayer();
-
-    public List<Button> getButtons() {
-        return buttons;
+    public List<Widget> getWidgets() {
+        return widgets;
     }
 
-    public SoundPlayer getSoundPlayer() {
-        if (soundPlayer == null){
-            soundPlayer = new NullSoundPlayer();
-        }
-        return soundPlayer;
-    }
-
-    public int getNumberOfButtons() {
-        return buttons.size();
+    public int getNumberOfWidgets() {
+        return widgets.size();
     }
 
     public void moveDown() {
-        getCurrentButton().setButtonState(ButtonState.UNSELECTED);
-        currentButton++;
-        currentButton %= getNumberOfButtons();
-        getCurrentButton().setButtonState(ButtonState.SELECTED);
+        currentWidget++;
+        currentWidget %= getNumberOfWidgets();
     }
 
     public void moveUp() {
-        getCurrentButton().setButtonState(ButtonState.UNSELECTED);
-        currentButton += getNumberOfButtons() - 1;
-        currentButton %= getNumberOfButtons();
-        getCurrentButton().setButtonState(ButtonState.SELECTED);
+        currentWidget += getNumberOfWidgets() - 1;
+        currentWidget %= getNumberOfWidgets();
     }
 
-    public Button getCurrentButton() {
-        return buttons.get(currentButton);
+    public Widget getCurrentWidget() {
+        return widgets.get(currentWidget);
     }
 }

@@ -4,11 +4,7 @@ import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralModel;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralState;
 import com.ldtsfeup2526.bobTheDestructor.model.game.physics.Collider;
 import com.ldtsfeup2526.bobTheDestructor.model.game.physics.CollisionChecker;
-import com.ldtsfeup2526.bobTheDestructor.model.menu.Button;
-import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.Player.PlayerModel;
-import com.ldtsfeup2526.bobTheDestructor.sounds.NullSoundPlayer;
-import com.ldtsfeup2526.bobTheDestructor.sounds.SoundPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +14,6 @@ public class Scene implements CollisionChecker {
     private final PlayerModel playerModel;
     private List<Collider> blockColliders;
     private final List<MineralModel> mineralModels;
-    private SoundPlayer soundPlayer;
     private int currentMineralsCollected = 0;
 
     public Scene(String caveFilePath, PlayerModel playerModel, List<MineralModel> mineralModels) {
@@ -35,12 +30,6 @@ public class Scene implements CollisionChecker {
         return caveFilePath;
     }
 
-    public void setSoundPlayer(SoundPlayer soundPlayer) {this.soundPlayer = soundPlayer;}
-
-    public SoundPlayer getSoundPlayer() {
-        return soundPlayer;
-    }
-
     public void setBlockColliders(List<Collider> blockColliders) {
         this.blockColliders = blockColliders;
     }
@@ -49,13 +38,13 @@ public class Scene implements CollisionChecker {
         return blockColliders;
     }
 
-    public boolean check(Collider collider) {
+    public Collider check(Collider collider) {
         for (Collider c : blockColliders) {
             if (c.isColliderOver(collider)) {
-                return true;
+                return c;
             }
         }
-        return false;
+        return null;
     }
 
     public List<MineralModel> getMineralModels() {

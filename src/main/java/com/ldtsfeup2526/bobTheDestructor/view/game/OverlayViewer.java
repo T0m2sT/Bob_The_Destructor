@@ -4,6 +4,10 @@ import com.ldtsfeup2526.bobTheDestructor.gui.GUI;
 import com.ldtsfeup2526.bobTheDestructor.model.game.scene.SceneManager;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
 import com.ldtsfeup2526.bobTheDestructor.view.*;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.SpriteInstance;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.SpriteLoader;
+import com.ldtsfeup2526.bobTheDestructor.view.text.NumberParser;
 
 import java.io.IOException;
 
@@ -16,8 +20,8 @@ public class OverlayViewer implements ElementViewer<SceneManager> {
         overlay = spriteLoader.get("sprites/ui_overlay/ui_overlay.png");
         marker = spriteLoader.get("sprites/ui_overlay/marker.png");
         numberParsers = new NumberParser[] {
-                new NumberParser(spriteLoader, "sprites/ui_overlay/num_large/"),
-                new NumberParser(spriteLoader, "sprites/ui_overlay/num_small/", 4)
+                new NumberParser(spriteLoader, "sprites/ui_overlay/num_large/num", 5),
+                new NumberParser(spriteLoader, "sprites/ui_overlay/num_small/num", 4)
         };
     }
 

@@ -6,12 +6,8 @@ import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralType;
 import com.ldtsfeup2526.bobTheDestructor.model.game.physics.Collider;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Vector;
-import com.ldtsfeup2526.bobTheDestructor.sounds.BackgroundMusicPlayer;
-import com.ldtsfeup2526.bobTheDestructor.sounds.SoundLoader;
-import com.ldtsfeup2526.bobTheDestructor.sounds.SoundPlayer;
-import com.ldtsfeup2526.bobTheDestructor.view.SpriteLoader;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.SpriteLoader;
 
-import javax.sound.sampled.Clip;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,7 +31,6 @@ public class SceneBuilder implements ISceneBuilder{
         playerModel.getRigidBody().setPosition(new Vector(findEntrancePos(enterImage)));
         Scene scene = new Scene(caveFilePath, playerModel, createMinerals(mineralImage));
         scene.setBlockColliders(createColliders(structureImage));
-        scene.setSoundPlayer(createSoundPlayer());
 
         return scene;
     }
@@ -83,20 +78,5 @@ public class SceneBuilder implements ISceneBuilder{
         }
 
         return mineralModels;
-    }
-
-    private SoundPlayer createSoundPlayer() {
-        try {
-            return createSoundPlayerInternal();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    protected SoundPlayer createSoundPlayerInternal() throws Exception {
-        GameSoundtrack soundtrack = new GameSoundtrack();
-        Clip gameClip = new SoundLoader().loadSound(soundtrack.getAudioInput(), soundtrack.getSoundtrackClip());
-        return new BackgroundMusicPlayer(gameClip);
     }
 }

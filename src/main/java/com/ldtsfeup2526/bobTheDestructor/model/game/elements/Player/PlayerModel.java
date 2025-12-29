@@ -1,6 +1,7 @@
 package com.ldtsfeup2526.bobTheDestructor.model.game.elements.Player;
 
-import com.ldtsfeup2526.bobTheDestructor.controller.game.PlayerMiningListener;
+import com.ldtsfeup2526.bobTheDestructor.controller.game.PickaxeHitEventListener;
+import com.ldtsfeup2526.bobTheDestructor.controller.game.PlayerStateListener;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralModel;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralState;
 import com.ldtsfeup2526.bobTheDestructor.model.game.physics.Collider;
@@ -16,18 +17,21 @@ import java.util.List;
 import java.util.Objects;
 
 public class PlayerModel extends ElementModel {
-    private Collider collider;
-    private RigidBody rigidBody;
+    private final Collider collider;
+    private final RigidBody rigidBody;
     private boolean lookRight = true;
     private PlayerState state;
-    private float jumpForce = 2.6f;
+    private final float jumpForce = 2.6f;
     private MineralModel mineralSelected = null;
-    private float miningDistance = 10;
-    private List<PlayerMiningListener> playerMiningListeners = new ArrayList<>();
+    private final float miningDistance = 10;
+    private final List<PickaxeHitEventListener> pickaxeHitEventListeners = new ArrayList<>();
+    private final List<PlayerStateListener> playerStateListeners = new ArrayList<>();
     private boolean grounded = false;
+    private List<Position> lastValidPos = new ArrayList<>();
 
     public PlayerModel(Position position) {
         super(position);
+        this.lastValidPos.add(position);
         this.collider = new Collider(position, new Size(5, 5));
         this.rigidBody = new RigidBody(position);
         this.state = new IdleState(this);
@@ -35,46 +39,6 @@ public class PlayerModel extends ElementModel {
 
     public void update() {
         updateState();
-    }
-
-    public void physicsUpdate(CollisionChecker collisionChecker) {
-        //rigidBody.getVelocity().print();
-        rigidBody.update();
-        Vector nextPosF = rigidBody.getNextPos();
-        Position nextPosI = new Position((int) Math.round(nextPosF.getX()), nextPosF.getY().intValue());
-        Collider nextColX = collider.colPosCheck(new Position(nextPosI.getX(), getPosition().getY()));
-        Collider nextColY = collider.colPosCheck(new Position(getPosition().getX(), nextPosI.getY()));
-
-        boolean canMoveX = !collisionChecker.check(nextColX);
-        boolean canMoveY = !collisionChecker.check(nextColY);
-
-        float finalX = nextPosF.getX();
-        float finalY = nextPosF.getY();
-
-        if (!canMoveX) {
-            finalX = rigidBody.getPosition().getX();
-            rigidBody.setVelocity(new Vector(0, rigidBody.getVelocity().getY()));
-            rigidBody.setAcceleration(new Vector(0, rigidBody.getAcceleration().getY()));
-        }
-
-        if (!canMoveY) {
-            finalY = rigidBody.getPosition().getY();
-            rigidBody.setVelocity(new Vector(rigidBody.getVelocity().getX(), 0));
-        }
-
-        Position finalPos = new Position((int) Math.round(finalX), (int) finalY);
-        setPosition(finalPos);
-        collider.setPosition(finalPos);
-        rigidBody.setPosition(new Vector(finalPos));
-
-        groundedUpdate(collisionChecker);
-    }
-
-    private void groundedUpdate(CollisionChecker collisionChecker) {
-        Collider blockUnder = getCollider().colPosCheck(
-                new Position(getPosition().getX(), getPosition().getY()+1));
-
-        grounded = collisionChecker.check(blockUnder);
     }
 
     public RigidBody getRigidBody() {
@@ -101,24 +65,16 @@ public class PlayerModel extends ElementModel {
         state.movePlayerLeft();
     }
 
-    public boolean jump() {
-        if (state != null) {
-            state.jump();
-            return true;
-        }
-        return false;
+    public void jump() {
+        state.jump();
     }
 
     public void mine() {
-        state = new MiningState(this, mineralSelected);
+        setState(new MiningState(this, mineralSelected));
     }
 
-    public boolean applyFriction() {
-        if (state != null) {
-            state.applyFriction();
-            return true;
-        }
-        return false;
+    public void applyFriction() {
+        state.applyFriction();
     }
 
     public PlayerState getState() {
@@ -126,7 +82,18 @@ public class PlayerModel extends ElementModel {
     }
 
     public void updateState() {
-        state = state.getNextState();
+        setState(state.getNextState());
+    }
+
+    public void setState(PlayerState newState) {
+        if (newState != state) {
+            for(PlayerStateListener playerStateListener : playerStateListeners) {
+                playerStateListener.onPlayerStateExit(state);
+                playerStateListener.onPlayerStateEnter(newState);
+            }
+        }
+
+        state = newState;
     }
 
     public float getJumpForce() {
@@ -161,21 +128,44 @@ public class PlayerModel extends ElementModel {
     }
 
     public void notifyWhenPickaxeHit() {
-        for (PlayerMiningListener listeners: playerMiningListeners) {
-            listeners.onMiningFinished(this);
+        for (PickaxeHitEventListener listeners: pickaxeHitEventListeners) {
+            listeners.onPickaxeHit(this);
         }
     }
 
-    public void addMiningListener(PlayerMiningListener listener) {
-        playerMiningListeners.add(listener);
+    public void addPickaxeHitEventListener(PickaxeHitEventListener listener) {
+        pickaxeHitEventListeners.add(listener);
     }
 
-    public void removeMiningListener(PlayerMiningListener listener) {
-        playerMiningListeners.remove(listener);
+    public void removePickaxeHitEventListener(PickaxeHitEventListener listener) {
+        pickaxeHitEventListeners.remove(listener);
+    }
+
+    public void addPlayerStateListener(PlayerStateListener listener) {
+        playerStateListeners.add(listener);
+    }
+
+    public void removePlayerStateListener(PlayerStateListener listener) {
+        playerStateListeners.remove(listener);
     }
 
     public MineralModel getMineralSelected() {
         return mineralSelected;
+    }
+
+    public void setGrounded(boolean grounded) {
+        this.grounded = grounded;
+    }
+
+    public Position getLastValidPos() {
+        return lastValidPos.getFirst();
+    }
+
+    public void updateLastValidPos() {
+        if (lastValidPos.size() == 10) {
+            lastValidPos.removeFirst();
+        }
+        this.lastValidPos.add(getPosition());
     }
 }
 

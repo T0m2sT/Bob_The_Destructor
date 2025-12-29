@@ -3,11 +3,10 @@ package com.ldtsfeup2526.bobTheDestructor.view.game;
 import com.ldtsfeup2526.bobTheDestructor.gui.GUI;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.BatModel;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.BatState;
-import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralModel;
 import com.ldtsfeup2526.bobTheDestructor.view.Animation;
 import com.ldtsfeup2526.bobTheDestructor.view.ElementViewer;
-import com.ldtsfeup2526.bobTheDestructor.view.Sprite;
-import com.ldtsfeup2526.bobTheDestructor.view.SpriteLoader;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.SpriteLoader;
 
 import java.io.IOException;
 import java.util.HashMap;

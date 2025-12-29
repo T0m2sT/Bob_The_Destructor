@@ -2,36 +2,37 @@ package com.ldtsfeup2526.bobTheDestructor.view.menu;
 
 import com.ldtsfeup2526.bobTheDestructor.gui.GUI;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
-import com.ldtsfeup2526.bobTheDestructor.model.menu.Button;
-import com.ldtsfeup2526.bobTheDestructor.model.menu.ButtonState;
-import com.ldtsfeup2526.bobTheDestructor.model.menu.ButtonType;
+import com.ldtsfeup2526.bobTheDestructor.model.menu.Widget;
+import com.ldtsfeup2526.bobTheDestructor.model.menu.WidgetState;
+import com.ldtsfeup2526.bobTheDestructor.model.menu.WidgetType;
 import com.ldtsfeup2526.bobTheDestructor.view.ElementViewer;
-import com.ldtsfeup2526.bobTheDestructor.view.Sprite;
-import com.ldtsfeup2526.bobTheDestructor.view.SpriteLoader;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.SpriteLoader;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ButtonViewer implements ElementViewer<Button> {
-    private final Map<ButtonType, Map<ButtonState, Sprite>> spriteMap = new HashMap<>();
-    private final Map<ButtonType, Sprite> iconMap = new HashMap<>();
+public class ButtonViewer implements ElementViewer<Widget> {
+    private final Map<WidgetType, Map<WidgetState, Sprite>> spriteMap = new HashMap<>();
+    private final Map<WidgetType, Sprite> iconMap = new HashMap<>();
     private final Sprite pickaxeIcon;
 
     public ButtonViewer(SpriteLoader spriteLoader) throws IOException {
-        Map<ButtonState, Sprite> tempMap;
-        for (ButtonType buttonType : ButtonType.values()) {
+        Map<WidgetState, Sprite> tempMap;
+        for (WidgetType widgetType : Arrays.asList(WidgetType.PLAY, WidgetType.CONFIG, WidgetType.CREDITS, WidgetType.EXIT)) {
             tempMap = new HashMap<>();
-            tempMap.put(ButtonState.UNSELECTED, spriteLoader.get("sprites/ui/buttons/" + buttonType.name().toLowerCase() + "/button1.png"));
-            tempMap.put(ButtonState.SELECTED, spriteLoader.get("sprites/ui/buttons/" + buttonType.name().toLowerCase() + "/button2.png"));
-            tempMap.put(ButtonState.CLICKED, spriteLoader.get("sprites/ui/buttons/" + buttonType.name().toLowerCase() + "/button3.png"));
-            spriteMap.put(buttonType, tempMap);
+            tempMap.put(WidgetState.UNSELECTED, spriteLoader.get("sprites/ui/buttons/" + widgetType.name().toLowerCase() + "/button1.png"));
+            tempMap.put(WidgetState.SELECTED, spriteLoader.get("sprites/ui/buttons/" + widgetType.name().toLowerCase() + "/button2.png"));
+            tempMap.put(WidgetState.CLICKED, spriteLoader.get("sprites/ui/buttons/" + widgetType.name().toLowerCase() + "/button3.png"));
+            spriteMap.put(widgetType, tempMap);
 
             for (Sprite s : tempMap.values()) {
                 s.center();
             }
 
-            iconMap.put(buttonType, spriteLoader.get("sprites/ui/buttons/" + buttonType.name().toLowerCase() + "/icon.png"));
+            iconMap.put(widgetType, spriteLoader.get("sprites/ui/buttons/" + widgetType.name().toLowerCase() + "/icon.png"));
         }
         for (Sprite s : iconMap.values()) {
             s.center();
@@ -41,22 +42,22 @@ public class ButtonViewer implements ElementViewer<Button> {
         pickaxeIcon.center();
     }
 
-    public void draw(Button button, GUI gui, double deltaTime) {
-        Map<ButtonState, Sprite> buttonTypeSprites = spriteMap.get(button.getButtonType());
-        Sprite sprite = buttonTypeSprites.get(button.getButtonState());
+    public void draw(Widget widget, GUI gui, double deltaTime) {
+        Map<WidgetState, Sprite> buttonTypeSprites = spriteMap.get(widget.getWidgetType());
+        Sprite sprite = buttonTypeSprites.get(widget.getWidgetState());
 
-        sprite.draw(button.getPosition(), gui);
+        sprite.draw(widget.getPosition(), gui);
 
-        iconMap.get(button.getButtonType()).draw(new Position(
-                sprite.getSize().getX()/2 + button.getPosition().getX() + 5,
-                button.getPosition().getY()),
+        iconMap.get(widget.getWidgetType()).draw(new Position(
+                sprite.getSize().getX()/2 + widget.getPosition().getX() + 5,
+                widget.getPosition().getY()),
                 gui
         );
 
-        if (button.getButtonState() != ButtonState.UNSELECTED) {
+        if (widget.getWidgetState() != WidgetState.UNSELECTED) {
             pickaxeIcon.draw(new Position(
-                            button.getPosition().getX() - sprite.getSize().getX() / 2 - 4,
-                            button.getPosition().getY()),
+                            widget.getPosition().getX() - sprite.getSize().getX() / 2 - 4,
+                            widget.getPosition().getY()),
                     gui
             );
         }

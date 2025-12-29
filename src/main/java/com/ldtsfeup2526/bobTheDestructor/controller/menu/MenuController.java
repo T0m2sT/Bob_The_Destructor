@@ -3,51 +3,40 @@ package com.ldtsfeup2526.bobTheDestructor.controller.menu;
 import com.ldtsfeup2526.bobTheDestructor.Game;
 import com.ldtsfeup2526.bobTheDestructor.controller.Controller;
 import com.ldtsfeup2526.bobTheDestructor.controller.input.Action;
-import com.ldtsfeup2526.bobTheDestructor.model.GameSettings;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.Menu;
 
-import javax.sound.sampled.FloatControl;
 import java.io.IOException;
 import java.util.List;
 
 public abstract class MenuController<T extends Menu> extends Controller<T> {
-    private final ButtonController buttonController;
+    private final WidgetController widgetController;
 
-    public MenuController(T model) {
+    public MenuController(T model, WidgetController widgetController) {
         super(model);
-        this.buttonController = new ButtonController(getModel());
-
-        if (getModel().getSoundPlayer().getSound() != null) {
-            if (getModel().getSoundPlayer().getSound().isControlSupported(FloatControl.Type.MASTER_GAIN)) {
-                FloatControl gainControl = (FloatControl) getModel().getSoundPlayer().getSound().getControl(FloatControl.Type.MASTER_GAIN);
-                gainControl.setValue(-20.0f + GameSettings.getInstance().getMasterGain());
-            } else {
-                System.err.println("MASTER_GAIN control not supported on this Clip.");
-            }
-
-            getModel().getSoundPlayer().start();
-        }
+        this.widgetController = widgetController;
     }
 
     @Override
-    public void update(Game game, List<Action> actions) throws IOException {
+    public void update(Game game, List<Action> actions, double deltaTime) throws IOException {
         for (Action action : actions) {
             switch (action) {
                 case UP:
                     this.getModel().moveUp();
+                    widgetController.updateWidgetState();
                     break;
                 case DOWN:
                     this.getModel().moveDown();
+                    widgetController.updateWidgetState();
                     break;
                 case QUIT:
                     onQuit(game);
                     break;
                 default:
-                    buttonController.update(game, List.of(action));
+                    widgetController.update(game, List.of(action), deltaTime);
                     break;
             }
         }
     }
 
-    protected abstract void onQuit(Game game);
+    protected abstract void onQuit(Game game) throws IOException;
 }

@@ -1,6 +1,6 @@
 package com.ldtsfeup2526.bobTheDestructor.controller.input;
 
-import com.ldtsfeup2526.bobTheDestructor.states.IGameStateObserver;
+import com.ldtsfeup2526.bobTheDestructor.states.GameStateListener;
 import com.ldtsfeup2526.bobTheDestructor.states.State;
 import com.ldtsfeup2526.bobTheDestructor.states.GameState;
 import com.ldtsfeup2526.bobTheDestructor.states.MainMenuState;
@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActionParser implements IGameStateObserver {
+public class ActionParser implements GameStateListener {
     private final InputReader inputReader = new InputReader();
     private final List<Action> currentActions = new ArrayList<>();
     private boolean allowKeyHold = false;

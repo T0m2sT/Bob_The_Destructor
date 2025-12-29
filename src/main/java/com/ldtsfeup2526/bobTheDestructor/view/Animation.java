@@ -1,5 +1,7 @@
 package com.ldtsfeup2526.bobTheDestructor.view;
 
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite;
+
 public class Animation {
     private final String name;
     private final Sprite[] sprites;
@@ -32,6 +34,7 @@ public class Animation {
                 currentFrame = 0;
             } else {
                 currentFrame = sprites.length-1;
+                isFinished();
             }
             currentCooldownTime = cooldownTime;
         }

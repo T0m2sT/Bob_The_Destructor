@@ -4,37 +4,33 @@ import com.ldtsfeup2526.bobTheDestructor.controller.input.ActionParser;
 import com.ldtsfeup2526.bobTheDestructor.gui.GUILanterna;
 import com.ldtsfeup2526.bobTheDestructor.gui.Resolution;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.MainMenu;
+import com.ldtsfeup2526.bobTheDestructor.sounds.GameSoundLoader;
+import com.ldtsfeup2526.bobTheDestructor.sounds.GameSoundManager;
+import com.ldtsfeup2526.bobTheDestructor.sounds.SoundManager;
 import com.ldtsfeup2526.bobTheDestructor.states.State;
 import com.ldtsfeup2526.bobTheDestructor.states.MainMenuState;
-import com.ldtsfeup2526.bobTheDestructor.view.*;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.GameSpriteLoader;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.SpriteLoader;
 
 import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Objects;
 
 public class Game {
     public static final Resolution resolution = new Resolution(165, 90);
     private final int PIXEL_SIZE = 7;
     private final GUILanterna gui;
     private final SpriteLoader spriteLoader = new GameSpriteLoader();
+    private final SoundManager soundManager = new GameSoundManager(new GameSoundLoader());
     private ActionParser actionParser = new ActionParser();
     private State<?> state;
 
     public Game() throws IOException, URISyntaxException, FontFormatException {
-        this(new ActionParser());
-    }
-
-    public Game(ActionParser actionParser) throws IOException, URISyntaxException, FontFormatException {
-        this.actionParser = actionParser;
         System.out.println("Starting GUI... ");
         gui = new GUILanterna(actionParser.getInputReader(), resolution, PIXEL_SIZE, "Bob, The Destructor");
 
-        setState(new MainMenuState(new MainMenu(), spriteLoader));
-    }
-
-    public Game(GUILanterna gui, ActionParser actionParser) {
-        this.gui = gui;
-        this.actionParser = actionParser;
+        setState(new MainMenuState(new MainMenu(), spriteLoader, getSoundManager()));
     }
 
     public static void main(String[] args) {
@@ -65,22 +61,32 @@ public class Game {
             long elapsedTime = System.currentTimeMillis() - startTime;
             long sleepTime = deltaTime - elapsedTime;
 
-            sleep(sleepTime);
+            if (sleepTime > 0) Thread.sleep(sleepTime);
         }
 
         gui.close();
     }
 
-    protected void sleep(long sleepTime) throws InterruptedException {
-        if (sleepTime > 0) Thread.sleep(sleepTime);
-    }
+    public void setState(State<?> state) throws IOException {
+        if (this.state != null) {
+            this.state.onExit(this);
+        }
 
-    public void setState(State<?> state) {
         this.state = state;
+
+        if (Objects.isNull(state)) {
+            return;
+        }
+
+        state.onEnter(this);
         actionParser.notifyStateChange(state);
     }
 
     public SpriteLoader getSpriteLoader() {
         return spriteLoader;
+    }
+
+    public SoundManager getSoundManager() {
+        return soundManager;
     }
 }

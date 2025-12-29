@@ -7,8 +7,8 @@ import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralType;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.PointingDirection;
 import com.ldtsfeup2526.bobTheDestructor.view.Animation;
 import com.ldtsfeup2526.bobTheDestructor.view.ElementViewer;
-import com.ldtsfeup2526.bobTheDestructor.view.Sprite;
-import com.ldtsfeup2526.bobTheDestructor.view.SpriteLoader;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite;
+import com.ldtsfeup2526.bobTheDestructor.view.sprite.SpriteLoader;
 
 import java.io.IOException;
 import java.util.HashMap;

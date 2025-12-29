@@ -3,57 +3,56 @@ package com.ldtsfeup2526.bobTheDestructor.controller.game;
 import com.ldtsfeup2526.bobTheDestructor.Game;
 import com.ldtsfeup2526.bobTheDestructor.controller.Controller;
 import com.ldtsfeup2526.bobTheDestructor.controller.input.Action;
-import com.ldtsfeup2526.bobTheDestructor.model.GameSettings;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.Player.PlayerModel;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.Player.PlayerState;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralState;
+import com.ldtsfeup2526.bobTheDestructor.model.game.physics.Collider;
+import com.ldtsfeup2526.bobTheDestructor.model.game.physics.CollisionChecker;
+import com.ldtsfeup2526.bobTheDestructor.model.game.physics.RigidBody;
 import com.ldtsfeup2526.bobTheDestructor.model.game.scene.SceneBuilder;
 import com.ldtsfeup2526.bobTheDestructor.model.game.scene.SceneManager;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.MainMenu;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
+import com.ldtsfeup2526.bobTheDestructor.model.spatials.Vector;
+import com.ldtsfeup2526.bobTheDestructor.model.stats.Stats;
+import com.ldtsfeup2526.bobTheDestructor.sounds.SoundManager;
+import com.ldtsfeup2526.bobTheDestructor.states.EndState;
 import com.ldtsfeup2526.bobTheDestructor.states.MainMenuState;
 
-import javax.sound.sampled.FloatControl;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-public class SceneController extends Controller<SceneManager> implements PlayerMiningListener {
+public class SceneController extends Controller<SceneManager> implements PickaxeHitEventListener {
     private final PlayerController playerController;
     private final SceneBuilder sceneBuilder;
+    private final SoundManager soundManager;
 
-    public SceneController(SceneManager sceneManager, SceneBuilder sceneBuilder) throws IOException {
+    public SceneController(SceneManager sceneManager, SceneBuilder sceneBuilder, SoundManager soundManager) throws IOException {
         super(sceneManager);
         sceneManager.setScene(sceneBuilder.createScene(sceneManager.getNextCavePath(), new PlayerModel(new Position(0, 0))));
         this.sceneBuilder = sceneBuilder;
-        this.playerController = new PlayerController(getModel().getScene().getPlayerModel());
-        getModel().getScene().getPlayerModel().addMiningListener(this);
+        this.playerController = new PlayerController(getModel().getScene().getPlayerModel(), soundManager);
+        this.soundManager = soundManager;
+        getModel().getScene().getPlayerModel().addPickaxeHitEventListener(this);
 
-
-        if (getModel().getScene().getSoundPlayer() != null && getModel().getScene().getSoundPlayer().getSound() != null) {
-            if (getModel().getScene().getSoundPlayer().getSound().isControlSupported(FloatControl.Type.MASTER_GAIN)) {
-                FloatControl gainControl = (FloatControl) getModel().getScene().getSoundPlayer().getSound().getControl(FloatControl.Type.MASTER_GAIN);
-                gainControl.setValue(-5.0f + GameSettings.getInstance().getMasterGain());
-            } else {
-                System.err.println("VOLUME control not supported on this Clip.");
-            }
-            getModel().getScene().getSoundPlayer().start();
-        }
     }
 
     @Override
-    public void update(Game game, List<Action> actions) throws IOException {
+    public void update(Game game, List<Action> actions, double deltaTime) throws IOException {
         updateSceneState(game, actions);
 
-        playerController.update(game, actions);
-        playerController.getModel().physicsUpdate(getModel().getScene());
+        playerController.positionCorrection(getModel().getScene());
+        playerController.update(game, actions, deltaTime);
+        playerController.physicsUpdate(getModel().getScene());
+
         updateMining();
 
-
+        getModel().updateTime(deltaTime);
     }
 
     @Override
-    public void onMiningFinished(PlayerModel playerModel) {
+    public void onPickaxeHit(PlayerModel playerModel) {
         PlayerState state = playerModel.getState();
         if (state.getMineral() != null) {
             state.getMineral().setState(MineralState.DESTROYED);
@@ -62,6 +61,7 @@ public class SceneController extends Controller<SceneManager> implements PlayerM
             playerModel.getMineralSelected().setState(MineralState.DESTROYED);
             getModel().getScene().incrementCurrentMineralsCollected();
         }
+        soundManager.playSFX("sounds/soundEffects/mining.wav");
     }
 
     public void updateMining() {
@@ -75,11 +75,7 @@ public class SceneController extends Controller<SceneManager> implements PlayerM
 
     public void updateSceneState(Game game, List<Action> actions) throws IOException {
         if (actions.contains(Action.QUIT)) {
-            game.setState(new MainMenuState(new MainMenu(), game.getSpriteLoader()));
-            if (getModel().getScene().getSoundPlayer() != null && getModel().getScene().getSoundPlayer().getSound() != null) {
-                getModel().getScene().getSoundPlayer().stop();
-            }
-            return;
+            game.setState(new MainMenuState(new MainMenu(), game.getSpriteLoader(), game.getSoundManager()));
         }
 
         if (getModel().getScene().getPlayerModel().getPosition().getY() > Game.resolution.height()) {
@@ -87,7 +83,7 @@ public class SceneController extends Controller<SceneManager> implements PlayerM
             String path = getModel().getNextCavePath();
 
             if (Objects.isNull(path)) {
-                game.setState(new MainMenuState(new MainMenu(), game.getSpriteLoader()));
+                game.setState(new EndState(new Stats(getModel()), game.getSpriteLoader(), soundManager));
                 return;
             }
             getModel().setScene(sceneBuilder.createScene(path, getModel().getScene().getPlayerModel()));
