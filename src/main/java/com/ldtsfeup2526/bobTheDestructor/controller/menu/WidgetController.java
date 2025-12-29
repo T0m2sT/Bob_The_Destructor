@@ -4,11 +4,13 @@ import com.ldtsfeup2526.bobTheDestructor.Game;
 import com.ldtsfeup2526.bobTheDestructor.controller.Controller;
 import com.ldtsfeup2526.bobTheDestructor.controller.input.Action;
 import com.ldtsfeup2526.bobTheDestructor.model.GameSettings;
+import com.ldtsfeup2526.bobTheDestructor.model.credits.Credits;
 import com.ldtsfeup2526.bobTheDestructor.model.game.scene.SceneManager;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.WidgetType;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.Menu;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.SettingsMenu;
 import com.ldtsfeup2526.bobTheDestructor.sounds.SoundManager;
+import com.ldtsfeup2526.bobTheDestructor.states.CreditsState;
 import com.ldtsfeup2526.bobTheDestructor.states.SettingsMenuState;
 import com.ldtsfeup2526.bobTheDestructor.states.GameState;
 import com.ldtsfeup2526.bobTheDestructor.view.SpriteLoader;
@@ -41,7 +43,7 @@ public class WidgetController extends Controller<Menu> {
                     }
                     break;
                 case CREDITS:
-                    // TODO
+                    game.setState(new CreditsState(new Credits(), game.getSpriteLoader(), game.getSoundManager()));
                     break;
                 case EXIT:
                     if (action == Action.SELECT) {

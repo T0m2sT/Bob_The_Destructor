@@ -5,10 +5,12 @@ public class Credits {
 
     public Credits() {
         credits = new String[] {
-                "Programmer:         Aléxis Ramos",
-                "Programmer: Pedro Tomás Teixeira",
-                "Programmer: Rafael Pinho e Silva",
-                "Artist:                     Mich"
+                "Programmers:",
+                "Alexis Ramos",
+                "Pedro Tomas Teixeira",
+                "Rafael Pinho e Silva",
+                "Artists:",
+                "Mich"
         };
     }
 
