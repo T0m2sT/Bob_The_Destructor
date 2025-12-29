@@ -24,7 +24,7 @@ public class WidgetController extends Controller<Menu> {
     }
 
     @Override
-    public void update(Game game, List<Action> actions) throws IOException {
+    public void update(Game game, List<Action> actions, double deltaTime) throws IOException {
         GameSettings gameSettings = GameSettings.getInstance();
         for (Action action : actions) {
             switch (getModel().getCurrentWidget().getWidgetType()) {

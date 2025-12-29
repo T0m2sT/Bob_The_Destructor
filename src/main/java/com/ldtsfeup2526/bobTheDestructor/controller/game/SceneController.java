@@ -6,7 +6,6 @@ import com.ldtsfeup2526.bobTheDestructor.controller.input.Action;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.Player.PlayerModel;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.Player.PlayerState;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralState;
-import com.ldtsfeup2526.bobTheDestructor.model.game.physics.CollisionChecker;
 import com.ldtsfeup2526.bobTheDestructor.model.game.scene.SceneBuilder;
 import com.ldtsfeup2526.bobTheDestructor.model.game.scene.SceneManager;
 import com.ldtsfeup2526.bobTheDestructor.model.menu.MainMenu;
@@ -36,10 +35,10 @@ public class SceneController extends Controller<SceneManager> implements Pickaxe
     }
 
     @Override
-    public void update(Game game, List<Action> actions) throws IOException {
+    public void update(Game game, List<Action> actions, double deltaTime) throws IOException {
         updateSceneState(game, actions);
 
-        playerController.update(game, actions);
+        playerController.update(game, actions, deltaTime);
         playerController.getModel().physicsUpdate(getModel().getScene());
 
         playerController.positionCorrection(getModel().getScene());

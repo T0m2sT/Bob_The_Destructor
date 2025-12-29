@@ -17,5 +17,5 @@ public abstract class Controller<T> {
         return model;
     }
 
-    public abstract void update(Game game, List<Action> actions) throws IOException;
+    public abstract void update(Game game, List<Action> actions, double deltaTime) throws IOException;
 }

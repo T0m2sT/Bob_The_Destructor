@@ -16,7 +16,7 @@ public class EndController extends Controller<Stats> {
     }
 
     @Override
-    public void update(Game game, List<Action> actions) throws IOException {
+    public void update(Game game, List<Action> actions, double deltaTime) throws IOException {
         if (actions.contains(Action.QUIT)) {
             game.setState(new MainMenuState(new MainMenu(), game.getSpriteLoader(), game.getSoundManager()));
         }

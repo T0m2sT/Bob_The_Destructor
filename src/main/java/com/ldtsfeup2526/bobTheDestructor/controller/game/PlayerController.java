@@ -11,7 +11,6 @@ import com.ldtsfeup2526.bobTheDestructor.sounds.SoundManager;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Vector;
 
 public class PlayerController extends Controller<PlayerModel> implements PlayerStateListener{
     private final SoundManager soundManager;
@@ -23,7 +22,7 @@ public class PlayerController extends Controller<PlayerModel> implements PlayerS
     }
 
     @Override
-    public void update(Game game, List<Action> actions) {
+    public void update(Game game, List<Action> actions, double deltaTime) {
         PlayerModel player = getModel();
 
         if (actions.contains(Action.RIGHT)) player.moveRight();

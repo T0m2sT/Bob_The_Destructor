@@ -2,10 +2,8 @@ package com.ldtsfeup2526.bobTheDestructor.states;
 
 import com.ldtsfeup2526.bobTheDestructor.Game;
 import com.ldtsfeup2526.bobTheDestructor.controller.Controller;
-import com.ldtsfeup2526.bobTheDestructor.controller.input.Action;
 import com.ldtsfeup2526.bobTheDestructor.controller.input.ActionParser;
 import com.ldtsfeup2526.bobTheDestructor.gui.GUI;
-import com.ldtsfeup2526.bobTheDestructor.sounds.SoundLoader;
 import com.ldtsfeup2526.bobTheDestructor.sounds.SoundManager;
 import com.ldtsfeup2526.bobTheDestructor.view.SpriteLoader;
 import com.ldtsfeup2526.bobTheDestructor.view.ViewerProvider;
@@ -36,7 +34,7 @@ public abstract class State<T> {
     }
 
     public void update(Game game, GUI gui, ActionParser actionParser, double deltaTime) throws IOException {
-        controller.update(game, actionParser.get());
+        controller.update(game, actionParser.get(), deltaTime);
         screenViewer.draw(gui, deltaTime);
     }
 
