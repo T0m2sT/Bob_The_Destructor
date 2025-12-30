@@ -33,6 +33,7 @@ public class SceneControllerTest {
     private SceneController controller;
     private Game game;
     private SoundManager soundManager;
+    private PlayerController mockPlayerController;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -66,13 +67,35 @@ public class SceneControllerTest {
             Mockito.when(mock.getModel()).thenReturn(player);
         })) {
             controller = new SceneController(sceneManager, sceneBuilder, soundManager);
+            mockPlayerController = mockedPlayerController.constructed().get(0);
         }
     }
 
     @Test
-    void testUpdateQuit() throws IOException {
-        controller.update(game, List.of(Action.QUIT), 0.016);
-        verify(game).setState(any(MainMenuState.class));
+    void testConstructorAddsListenerAndSetsInitialScene() throws IOException {
+        SceneManager sm = mock(SceneManager.class);
+        SceneBuilder sb = mock(SceneBuilder.class);
+        Scene sc = mock(Scene.class);
+        PlayerModel pm = mock(PlayerModel.class);
+        when(sm.getNextCavePath()).thenReturn("path/to/first/cave");
+        when(sm.getScene()).thenReturn(sc);
+        when(sc.getPlayerModel()).thenReturn(pm);
+        when(sb.createScene(eq("path/to/first/cave"), any(PlayerModel.class))).thenReturn(sc);
+        
+        SceneController scCon = new SceneController(sm, sb, soundManager);
+        
+        verify(sm).setScene(sc);
+        verify(pm).addPickaxeHitEventListener(scCon);
+        verify(sb).createScene(eq("path/to/first/cave"), argThat(p -> p.getPosition().getX() == 0 && p.getPosition().getY() == 0));
+    }
+
+    @Test
+    void testUpdateCallsPlayerControllerMethods() throws IOException {
+        controller.update(game, List.of(Action.LEFT), 0.016);
+        
+        verify(mockPlayerController).positionCorrection(any());
+        verify(mockPlayerController).update(eq(game), any(), eq(0.016));
+        verify(mockPlayerController).physicsUpdate(any());
     }
 
     @Test
@@ -102,23 +125,53 @@ public class SceneControllerTest {
 
     @Test
     void testUpdateSceneStateNextCave() throws IOException {
-        when(player.getPosition()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Position(0, 100)); // Beyond height
+        Scene oldScene = scene;
+        Scene newScene = mock(Scene.class);
+        PlayerModel pm = mock(PlayerModel.class);
+        when(newScene.getPlayerModel()).thenReturn(pm);
+        
+        when(player.getPosition()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Position(0, 91)); // Exactly resolution.height() + 1
         when(sceneManager.getNextCavePath()).thenReturn("caves/cave1/");
+        when(sceneBuilder.createScene(eq("caves/cave1/"), any())).thenReturn(newScene);
         
         controller.update(game, new ArrayList<>(), 0.016);
         
-        verify(sceneManager, atLeastOnce()).updateTotalMineralsCollected();
-        verify(sceneManager, atLeastOnce()).setScene(any(Scene.class));
+        verify(sceneManager).updateTotalMineralsCollected();
+        verify(sceneManager).setScene(newScene);
+        // Ensure it's not the old scene anymore
+        verify(sceneManager, atLeastOnce()).getScene(); 
+    }
+
+    @Test
+    void testUpdateSceneStateBoundary() throws IOException {
+        // Boundary check for getModel().getScene().getPlayerModel().getPosition().getY() > Game.resolution.height()
+        // resolution.height() is 90
+        
+        // Case Y == 90 (should NOT trigger)
+        when(player.getPosition()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Position(0, 90));
+        controller.updateSceneState(game, new ArrayList<>());
+        verify(sceneManager, never()).updateTotalMineralsCollected();
+        
+        // Case Y == 91 (should trigger)
+        when(player.getPosition()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Position(0, 91));
+        controller.updateSceneState(game, new ArrayList<>());
+        verify(sceneManager).updateTotalMineralsCollected();
     }
 
     @Test
     void testUpdateSceneStateEnd() throws IOException {
-        when(player.getPosition()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Position(0, 100)); // Beyond height
+        when(player.getPosition()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Position(0, 91)); // Beyond height
         when(sceneManager.getNextCavePath()).thenReturn(null); // No more caves
         
         controller.update(game, new ArrayList<>(), 0.016);
         
         verify(game).setState(any(EndState.class));
+    }
+
+    @Test
+    void testUpdateSceneStateQuit() throws IOException {
+        controller.updateSceneState(game, List.of(Action.QUIT));
+        verify(game).setState(any(MainMenuState.class));
     }
     @Test
     void testOnPickaxeHitFromState() {
