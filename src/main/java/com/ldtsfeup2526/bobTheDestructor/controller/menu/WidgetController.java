@@ -27,7 +27,9 @@ public class WidgetController extends Controller<Menu> {
     public void update(Game game, List<Action> actions, double deltaTime) throws IOException {
         GameSettings gameSettings = GameSettings.getInstance();
         for (Action action : actions) {
-            switch (getModel().getCurrentWidget().getWidgetType()) {
+            Widget currentWidget = getModel().getCurrentWidget();
+            if (currentWidget == null || currentWidget.getWidgetType() == null) continue;
+            switch (currentWidget.getWidgetType()) {
                 case WidgetType.PLAY:
                     if (action == Action.SELECT) {
                         SpriteLoader spriteLoader = game.getSpriteLoader();
@@ -74,6 +76,8 @@ public class WidgetController extends Controller<Menu> {
                     }
                     soundManager.setSFXVolume(gameSettings.getSfxVolume());
                     soundManager.updateVolumes();
+                    break;
+                default:
                     break;
             }
         }
