@@ -6,8 +6,9 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MineralTypeTest {
     @Test
     void testEnumValues() {
-        assertNotNull(MineralType.PINK);
-        assertNotNull(MineralType.BLUE);
-        assertNotNull(MineralType.YELLOW);
+        assertEquals(3, MineralType.values().length);
+        assertEquals(MineralType.PINK, MineralType.valueOf("PINK"));
+        assertEquals(MineralType.BLUE, MineralType.valueOf("BLUE"));
+        assertEquals(MineralType.YELLOW, MineralType.valueOf("YELLOW"));
     }
 }
