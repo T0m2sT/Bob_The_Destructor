@@ -95,17 +95,19 @@ public class WidgetControllerTest {
         when(currentWidget.getWidgetType()).thenReturn(WidgetType.MASTER_VOLUME);
         controller.update(game, List.of(Action.LEFT), 0.1);
         verify(soundManager).setMasterVolume(floatThat(v -> Math.abs(v - 0.4f) < 0.001f));
-        verify(soundManager, atLeastOnce()).updateVolumes();
+        verify(soundManager).updateVolumes();
 
+        reset(soundManager);
         when(currentWidget.getWidgetType()).thenReturn(WidgetType.MUSIC_VOLUME);
         controller.update(game, List.of(Action.RIGHT), 0.1);
         verify(soundManager).setMusicVolume(floatThat(v -> Math.abs(v - 0.6f) < 0.001f));
-        verify(soundManager, atLeastOnce()).updateVolumes();
+        verify(soundManager).updateVolumes();
 
+        reset(soundManager);
         when(currentWidget.getWidgetType()).thenReturn(WidgetType.SFX_VOLUME);
         controller.update(game, List.of(Action.LEFT), 0.1);
         verify(soundManager).setSFXVolume(floatThat(v -> Math.abs(v - 0.4f) < 0.001f));
-        verify(soundManager, atLeastOnce()).updateVolumes();
+        verify(soundManager).updateVolumes();
 
         // Test no action for volume
         reset(soundManager);
@@ -114,6 +116,7 @@ public class WidgetControllerTest {
         verify(soundManager, never()).setMasterVolume(anyFloat());
         verify(soundManager, never()).setMusicVolume(anyFloat());
         verify(soundManager, never()).setSFXVolume(anyFloat());
+        verify(soundManager, never()).updateVolumes();
     }
 
     @Test
