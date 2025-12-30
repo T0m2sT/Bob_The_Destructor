@@ -32,9 +32,13 @@ public class PositionTest {
     }
 
     @Test
-    void testDistance() {
-        Position pos1 = new Position(0, 0);
-        Position pos2 = new Position(3, 4);
-        assertEquals(5.0, pos1.distance(pos2), 0.0001);
+    void testConstructorWithNumberTypes() {
+        Position pos1 = new Position(10.5, 20.7);
+        assertEquals(10, pos1.getX());
+        assertEquals(20, pos1.getY());
+        
+        Position pos2 = new Position(10L, 20L);
+        assertEquals(10, pos2.getX());
+        assertEquals(20, pos2.getY());
     }
 }
