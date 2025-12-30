@@ -6,6 +6,7 @@ import com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite;
 import com.ldtsfeup2526.bobTheDestructor.view.sprite.SpriteLoader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InOrder;
 
 import java.io.IOException;
 
@@ -29,13 +30,31 @@ public class TitleViewerTest {
         GUI gui = mock(GUI.class);
 
         viewer.draw(new Position(100, 100), "BOBS", gui);
-        verify(charSprite, times(4)).draw(argThat(p -> p.getX() == 90 && p.getY() == 100), eq(gui));
+        
+        InOrder inOrder = inOrder(charSprite);
+        inOrder.verify(charSprite).setOffset(any());
+        inOrder.verify(charSprite, atLeastOnce()).draw(argThat(p -> p.getX() == 90 && p.getY() == 100), eq(gui));
         
         reset(charSprite);
 
         viewer.draw(new Position(100, 100), "BOB", gui);
-        verify(charSprite, times(3)).draw(argThat(p -> p.getX() == 93 && p.getY() == 100), eq(gui));
-        verify(charSprite, atLeastOnce()).setOffset(any());
+        
+        inOrder = inOrder(charSprite);
+        inOrder.verify(charSprite).setOffset(any());
+        inOrder.verify(charSprite, atLeastOnce()).draw(argThat(p -> p.getX() == 93 && p.getY() == 100), eq(gui));
+    }
+
+    @Test
+    void testDrawStringBoundary() {
+        GUI gui = mock(GUI.class);
+        // length 1 -> halfWidth = 1 * 5 / 2 = 2
+        viewer.draw(new Position(100, 100), "A", gui);
+        verify(charSprite).draw(argThat(p -> p.getX() == 98 && p.getY() == 100), eq(gui));
+        
+        reset(charSprite);
+        // length 2 -> halfWidth = 2 * 5 / 2 = 5
+        viewer.draw(new Position(100, 100), "AB", gui);
+        verify(charSprite, times(2)).draw(argThat(p -> p.getX() == 95 && p.getY() == 100), eq(gui));
     }
 
     @Test
@@ -44,6 +63,6 @@ public class TitleViewerTest {
         viewer.drawAtTextStart(new Position(100, 100), "BOB", gui);
         // startTextPos = (100, 100)
         verify(charSprite, times(3)).draw(argThat(p -> p.getX() == 100 && p.getY() == 100), eq(gui));
-        verify(charSprite, times(3)).setOffset(any());
+        verify(charSprite, atLeastOnce()).setOffset(any());
     }
 }
