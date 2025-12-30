@@ -16,6 +16,11 @@ public class GameTest {
              var mockedAudioSystem = mockStatic(javax.sound.sampled.AudioSystem.class);
              var mockedActionParser = mockConstruction(ActionParser.class, (mock, context) -> {
                  when(mock.getInputReader()).thenReturn(mock(com.ldtsfeup2526.bobTheDestructor.controller.input.InputReader.class));
+             });
+             var mockedSpriteLoader = mockConstruction(com.ldtsfeup2526.bobTheDestructor.view.sprite.GameSpriteLoader.class, (mock, context) -> {
+                 com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite mockSprite = mock(com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite.class);
+                 when(mockSprite.getSize()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Size(1, 1));
+                 when(mock.get(anyString())).thenReturn(mockSprite);
              })) {
              mockedAudioSystem.when(() -> javax.sound.sampled.AudioSystem.getClip()).thenReturn(mock(javax.sound.sampled.Clip.class));
              mockedAudioSystem.when(() -> javax.sound.sampled.AudioSystem.getAudioInputStream(any(java.net.URL.class)))
@@ -53,7 +58,12 @@ public class GameTest {
     @Test
     void testRun() throws Exception {
         try (var mockedGui = mockConstruction(GUILanterna.class);
-             var mockedAudioSystem = mockStatic(javax.sound.sampled.AudioSystem.class)) {
+             var mockedAudioSystem = mockStatic(javax.sound.sampled.AudioSystem.class);
+             var mockedSpriteLoader = mockConstruction(com.ldtsfeup2526.bobTheDestructor.view.sprite.GameSpriteLoader.class, (mock, context) -> {
+                 com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite mockSprite = mock(com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite.class);
+                 when(mockSprite.getSize()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Size(1, 1));
+                 when(mock.get(anyString())).thenReturn(mockSprite);
+             })) {
             mockedAudioSystem.when(() -> javax.sound.sampled.AudioSystem.getClip()).thenReturn(mock(javax.sound.sampled.Clip.class));
             mockedAudioSystem.when(() -> javax.sound.sampled.AudioSystem.getAudioInputStream(any(java.net.URL.class)))
                     .thenReturn(mock(javax.sound.sampled.AudioInputStream.class));
@@ -93,7 +103,12 @@ public class GameTest {
     @Test
     void testRunSlow() throws Exception {
         try (var mockedGui = mockConstruction(GUILanterna.class);
-             var mockedAudioSystem = mockStatic(javax.sound.sampled.AudioSystem.class)) {
+             var mockedAudioSystem = mockStatic(javax.sound.sampled.AudioSystem.class);
+             var mockedSpriteLoader = mockConstruction(com.ldtsfeup2526.bobTheDestructor.view.sprite.GameSpriteLoader.class, (mock, context) -> {
+                 com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite mockSprite = mock(com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite.class);
+                 when(mockSprite.getSize()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Size(1, 1));
+                 when(mock.get(anyString())).thenReturn(mockSprite);
+             })) {
             mockedAudioSystem.when(() -> javax.sound.sampled.AudioSystem.getClip()).thenReturn(mock(javax.sound.sampled.Clip.class));
             mockedAudioSystem.when(() -> javax.sound.sampled.AudioSystem.getAudioInputStream(any(java.net.URL.class)))
                     .thenReturn(mock(javax.sound.sampled.AudioInputStream.class));
@@ -118,7 +133,12 @@ public class GameTest {
         java.io.ByteArrayOutputStream outContent = new java.io.ByteArrayOutputStream();
         System.setOut(new java.io.PrintStream(outContent));
         try (var mockedGui = mockConstruction(GUILanterna.class);
-             var mockedAudioSystem = mockStatic(javax.sound.sampled.AudioSystem.class)) {
+             var mockedAudioSystem = mockStatic(javax.sound.sampled.AudioSystem.class);
+             var mockedSpriteLoader = mockConstruction(com.ldtsfeup2526.bobTheDestructor.view.sprite.GameSpriteLoader.class, (mock, context) -> {
+                 com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite mockSprite = mock(com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite.class);
+                 when(mockSprite.getSize()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Size(1, 1));
+                 when(mock.get(anyString())).thenReturn(mockSprite);
+             })) {
             mockedAudioSystem.when(() -> javax.sound.sampled.AudioSystem.getClip()).thenReturn(mock(javax.sound.sampled.Clip.class));
             mockedAudioSystem.when(() -> javax.sound.sampled.AudioSystem.getAudioInputStream(any(java.net.URL.class)))
                     .thenReturn(mock(javax.sound.sampled.AudioInputStream.class));
@@ -133,7 +153,12 @@ public class GameTest {
     @Test
     void testRunSleepZero() throws Exception {
         try (var mockedGui = mockConstruction(GUILanterna.class);
-             var mockedAudioSystem = mockStatic(javax.sound.sampled.AudioSystem.class)) {
+             var mockedAudioSystem = mockStatic(javax.sound.sampled.AudioSystem.class);
+             var mockedSpriteLoader = mockConstruction(com.ldtsfeup2526.bobTheDestructor.view.sprite.GameSpriteLoader.class, (mock, context) -> {
+                 com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite mockSprite = mock(com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite.class);
+                 when(mockSprite.getSize()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Size(1, 1));
+                 when(mock.get(anyString())).thenReturn(mockSprite);
+             })) {
             mockedAudioSystem.when(() -> javax.sound.sampled.AudioSystem.getClip()).thenReturn(mock(javax.sound.sampled.Clip.class));
             mockedAudioSystem.when(() -> javax.sound.sampled.AudioSystem.getAudioInputStream(any(java.net.URL.class)))
                     .thenReturn(mock(javax.sound.sampled.AudioInputStream.class));
@@ -157,7 +182,12 @@ public class GameTest {
     @Test
     void testRunSleepExactBoundary() throws Exception {
         try (var mockedGui = mockConstruction(GUILanterna.class);
-             var mockedAudioSystem = mockStatic(javax.sound.sampled.AudioSystem.class)) {
+             var mockedAudioSystem = mockStatic(javax.sound.sampled.AudioSystem.class);
+             var mockedSpriteLoader = mockConstruction(com.ldtsfeup2526.bobTheDestructor.view.sprite.GameSpriteLoader.class, (mock, context) -> {
+                 com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite mockSprite = mock(com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite.class);
+                 when(mockSprite.getSize()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Size(1, 1));
+                 when(mock.get(anyString())).thenReturn(mockSprite);
+             })) {
             mockedAudioSystem.when(() -> javax.sound.sampled.AudioSystem.getClip()).thenReturn(mock(javax.sound.sampled.Clip.class));
             mockedAudioSystem.when(() -> javax.sound.sampled.AudioSystem.getAudioInputStream(any(java.net.URL.class)))
                     .thenReturn(mock(javax.sound.sampled.AudioInputStream.class));
@@ -177,7 +207,12 @@ public class GameTest {
         }
         
         try (var mockedGui = mockConstruction(GUILanterna.class);
-             var mockedAudioSystem = mockStatic(javax.sound.sampled.AudioSystem.class)) {
+             var mockedAudioSystem = mockStatic(javax.sound.sampled.AudioSystem.class);
+             var mockedSpriteLoader = mockConstruction(com.ldtsfeup2526.bobTheDestructor.view.sprite.GameSpriteLoader.class, (mock, context) -> {
+                 com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite mockSprite = mock(com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite.class);
+                 when(mockSprite.getSize()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Size(1, 1));
+                 when(mock.get(anyString())).thenReturn(mockSprite);
+             })) {
             mockedAudioSystem.when(() -> javax.sound.sampled.AudioSystem.getClip()).thenReturn(mock(javax.sound.sampled.Clip.class));
             mockedAudioSystem.when(() -> javax.sound.sampled.AudioSystem.getAudioInputStream(any(java.net.URL.class)))
                     .thenReturn(mock(javax.sound.sampled.AudioInputStream.class));
@@ -200,7 +235,12 @@ public class GameTest {
     @Test
     void testRunSleepOneMs() throws Exception {
         try (var mockedGui = mockConstruction(GUILanterna.class);
-             var mockedAudioSystem = mockStatic(javax.sound.sampled.AudioSystem.class)) {
+             var mockedAudioSystem = mockStatic(javax.sound.sampled.AudioSystem.class);
+             var mockedSpriteLoader = mockConstruction(com.ldtsfeup2526.bobTheDestructor.view.sprite.GameSpriteLoader.class, (mock, context) -> {
+                 com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite mockSprite = mock(com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite.class);
+                 when(mockSprite.getSize()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Size(1, 1));
+                 when(mock.get(anyString())).thenReturn(mockSprite);
+             })) {
             mockedAudioSystem.when(() -> javax.sound.sampled.AudioSystem.getClip()).thenReturn(mock(javax.sound.sampled.Clip.class));
             mockedAudioSystem.when(() -> javax.sound.sampled.AudioSystem.getAudioInputStream(any(java.net.URL.class)))
                     .thenReturn(mock(javax.sound.sampled.AudioInputStream.class));
@@ -240,7 +280,12 @@ public class GameTest {
     @Test
     void testRunStateNull() throws Exception {
         try (var mockedGui = mockConstruction(GUILanterna.class);
-             var mockedAudioSystem = mockStatic(javax.sound.sampled.AudioSystem.class)) {
+             var mockedAudioSystem = mockStatic(javax.sound.sampled.AudioSystem.class);
+             var mockedSpriteLoader = mockConstruction(com.ldtsfeup2526.bobTheDestructor.view.sprite.GameSpriteLoader.class, (mock, context) -> {
+                 com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite mockSprite = mock(com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite.class);
+                 when(mockSprite.getSize()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Size(1, 1));
+                 when(mock.get(anyString())).thenReturn(mockSprite);
+             })) {
             mockedAudioSystem.when(() -> javax.sound.sampled.AudioSystem.getClip()).thenReturn(mock(javax.sound.sampled.Clip.class));
             mockedAudioSystem.when(() -> javax.sound.sampled.AudioSystem.getAudioInputStream(any(java.net.URL.class)))
                     .thenReturn(mock(javax.sound.sampled.AudioInputStream.class));
@@ -263,7 +308,12 @@ public class GameTest {
     @Test
     void testRunSleepTimeCalculation() throws Exception {
         try (var mockedGui = mockConstruction(GUILanterna.class);
-             var mockedAudioSystem = mockStatic(javax.sound.sampled.AudioSystem.class)) {
+             var mockedAudioSystem = mockStatic(javax.sound.sampled.AudioSystem.class);
+             var mockedSpriteLoader = mockConstruction(com.ldtsfeup2526.bobTheDestructor.view.sprite.GameSpriteLoader.class, (mock, context) -> {
+                 com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite mockSprite = mock(com.ldtsfeup2526.bobTheDestructor.view.sprite.Sprite.class);
+                 when(mockSprite.getSize()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Size(1, 1));
+                 when(mock.get(anyString())).thenReturn(mockSprite);
+             })) {
             
             mockedAudioSystem.when(() -> javax.sound.sampled.AudioSystem.getClip()).thenReturn(mock(javax.sound.sampled.Clip.class));
             mockedAudioSystem.when(() -> javax.sound.sampled.AudioSystem.getAudioInputStream(any(java.net.URL.class)))
