@@ -67,4 +67,4 @@ For a more detailed version of this description, click [here](./docs/README.md).
 
 ## General Structure
 
-<img src="docs/uml.png">
+<img src="docs/finalDelivery/uml.png">

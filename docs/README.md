@@ -78,7 +78,7 @@ As a result, some planned features were not implemented, while others were intro
 
 ## General Structure
 
-<img src="uml.png">
+<img src="finalDelivery/uml.png">
 
 ## Design
 
@@ -638,13 +638,21 @@ We focused on unit testing to ensure the reliability of the game's architectural
 *   **States**: We validated that states correctly initialize their respective controllers and viewers.
 
 #### Coverage Summary:
-The project achieved a high degree of code coverage, as shown in the report below:
 
-![Coverage Report](intermediateDelivery/Overall_Coverage_Report.png)
+Both **Unit Testing** and **Mocks** have been used to make the tests.
 
-*   **Class Coverage**: 89.7%
-*   **Method Coverage**: 91.7%
-*   **Line Coverage**: 85.6%
+Coverage testing using **JaCoCo**:
+- Instruction Coverage: 100%
+- Branch Coverage: 100%
+
+![Coverage Report](finalDelivery/jacocoCoverage.png)
+
+Mutation testing using **Pitest**:
+- Line Coverage: 100%
+- Mutation Coverage: 99%
+- Test Strength: 99%
+
+![Coverage Report](finalDelivery/pitestCoverage.png)
 
 #### Detailed Breakdown:
 *   **Core Logic (`model.game`, `states`, `view`)**: These packages achieved **100% line coverage**. This ensures that the core gameplay loop, state transitions, and rendering logic are robust and error-free.
