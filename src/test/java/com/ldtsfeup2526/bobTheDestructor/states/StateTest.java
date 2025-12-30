@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 public class StateTest {
@@ -70,5 +71,25 @@ public class StateTest {
         Game game = mock(Game.class);
         state.onEnter(game);
         state.onExit(game);
+    }
+
+    @Test
+    void testEndState() throws IOException {
+        com.ldtsfeup2526.bobTheDestructor.model.stats.Stats stats = mock(com.ldtsfeup2526.bobTheDestructor.model.stats.Stats.class);
+        EndState endState = new EndState(stats, spriteLoader, soundManager);
+        
+        ViewerProvider provider = mock(ViewerProvider.class);
+        assertNotNull(endState.createScreenViewer(provider));
+        assertNotNull(endState.createController());
+    }
+
+    @Test
+    void testCreditsState() throws IOException {
+        com.ldtsfeup2526.bobTheDestructor.model.credits.Credits credits = mock(com.ldtsfeup2526.bobTheDestructor.model.credits.Credits.class);
+        CreditsState creditsState = new CreditsState(credits, spriteLoader, soundManager);
+        
+        ViewerProvider provider = mock(ViewerProvider.class);
+        assertNotNull(creditsState.createScreenViewer(provider));
+        assertNotNull(creditsState.createController());
     }
 }
