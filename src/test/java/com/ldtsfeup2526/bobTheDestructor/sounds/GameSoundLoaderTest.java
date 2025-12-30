@@ -15,7 +15,6 @@ public class GameSoundLoaderTest {
     @Test
     void testGetInvalidAudioFile() {
         GameSoundLoader loader = new GameSoundLoader();
-        // Use a file that exists but is not audio (like a png)
         Clip clip = loader.get("background/bg1.png");
         assertNull(clip);
     }
@@ -37,7 +36,6 @@ public class GameSoundLoaderTest {
             
             Clip clip2 = loader.get(path);
             assertSame(clip1, clip2);
-            // Verify open was NOT called again for cached clip
             verify(mockClip, times(1)).open(any(javax.sound.sampled.AudioInputStream.class));
         }
     }
@@ -45,11 +43,20 @@ public class GameSoundLoaderTest {
     @Test
     void testGetException() throws Exception {
         try (var mockedAudioSystem = mockStatic(javax.sound.sampled.AudioSystem.class)) {
-            mockedAudioSystem.when(() -> javax.sound.sampled.AudioSystem.getClip()).thenThrow(new javax.sound.sampled.LineUnavailableException());
+            mockedAudioSystem.when(() -> javax.sound.sampled.AudioSystem.getClip()).thenThrow(new javax.sound.sampled.LineUnavailableException("Mocked exception"));
             
-            GameSoundLoader loader = new GameSoundLoader();
-            Clip clip = loader.get("sounds/soundEffects/mining.wav");
-            assertNull(clip);
+            java.io.ByteArrayOutputStream errContent = new java.io.ByteArrayOutputStream();
+            java.io.PrintStream originalErr = System.err;
+            System.setErr(new java.io.PrintStream(errContent));
+            
+            try {
+                GameSoundLoader loader = new GameSoundLoader();
+                Clip clip = loader.get("sounds/soundEffects/mining.wav");
+                assertNull(clip);
+                assertTrue(errContent.toString().contains("Mocked exception"), "StackTrace should be printed");
+            } finally {
+                System.setErr(originalErr);
+            }
         }
     }
 }
