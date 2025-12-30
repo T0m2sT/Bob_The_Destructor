@@ -26,10 +26,24 @@ public class WalkingStateTest {
     void testGetNextStateStillWalking() {
         WalkingState state = new WalkingState(player);
         when(player.isGrounded()).thenReturn(true);
-        when(rb.getVelocity()).thenReturn(new Vector(0.5f, 0));
+        // Explicitly use 0.0f for Y to test the < 0 boundary
+        when(rb.getVelocity()).thenReturn(new Vector(0.5f, 0.0f));
 
         PlayerState next = state.getNextState();
-        assertSame(state, next);
+        assertSame(state, next, "Should NOT transition to JumpingState when velocity.Y is exactly 0");
+    }
+
+    @Test
+    void testGetNextStateToJumpingBoundary() {
+        WalkingState state = new WalkingState(player);
+        // velY < 0 triggers JumpingState.
+        // Boundary test: -1e-7 should trigger it, but 0 should not.
+        when(rb.getVelocity()).thenReturn(new Vector(0.5f, -1e-7f));
+        assertInstanceOf(JumpingState.class, state.getNextState());
+        
+        when(rb.getVelocity()).thenReturn(new Vector(0.5f, 0.0f));
+        when(player.isGrounded()).thenReturn(true);
+        assertSame(state, state.getNextState());
     }
 
     @Test
