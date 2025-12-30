@@ -31,12 +31,17 @@ public class GameSoundtrackTest {
     }
 
     @Test
-    void testConstructorException() {
+    void testConstructorExceptionStackTrace() {
+        java.io.PrintStream standardErr = System.err;
+        java.io.ByteArrayOutputStream errContent = new java.io.ByteArrayOutputStream();
+        System.setErr(new java.io.PrintStream(errContent));
         try (var mockedAudioSystem = mockStatic(javax.sound.sampled.AudioSystem.class)) {
-            mockedAudioSystem.when(() -> javax.sound.sampled.AudioSystem.getClip()).thenThrow(new RuntimeException("Test"));
+            mockedAudioSystem.when(() -> javax.sound.sampled.AudioSystem.getClip()).thenThrow(new RuntimeException("Test Exception ST"));
             GameSoundtrack soundtrack = new GameSoundtrack();
             assertNull(soundtrack.getAudioInput());
-            assertNull(soundtrack.getSoundtrackClip());
+            assertTrue(errContent.toString().contains("Test Exception ST"));
+        } finally {
+            System.setErr(standardErr);
         }
     }
 }
