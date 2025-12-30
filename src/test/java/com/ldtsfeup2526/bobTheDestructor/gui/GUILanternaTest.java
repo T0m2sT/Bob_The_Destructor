@@ -30,6 +30,10 @@ public class GUILanternaTest {
         when(screenCreator.createScreen(any(), anyInt(), anyString(), any())).thenReturn(screen);
         
         gui = new GUILanterna(screenCreator, keyListener, resolution, 12, "Title");
+        
+        // Verify initialization calls
+        verify(screen).setCursorPosition(null);
+        verify(screen).startScreen();
     }
 
     @Test
@@ -37,10 +41,13 @@ public class GUILanternaTest {
         TextGraphics graphics = mock(TextGraphics.class);
         when(screen.newTextGraphics()).thenReturn(graphics);
         
-        gui.drawPixel(new Position(1, 2), new TextColor.RGB(255, 0, 0));
+        Position pos = new Position(1, 2);
+        TextColor color = new TextColor.RGB(255, 0, 0);
+        gui.drawPixel(pos, color);
         
-        verify(graphics).setBackgroundColor(new TextColor.RGB(255, 0, 0));
+        verify(graphics).setBackgroundColor(color);
         verify(graphics).setCharacter(1, 2, ' ');
+        verifyNoMoreInteractions(graphics);
     }
 
     @Test
@@ -69,13 +76,14 @@ public class GUILanternaTest {
         
         gui.drawBackground(color);
         
+        verify(graphics, times(1)).setBackgroundColor(color);
         verify(graphics, times(100)).setCharacter(anyInt(), anyInt(), eq(' '));
-        verify(graphics, atLeastOnce()).setBackgroundColor(color);
-        
-        verify(graphics).setCharacter(0, 0, ' ');
-        verify(graphics).setCharacter(9, 9, ' ');
-        verify(graphics, never()).setCharacter(10, 0, ' ');
-        verify(graphics, never()).setCharacter(0, 10, ' ');
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                verify(graphics).setCharacter(i, j, ' ');
+            }
+        }
+        verifyNoMoreInteractions(graphics);
     }
 
     @Test
@@ -84,29 +92,38 @@ public class GUILanternaTest {
     }
 
     @Test
-    void testAlternativeConstructors() throws IOException, URISyntaxException, FontFormatException {
-        Resolution res = new Resolution(100, 100);
+    void testDrawBackgroundLoops() throws Exception {
+        TextGraphics graphics = mock(TextGraphics.class);
+        when(screen.newTextGraphics()).thenReturn(graphics);
+        Resolution res = new Resolution(2, 2);
         GUILanterna gui2 = new GUILanterna(screenCreator, keyListener, res, 8, "Title");
-        assertEquals(screen, gui2.getScreen());
-        verify(screenCreator).createScreen(eq(res), eq(8), eq("Title"), eq(keyListener));
+        
+        gui2.drawBackground(new TextColor.RGB(0, 0, 0));
+        
+        // Should draw 4 pixels (2x2)
+        verify(graphics, times(4)).setCharacter(anyInt(), anyInt(), eq(' '));
+    }
 
-        GUILanterna gui3 = new GUILanterna(screenCreator, keyListener, new Resolution(240, 135), 6, "Title");
-        assertEquals(screen, gui3.getScreen());
-        verify(screenCreator).createScreen(eq(new Resolution(240, 135)), eq(6), eq("Title"), eq(keyListener));
+    @Test
+    void testDrawPixelWithDifferentColors() {
+        TextGraphics graphics = mock(TextGraphics.class);
+        when(screen.newTextGraphics()).thenReturn(graphics);
+        
+        gui.drawPixel(new Position(1, 1), TextColor.ANSI.BLUE);
+        verify(graphics).setBackgroundColor(TextColor.ANSI.BLUE);
+        verify(graphics).setCharacter(1, 1, ' ');
     }
 
     @Test
     void testConstructorsWithoutScreenCreator() throws IOException, URISyntaxException, FontFormatException {
-        try {
+        try (var mockedLanternaScreenCreator = mockConstruction(LanternaScreenCreator.class, (mock, context) -> {
+            when(mock.createScreen(any(), anyInt(), anyString(), any())).thenReturn(mock(Screen.class));
+        })) {
             new GUILanterna(keyListener, "Title");
-        } catch (Exception e) {
-            // Expected if headless or font not found in this environment
-        }
+            assertEquals(1, mockedLanternaScreenCreator.constructed().size());
 
-        try {
             new GUILanterna(keyListener, resolution, 12, "Title");
-        } catch (Exception e) {
-            // Expected if headless or font not found in this environment
+            assertEquals(2, mockedLanternaScreenCreator.constructed().size());
         }
     }
 }
