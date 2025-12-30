@@ -2,13 +2,14 @@ package com.ldtsfeup2526.bobTheDestructor.controller.input;
 
 import com.ldtsfeup2526.bobTheDestructor.states.GameState;
 import com.ldtsfeup2526.bobTheDestructor.states.MainMenuState;
+import com.ldtsfeup2526.bobTheDestructor.states.SettingsMenuState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 public class ActionParserTest {
     private ActionParser parser;
@@ -56,30 +57,39 @@ public class ActionParserTest {
     }
 
     @Test
-    void testNotifyStateChange() {
-        parser.notifyStateChange(mock(GameState.class));
-        reader.keyPressed(new KeyEvent(source, KeyEvent.KEY_PRESSED, 0, 0, KeyEvent.VK_RIGHT, 'd'));
-        reader.getInputFinished().clear();
-        parser.get();
-        assertFalse(reader.getInputFinished().contains(KeyEvent.VK_RIGHT));
-
+    void testNotifyStateChangeHold() {
+        // MainMenu -> No Hold
         parser.notifyStateChange(mock(MainMenuState.class));
         reader.keyPressed(new KeyEvent(source, KeyEvent.KEY_PRESSED, 0, 0, KeyEvent.VK_LEFT, 'a'));
-        reader.getInputFinished().clear();
         parser.get();
         assertTrue(reader.getInputFinished().contains(KeyEvent.VK_LEFT));
 
+        // GameState -> Allow Hold
         parser.notifyStateChange(mock(GameState.class));
-        reader.keyPressed(new KeyEvent(source, KeyEvent.KEY_PRESSED, 0, 0, KeyEvent.VK_RIGHT, 'd'));
-        reader.getInputFinished().clear();
-        parser.get();
-        assertFalse(reader.getInputFinished().contains(KeyEvent.VK_RIGHT));
-
-        parser.notifyStateChange(mock(com.ldtsfeup2526.bobTheDestructor.states.SettingsMenuState.class));
+        reader.keyReleased(new KeyEvent(source, KeyEvent.KEY_RELEASED, 0, 0, KeyEvent.VK_LEFT, 'a'));
         reader.keyPressed(new KeyEvent(source, KeyEvent.KEY_PRESSED, 0, 0, KeyEvent.VK_LEFT, 'a'));
-        reader.getInputFinished().clear();
+        parser.get();
+        assertFalse(reader.getInputFinished().contains(KeyEvent.VK_LEFT));
+        
+        // Other (Settings) -> No Hold
+        parser.notifyStateChange(mock(SettingsMenuState.class));
         parser.get();
         assertTrue(reader.getInputFinished().contains(KeyEvent.VK_LEFT));
+    }
+
+    @Test
+    void testParseInputToggles() {
+        // Test keys that always add to inputFinished regardless of allowKeyHold
+        int[] toggleKeys = {KeyEvent.VK_UP, KeyEvent.VK_W, KeyEvent.VK_DOWN, KeyEvent.VK_S, KeyEvent.VK_SPACE, KeyEvent.VK_ENTER, KeyEvent.VK_ESCAPE, KeyEvent.VK_SHIFT};
+        
+        parser.notifyStateChange(mock(GameState.class)); // Even if hold allowed
+        
+        for (int key : toggleKeys) {
+            reader.keyReleased(new KeyEvent(source, KeyEvent.KEY_RELEASED, 0, 0, key, ' '));
+            reader.keyPressed(new KeyEvent(source, KeyEvent.KEY_PRESSED, 0, 0, key, ' '));
+            parser.get();
+            assertTrue(reader.getInputFinished().contains(key), "Key " + key + " should be in finished");
+        }
     }
 
     @Test
