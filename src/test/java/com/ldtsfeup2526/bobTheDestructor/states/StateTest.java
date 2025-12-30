@@ -70,6 +70,5 @@ public class StateTest {
         Game game = mock(Game.class);
         state.onEnter(game);
         state.onExit(game);
-        // Default implementation does nothing, so just check it doesn't crash
     }
 }
