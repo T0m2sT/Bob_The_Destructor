@@ -72,12 +72,7 @@ public class GameViewerTest {
         when(scene.getMineralModels()).thenReturn(minerals);
 
         viewer.draw(gui, 0.1);
-        
-        // MineralViewer.draw IS called in GameViewer, but it's okay because we want to test GameViewer's logic.
-        // If we want to verify m1 is not drawn, we should check what MineralViewer does, but MineralViewer is a mock here.
-        // Wait, viewerProvider.getMineralViewer() returns a MOCK.
-        // So MineralViewer.draw(m1, gui, 0.1) SHOULD be called unless GameViewer filters it.
-        // GameViewer DOES NOT filter it in drawElements.
+
         verify(viewerProvider.getMineralViewer()).draw(eq(m1), eq(gui), anyDouble());
     }
 
