@@ -190,11 +190,9 @@ public class WidgetControllerTest {
     void testUpdateVolumesNoAction() throws IOException {
         when(currentWidget.getWidgetType()).thenReturn(WidgetType.MASTER_VOLUME);
         controller.update(game, List.of(Action.SELECT), 0.1);
-        // Verify no volume changes if possible, or just that it doesn't crash
     }
     @Test
     void testUpdateCreditsWithOtherAction() throws IOException {
-        // CREDITS doesn't check the action, it just transitions
         when(currentWidget.getWidgetType()).thenReturn(WidgetType.CREDITS);
         controller.update(game, List.of(Action.UP), 0.1);
         verify(game).setState(any(CreditsState.class));
