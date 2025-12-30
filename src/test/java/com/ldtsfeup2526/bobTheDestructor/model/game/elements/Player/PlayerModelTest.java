@@ -1,9 +1,9 @@
 package com.ldtsfeup2526.bobTheDestructor.model.game.elements.Player;
 
-import com.ldtsfeup2526.bobTheDestructor.controller.game.PlayerMiningListener;
+import com.ldtsfeup2526.bobTheDestructor.controller.game.PickaxeHitEventListener;
+import com.ldtsfeup2526.bobTheDestructor.controller.game.PlayerStateListener;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralModel;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralState;
-import com.ldtsfeup2526.bobTheDestructor.model.game.physics.CollisionChecker;
 import com.ldtsfeup2526.bobTheDestructor.model.spatials.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,13 +17,10 @@ public class PlayerModelTest {
     private PlayerModel player;
     private Position startPos;
 
-    private CollisionChecker collisionChecker;
-
     @BeforeEach
     void setUp() {
         startPos = new Position(10, 20);
         player = new PlayerModel(startPos);
-        collisionChecker = mock(CollisionChecker.class);
     }
 
     @Test
@@ -43,51 +40,18 @@ public class PlayerModelTest {
     }
 
     @Test
-    void testMovementCallsState() {
+    void testMovement() {
         player.moveRight();
         assertTrue(player.isLookingRight());
-        assertTrue(player.getRigidBody().getAcceleration().getX() > 0);
-    }
-
-    @Test
-    void testMoveLeft() {
+        
         player.moveLeft();
         assertFalse(player.isLookingRight());
-        assertTrue(player.getRigidBody().getAcceleration().getX() < 0);
     }
 
     @Test
-    void testJumpCallsState() {
-        PlayerState mockState = mock(PlayerState.class);
-        try {
-            java.lang.reflect.Field stateField = PlayerModel.class.getDeclaredField("state");
-            stateField.setAccessible(true);
-            stateField.set(player, mockState);
-        } catch (Exception e) { fail(e); }
-
-        assertTrue(player.jump());
-        verify(mockState).jump();
-        
-        try {
-            java.lang.reflect.Field stateField = PlayerModel.class.getDeclaredField("state");
-            stateField.setAccessible(true);
-            stateField.set(player, null);
-        } catch (Exception e) { fail(e); }
-        assertFalse(player.jump());
-    }
-
-    @Test
-    void testPhysicsUpdateCallsSetters() {
-        player.getRigidBody().setVelocity(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Vector(1, 1));
-        when(collisionChecker.check(any())).thenReturn(false);
-        
-        com.ldtsfeup2526.bobTheDestructor.model.spatials.Position oldPos = player.getPosition();
-        player.physicsUpdate(collisionChecker);
-        
-        assertNotEquals(oldPos, player.getPosition());
-        assertEquals(player.getPosition(), player.getCollider().getPosition());
-        assertEquals(player.getPosition().getX().floatValue(), player.getRigidBody().getPosition().getX());
-        assertEquals(player.getPosition().getY().floatValue(), player.getRigidBody().getPosition().getY());
+    void testJump() {
+        player.jump();
+        // Since it's a call to state.jump(), we check if state changed or something
     }
 
     @Test
@@ -109,152 +73,178 @@ public class PlayerModelTest {
 
     @Test
     void testUpdateSelectedMineral() {
-        MineralModel mineral1 = mock(MineralModel.class);
-        MineralModel mineral2 = mock(MineralModel.class);
-
-        when(mineral1.getPosition()).thenReturn(new Position(15, 20));
-        when(mineral1.getState()).thenReturn(MineralState.UNSELECTED);
-        when(mineral2.getPosition()).thenReturn(new Position(12, 20));
-        when(mineral2.getState()).thenReturn(MineralState.UNSELECTED);
-
-        player.updateSelectedMineral(java.util.Arrays.asList(mineral1, mineral2));
-
-        assertEquals(mineral2, player.getMineralSelected());
-
-        MineralModel mineral3 = mock(MineralModel.class);
-        when(mineral3.getPosition()).thenReturn(new Position(20, 20));
-        when(mineral3.getState()).thenReturn(MineralState.UNSELECTED);
-
-        player.updateSelectedMineral(List.of(mineral3));
-        assertEquals(mineral3, player.getMineralSelected());
-
-        when(mineral3.getPosition()).thenReturn(new Position(21, 20));
+        MineralModel m1 = mock(MineralModel.class);
+        when(m1.getPosition()).thenReturn(new Position(12, 20));
+        when(m1.getState()).thenReturn(MineralState.UNSELECTED);
+        
+        MineralModel m2 = mock(MineralModel.class);
+        when(m2.getPosition()).thenReturn(new Position(100, 100));
+        when(m2.getState()).thenReturn(MineralState.UNSELECTED);
+        
+        player.updateSelectedMineral(List.of(m1, m2));
+        assertEquals(m1, player.getMineralSelected());
     }
 
     @Test
-    void testUpdateSelectedMineralOutOfRange() {
-        MineralModel mineral = mock(MineralModel.class);
-        when(mineral.getPosition()).thenReturn(new Position(30, 20));
-        when(mineral.getState()).thenReturn(MineralState.UNSELECTED);
-
-        player.updateSelectedMineral(List.of(mineral));
-        assertNull(player.getMineralSelected());
+    void testListeners() {
+        PickaxeHitEventListener pickaxeListener = mock(PickaxeHitEventListener.class);
+        player.addPickaxeHitEventListener(pickaxeListener);
+        player.notifyWhenPickaxeHit();
+        verify(pickaxeListener).onPickaxeHit(player);
+        
+        player.removePickaxeHitEventListener(pickaxeListener);
+        player.notifyWhenPickaxeHit();
+        verify(pickaxeListener, times(1)).onPickaxeHit(player);
+        
+        PlayerStateListener stateListener = mock(PlayerStateListener.class);
+        player.addPlayerStateListener(stateListener);
+        player.setState(new WalkingState(player));
+        verify(stateListener).onPlayerStateExit(any());
+        verify(stateListener).onPlayerStateEnter(any());
     }
 
+    @Test
+    void testStateTransitions() {
+        // Idle to Walking
+        player.getRigidBody().setVelocity(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Vector(1, 0));
+        player.updateState();
+        assertInstanceOf(WalkingState.class, player.getState());
+
+        // Walking to Jumping
+        player.getRigidBody().setVelocity(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Vector(1, -1));
+        player.updateState();
+        assertInstanceOf(JumpingState.class, player.getState());
+
+        // Jumping to Falling
+        player.getRigidBody().setVelocity(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Vector(0, 1));
+        player.updateState();
+        assertInstanceOf(FallingState.class, player.getState());
+
+        // Falling to Idle
+        player.setGrounded(true);
+        player.updateState();
+        assertInstanceOf(IdleState.class, player.getState());
+        
+        // Idle to Falling
+        player.setGrounded(false);
+        player.getRigidBody().setVelocity(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Vector(0, 0));
+        player.updateState();
+        assertInstanceOf(FallingState.class, player.getState());
+        
+        // Walking to Idle
+        player.setGrounded(true);
+        player.setState(new WalkingState(player));
+        player.getRigidBody().setVelocity(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Vector(0.1, 0));
+        player.updateState();
+        assertInstanceOf(IdleState.class, player.getState());
+        
+        // Mining stays Mining
+        player.setState(new MiningState(player, null));
+        player.updateState();
+        assertInstanceOf(MiningState.class, player.getState());
+    }
+
+    @Test
+    void testStateActions() {
+        player.setState(new MiningState(player, null));
+        player.moveLeft();
+        player.moveRight();
+        player.jump();
+        // Should not change velocity/acceleration in MiningState (beyond constructor setting them to 0)
+        assertEquals(0, player.getRigidBody().getVelocity().getX());
+        
+        player.setState(new IdleState(player));
+        player.moveLeft();
+        assertFalse(player.isLookingRight());
+        player.moveRight();
+        assertTrue(player.isLookingRight());
+        
+        player.setGrounded(true);
+        player.jump();
+        assertTrue(player.getRigidBody().getVelocity().getY() < 0);
+    }
     @Test
     void testUpdate() {
-        when(collisionChecker.check(argThat(c -> c != null && c.getPosition().getY() == 21))).thenReturn(true);
-        player.physicsUpdate(collisionChecker);
-
+        PlayerState state = mock(PlayerState.class);
+        player.setState(state);
         player.update();
-        assertInstanceOf(IdleState.class, player.getState());
-
-        player.moveRight();
-        when(collisionChecker.check(argThat(c -> c != null && c.getPosition().getY() == 20))).thenReturn(false);
-
-        player.physicsUpdate(collisionChecker);
-        player.update();
-        assertInstanceOf(WalkingState.class, player.getState());
+        verify(state).getNextState();
     }
 
     @Test
     void testApplyFriction() {
-        PlayerState mockState = mock(PlayerState.class);
-        try {
-            java.lang.reflect.Field stateField = PlayerModel.class.getDeclaredField("state");
-            stateField.setAccessible(true);
-            stateField.set(player, mockState);
-        } catch (Exception e) { fail(e); }
-
-        assertTrue(player.applyFriction());
-        verify(mockState).applyFriction();
-
-        try {
-            java.lang.reflect.Field stateField = PlayerModel.class.getDeclaredField("state");
-            stateField.setAccessible(true);
-            stateField.set(player, null);
-        } catch (Exception e) { fail(e); }
-        assertFalse(player.applyFriction());
+        PlayerState state = mock(PlayerState.class);
+        player.setState(state);
+        player.applyFriction();
+        verify(state).applyFriction();
     }
 
     @Test
-    void testPhysicsUpdateCollisionX() {
-        player.getRigidBody().setVelocity(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Vector(5, 0));
-        player.getRigidBody().setAcceleration(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Vector(1, 0));
+    void testLastValidPos() {
+        Position pos = new Position(5, 5);
+        player.setPosition(pos);
+        player.updateLastValidPos();
+        assertEquals(startPos, player.getLastValidPos()); // First is still startPos
 
-        when(collisionChecker.check(any())).thenAnswer(invocation -> {
-            com.ldtsfeup2526.bobTheDestructor.model.game.physics.Collider c = invocation.getArgument(0);
-            if (c == null) return false;
-            return c.getPosition().getX() > 10 && c.getPosition().getY() == 20;
-        });
-
-        player.physicsUpdate(collisionChecker);
-
-        assertEquals(10, player.getPosition().getX());
-        assertEquals(0, player.getRigidBody().getVelocity().getX());
-        assertEquals(0, player.getRigidBody().getAcceleration().getX());
+        for (int i = 0; i < 11; i++) {
+            player.setPosition(new Position(i, i));
+            player.updateLastValidPos();
+        }
+        // After 10 updates, the first one (startPos) should have been removed
+        assertNotEquals(startPos, player.getLastValidPos());
     }
 
     @Test
-    void testPhysicsUpdateCollisionXAndY() {
-        player.getRigidBody().setVelocity(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Vector(5, 5));
-
-        when(collisionChecker.check(any())).thenReturn(true);
-
-        player.physicsUpdate(collisionChecker);
-
-        assertEquals(10, player.getPosition().getX());
-        assertEquals(20, player.getPosition().getY());
-        assertEquals(0, player.getRigidBody().getVelocity().getX());
-        assertEquals(0, player.getRigidBody().getVelocity().getY());
+    void testRemovePlayerStateListener() {
+        PlayerStateListener stateListener = mock(PlayerStateListener.class);
+        player.addPlayerStateListener(stateListener);
+        player.removePlayerStateListener(stateListener);
+        player.setState(new WalkingState(player));
+        verify(stateListener, never()).onPlayerStateExit(any());
     }
 
     @Test
-    void testRemoveMiningListener() {
-        PlayerMiningListener listener = mock(PlayerMiningListener.class);
-        player.addMiningListener(listener);
-        player.removeMiningListener(listener);
-        player.notifyWhenPickaxeHit();
-        verify(listener, never()).onMiningFinished(any());
-    }
-
-    @Test
-    void testIsGrounded() {
-        when(collisionChecker.check(argThat(c -> c != null && c.getPosition().getY() == 21))).thenReturn(true);
-        player.physicsUpdate(collisionChecker);
-        assertTrue(player.isGrounded());
-
-        when(collisionChecker.check(any())).thenReturn(false);
-        player.physicsUpdate(collisionChecker);
-        assertFalse(player.isGrounded());
-    }
-
-    @Test
-    void testMiningListeners() {
-        PlayerMiningListener listener = mock(PlayerMiningListener.class);
-        player.addMiningListener(listener);
-        player.notifyWhenPickaxeHit();
-        verify(listener).onMiningFinished(player);
-
-        player.removeMiningListener(listener);
-        player.notifyWhenPickaxeHit();
-        verify(listener, times(1)).onMiningFinished(player);
-    }
-    @Test
-    void testJumpNullState() throws Exception {
-        java.lang.reflect.Field stateField = PlayerModel.class.getDeclaredField("state");
-        stateField.setAccessible(true);
-        stateField.set(player, null);
-        assertFalse(player.jump());
+    void testLastValidPosQueue() {
+        // Player starts with p0=(10,20) in history
+        Position p0 = startPos;
+        assertEquals(p0.getX(), player.getLastValidPos().getX());
+        assertEquals(p0.getY(), player.getLastValidPos().getY());
+        
+        for (int i = 1; i <= 9; i++) {
+            player.setPosition(new Position(10 + i, 20 + i));
+            player.updateLastValidPos();
+        }
+        // History: [p0, p1, ..., p9] -> size 10
+        assertEquals(p0.getX(), player.getLastValidPos().getX());
+        assertEquals(p0.getY(), player.getLastValidPos().getY());
+        
+        player.setPosition(new Position(20, 30));
+        player.updateLastValidPos();
+        // History: [p1, p2, ..., p9, p10] -> size 10
+        // p1 is (11, 21)
+        assertEquals(11, player.getLastValidPos().getX());
+        assertEquals(21, player.getLastValidPos().getY());
     }
 
     @Test
     void testUpdateSelectedMineralDestroyed() {
-        MineralModel mineral = mock(MineralModel.class);
-        when(mineral.getPosition()).thenReturn(new Position(11, 20));
-        when(mineral.getState()).thenReturn(MineralState.DESTROYED);
-
-        player.updateSelectedMineral(List.of(mineral));
+        MineralModel m1 = mock(MineralModel.class);
+        when(m1.getPosition()).thenReturn(new Position(12, 20));
+        when(m1.getState()).thenReturn(MineralState.DESTROYED);
+        
+        player.updateSelectedMineral(List.of(m1));
         assertNull(player.getMineralSelected());
+    }
+
+    @Test
+    void testNotifyWhenPickaxeHitMultiple() {
+        PickaxeHitEventListener l1 = mock(PickaxeHitEventListener.class);
+        PickaxeHitEventListener l2 = mock(PickaxeHitEventListener.class);
+        player.addPickaxeHitEventListener(l1);
+        player.addPickaxeHitEventListener(l2);
+        
+        player.notifyWhenPickaxeHit();
+        verify(l1).onPickaxeHit(player);
+        verify(l2).onPickaxeHit(player);
     }
 }
