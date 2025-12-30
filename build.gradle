@@ -2,13 +2,15 @@ plugins {
     id 'java'
     id 'application'
     id 'info.solidsoft.pitest' version '1.15.0'
+    id 'jacoco'
 }
 
-group = 'com.ldts-feup-25-26.bob-the-destructor'
+group = 'com.ldtsfeup2526.bobTheDestructor'
+
 version = '1.0-SNAPSHOT'
 
 application {
-    mainClass.set("Game")
+    mainClass = "com.ldtsfeup2526.bobTheDestructor.Game"
 }
 
 repositories {
@@ -30,7 +32,7 @@ pitest {
     targetTests   = ['com.ldtsfeup2526.bobTheDestructor.*']
 
     threads = 4
-    outputFormats = ['HTML']
+    outputFormats = ['HTML', 'XML']
     timestampedReports = false
 
     failWhenNoMutations = false
@@ -38,4 +40,20 @@ pitest {
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport, 'pitest'
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        html.required = true
+    }
+    classDirectories.setFrom(files(sourceSets.main.output.classesDirs.collect {
+        fileTree(dir: it, exclude: ['**/*Test*'])
+    }))
+    sourceDirectories.setFrom(files(sourceSets.main.allSource.srcDirs))
 }
