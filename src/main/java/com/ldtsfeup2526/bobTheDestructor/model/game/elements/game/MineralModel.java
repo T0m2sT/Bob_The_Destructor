@@ -52,7 +52,6 @@ public class MineralModel extends ElementModel {
 
     public void notifyWhenAnimFinished(String name) {
         if (Objects.equals(name, "CrackAnim")) {
-            this.state = MineralState.CLEANUP;
             for (MineralBreakEventListener listener : mineralBreakEventListeners) {
                 listener.onMineralBreak(this);
             }
