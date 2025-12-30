@@ -12,8 +12,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import static com.sun.tools.attach.VirtualMachine.list;
-
 public class SceneManager {
     private Scene scene;
     private int numberOfCaves = 10;
@@ -36,7 +34,7 @@ public class SceneManager {
 
     private List<String> chooseCaves() {
         List<String> caveList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < numberOfCaves; i++) {
             caveList.add("caves/cave" + i + "/");
         }
 
