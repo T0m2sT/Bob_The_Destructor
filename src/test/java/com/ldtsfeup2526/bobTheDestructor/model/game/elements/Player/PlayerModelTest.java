@@ -51,7 +51,7 @@ public class PlayerModelTest {
     @Test
     void testJump() {
         player.jump();
-        // Since it's a call to state.jump(), we check if state changed or something
+        assertInstanceOf(IdleState.class, player.getState());
     }
 
     @Test
@@ -205,7 +205,6 @@ public class PlayerModelTest {
 
     @Test
     void testLastValidPosQueue() {
-        // Player starts with p0=(10,20) in history
         Position p0 = startPos;
         assertEquals(p0.getX(), player.getLastValidPos().getX());
         assertEquals(p0.getY(), player.getLastValidPos().getY());
@@ -214,14 +213,12 @@ public class PlayerModelTest {
             player.setPosition(new Position(10 + i, 20 + i));
             player.updateLastValidPos();
         }
-        // History: [p0, p1, ..., p9] -> size 10
         assertEquals(p0.getX(), player.getLastValidPos().getX());
         assertEquals(p0.getY(), player.getLastValidPos().getY());
         
         player.setPosition(new Position(20, 30));
         player.updateLastValidPos();
-        // History: [p1, p2, ..., p9, p10] -> size 10
-        // p1 is (11, 21)
+
         assertEquals(11, player.getLastValidPos().getX());
         assertEquals(21, player.getLastValidPos().getY());
     }
