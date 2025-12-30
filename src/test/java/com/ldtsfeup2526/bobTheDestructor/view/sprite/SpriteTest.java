@@ -163,9 +163,6 @@ public class SpriteTest {
 
     @Test
     void testDrawRotRightDetailed() {
-        // 3x2 image
-        // (0,0): R, (1,0): G, (2,0): B
-        // (0,1): C, (1,1): M, (2,1): Y
         BufferedImage image = new BufferedImage(3, 2, BufferedImage.TYPE_INT_ARGB);
         image.setRGB(0, 0, 0xFFFF0000); // R
         image.setRGB(1, 0, 0xFF00FF00); // G
@@ -177,15 +174,6 @@ public class SpriteTest {
         Sprite sprite = new Sprite(image);
         GUI gui = mock(GUI.class);
         sprite.drawRotRight(new Position(10, 10), gui);
-        
-        // height = 2, width = 3, heightMinusOne = 1
-        // (x,y) -> (10 + 1 - y, 10 + x)
-        // (0,0) -> (11, 10) R
-        // (1,0) -> (11, 11) G
-        // (2,0) -> (11, 12) B
-        // (0,1) -> (10, 10) C
-        // (1,1) -> (10, 11) M
-        // (2,1) -> (10, 12) Y
         
         verify(gui).drawPixel(argThat(p -> p.getX() == 11 && p.getY() == 10), argThat(c -> compareColors(c, 255, 0, 0)));
         verify(gui).drawPixel(argThat(p -> p.getX() == 11 && p.getY() == 11), argThat(c -> compareColors(c, 0, 255, 0)));
