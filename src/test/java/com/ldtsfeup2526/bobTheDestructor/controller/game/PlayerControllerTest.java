@@ -131,6 +131,33 @@ public class PlayerControllerTest {
     }
 
     @Test
+    void testGroundedUpdate() {
+        com.ldtsfeup2526.bobTheDestructor.model.game.physics.CollisionChecker checker = mock(com.ldtsfeup2526.bobTheDestructor.model.game.physics.CollisionChecker.class);
+        com.ldtsfeup2526.bobTheDestructor.model.game.physics.RigidBody rb = mock(com.ldtsfeup2526.bobTheDestructor.model.game.physics.RigidBody.class);
+        com.ldtsfeup2526.bobTheDestructor.model.game.physics.Collider collider = mock(com.ldtsfeup2526.bobTheDestructor.model.game.physics.Collider.class);
+        
+        when(player.getRigidBody()).thenReturn(rb);
+        when(player.getCollider()).thenReturn(collider);
+        when(player.getPosition()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Position(10, 20));
+        when(rb.getNextPos()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Vector(10, 20));
+        when(rb.getPosition()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Vector(10, 20));
+        when(rb.getVelocity()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Vector(0, 0));
+        
+        com.ldtsfeup2526.bobTheDestructor.model.game.physics.Collider blockUnder = mock(com.ldtsfeup2526.bobTheDestructor.model.game.physics.Collider.class);
+        when(collider.colPosCheck(argThat(p -> p != null && p.getX() == 10 && p.getY() == 21))).thenReturn(blockUnder);
+        
+        // Not grounded
+        when(checker.check(blockUnder)).thenReturn(null);
+        controller.physicsUpdate(checker);
+        verify(player).setGrounded(false);
+        
+        // Grounded
+        when(checker.check(blockUnder)).thenReturn(mock(com.ldtsfeup2526.bobTheDestructor.model.game.physics.Collider.class));
+        controller.physicsUpdate(checker);
+        verify(player).setGrounded(true);
+    }
+
+    @Test
     void testConstructorAddsListener() {
         PlayerModel model = mock(PlayerModel.class);
         new PlayerController(model, soundManager);
