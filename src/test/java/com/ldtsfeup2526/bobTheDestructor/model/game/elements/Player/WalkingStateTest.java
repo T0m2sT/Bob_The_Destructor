@@ -63,18 +63,20 @@ public class WalkingStateTest {
         when(rb.getVelocity()).thenReturn(new Vector(-0.199f, 0));
         assertInstanceOf(IdleState.class, state.getNextState());
         
-
         when(rb.getVelocity()).thenReturn(new Vector(0.2f, 0));
         assertSame(state, state.getNextState());
 
         when(rb.getVelocity()).thenReturn(new Vector(-0.2f, 0));
         assertSame(state, state.getNextState());
         
-        when(rb.getVelocity()).thenReturn(new Vector(0.2f, 0));
-        assertSame(state, state.getNextState());
-
         when(rb.getVelocity()).thenReturn(new Vector(0.199999f, 0));
         assertInstanceOf(IdleState.class, state.getNextState());
+
+        when(rb.getVelocity()).thenReturn(new Vector(0.200001f, 0));
+        assertSame(state, state.getNextState());
+
+        when(rb.getVelocity()).thenReturn(new Vector(-0.200001f, 0));
+        assertSame(state, state.getNextState());
 
         when(rb.getVelocity()).thenReturn(new Vector(0.5f, -0.0001f));
         assertInstanceOf(JumpingState.class, state.getNextState());
