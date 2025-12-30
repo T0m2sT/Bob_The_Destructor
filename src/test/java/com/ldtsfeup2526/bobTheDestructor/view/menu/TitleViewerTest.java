@@ -27,18 +27,12 @@ public class TitleViewerTest {
     @Test
     void testDrawStringDifferentLengths() {
         GUI gui = mock(GUI.class);
-        
-        // Even length: "BOBS" (4 chars)
-        // halfWidth = 4 * 5 / 2 = 10
-        // startTextPos = (100 - 10, 100) = (90, 100)
+
         viewer.draw(new Position(100, 100), "BOBS", gui);
         verify(charSprite, times(4)).draw(argThat(p -> p.getX() == 90 && p.getY() == 100), eq(gui));
         
         reset(charSprite);
-        
-        // Odd length: "BOB" (3 chars)
-        // halfWidth = 3 * 5 / 2 = 7
-        // startTextPos = (100 - 7, 100) = (93, 100)
+
         viewer.draw(new Position(100, 100), "BOB", gui);
         verify(charSprite, times(3)).draw(argThat(p -> p.getX() == 93 && p.getY() == 100), eq(gui));
         verify(charSprite, atLeastOnce()).setOffset(any());
