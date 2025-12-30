@@ -102,6 +102,7 @@ public class MineralViewer implements ElementViewer<MineralModel> {
         Sprite sprite = anim.getSprites()[anim.getFrame()];
         Sprite selectedSprite = selectedSpriteMap.get(model.getType());
 
+        if (model.getDirection() == null) return;
         switch (model.getDirection()) {
             case PointingDirection.UP:
                 sprite.draw(model.getPosition(), gui);
@@ -126,6 +127,8 @@ public class MineralViewer implements ElementViewer<MineralModel> {
                 if (model.getState() == MineralState.SELECTED) {
                     selectedSprite.drawRotRight(model.getPosition(), gui);
                 }
+                break;
+            default:
                 break;
         }
 
