@@ -77,9 +77,11 @@ public class SceneControllerTest {
         SceneBuilder sb = mock(SceneBuilder.class);
         Scene sc = mock(Scene.class);
         PlayerModel pm = mock(PlayerModel.class);
+        MineralModel mm = mock(MineralModel.class);
         when(sm.getNextCavePath()).thenReturn("path/to/first/cave");
         when(sm.getScene()).thenReturn(sc);
         when(sc.getPlayerModel()).thenReturn(pm);
+        when(sc.getMineralModels()).thenReturn(List.of(mm));
         when(sb.createScene(eq("path/to/first/cave"), any(PlayerModel.class))).thenReturn(sc);
         
         SceneController scCon = new SceneController(sm, sb, soundManager);
@@ -87,6 +89,7 @@ public class SceneControllerTest {
         verify(sm).setScene(sc);
         verify(pm).addPickaxeHitEventListener(scCon);
         verify(sb).createScene(eq("path/to/first/cave"), argThat(p -> p.getPosition().getX() == 0 && p.getPosition().getY() == 0));
+        verify(mm).addMineralBreakEventListener(scCon);
     }
 
     @Test
@@ -169,9 +172,45 @@ public class SceneControllerTest {
     }
 
     @Test
-    void testUpdateSceneStateQuit() throws IOException {
-        controller.updateSceneState(game, List.of(Action.QUIT));
-        verify(game).setState(any(MainMenuState.class));
+    void testAddListenersToMinerals() throws IOException {
+        MineralModel m1 = mock(MineralModel.class);
+        MineralModel m2 = mock(MineralModel.class);
+        when(scene.getMineralModels()).thenReturn(List.of(m1, m2));
+        
+        controller.addListenersToMinerals();
+        
+        verify(m1, atLeastOnce()).addMineralBreakEventListener(controller);
+        verify(m2, atLeastOnce()).addMineralBreakEventListener(controller);
+    }
+
+    @Test
+    void testOnMineralBreak() {
+        MineralModel mineral = mock(MineralModel.class);
+        controller.onMineralBreak(mineral);
+        verify(mineral).setState(MineralState.CLEANUP);
+    }
+
+    @Test
+    void testUpdateSceneStateNextCaveWithListeners() throws IOException {
+        when(player.getPosition()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Position(0, 91));
+        when(sceneManager.getNextCavePath()).thenReturn("caves/cave1/");
+        
+        Scene nextScene = mock(Scene.class);
+        MineralModel mineral = mock(MineralModel.class);
+        when(nextScene.getMineralModels()).thenReturn(List.of(mineral));
+        
+        PlayerModel nextPlayer = mock(PlayerModel.class);
+        when(nextScene.getPlayerModel()).thenReturn(nextPlayer);
+        when(nextPlayer.getPosition()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Position(0, 0));
+        
+        when(sceneBuilder.createScene(eq("caves/cave1/"), any())).thenReturn(nextScene);
+        
+        when(sceneManager.getScene()).thenReturn(scene, nextScene);
+        
+        controller.updateSceneState(game, new ArrayList<>());
+        
+        verify(sceneManager).setScene(nextScene);
+        verify(mineral).addMineralBreakEventListener(controller);
     }
     @Test
     void testOnPickaxeHitFromState() {
@@ -231,5 +270,11 @@ public class SceneControllerTest {
         when(player.getPosition()).thenReturn(new com.ldtsfeup2526.bobTheDestructor.model.spatials.Position(0, 0));
         controller.updateSceneState(game, List.of());
         verify(game, never()).setState(any());
+    }
+
+    @Test
+    void testUpdateSceneStateQuit() throws IOException {
+        controller.updateSceneState(game, List.of(Action.QUIT));
+        verify(game).setState(any(MainMenuState.class));
     }
 }
