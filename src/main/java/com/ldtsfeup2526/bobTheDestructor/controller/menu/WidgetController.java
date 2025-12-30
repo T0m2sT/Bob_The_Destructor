@@ -29,56 +29,47 @@ public class WidgetController extends Controller<Menu> {
         for (Action action : actions) {
             Widget currentWidget = getModel().getCurrentWidget();
             if (currentWidget == null || currentWidget.getWidgetType() == null) continue;
-            switch (currentWidget.getWidgetType()) {
-                case WidgetType.PLAY:
-                    if (action == Action.SELECT) {
-                        SpriteLoader spriteLoader = game.getSpriteLoader();
-                        game.setState(new GameState(new SceneManager(), spriteLoader, game.getSoundManager()));
-                    }
-                    break;
-                case CONFIG:
-                    if (action == Action.SELECT) {
-                        SpriteLoader spriteLoader = game.getSpriteLoader();
-                        game.setState(new SettingsMenuState(new SettingsMenu(), spriteLoader, game.getSoundManager()));
-                    }
-                    break;
-                case CREDITS:
-                    game.setState(new CreditsState(new Credits(), game.getSpriteLoader(), game.getSoundManager()));
-                    break;
-                case EXIT:
-                    if (action == Action.SELECT) {
-                        game.setState(null);
-                    }
-                    break;
-                case MASTER_VOLUME:
-                    if (action == Action.LEFT) {
-                        gameSettings.setMasterVolume(Math.max(gameSettings.getMasterVolume()-0.1f, 0));
-                    } else if (action == Action.RIGHT) {
-                        gameSettings.setMasterVolume(Math.min(gameSettings.getMasterVolume()+0.1f, 1));
-                    }
-                    soundManager.setMasterVolume(gameSettings.getMasterVolume());
-                    soundManager.updateVolumes();
-                    break;
-                case MUSIC_VOLUME:
-                    if (action == Action.LEFT) {
-                        gameSettings.setMusicVolume(Math.max(gameSettings.getMusicVolume()-0.1f, 0));
-                    } else if (action == Action.RIGHT) {
-                        gameSettings.setMusicVolume(Math.min(gameSettings.getMusicVolume()+0.1f, 1));
-                    }
-                    soundManager.setMusicVolume(gameSettings.getMusicVolume());
-                    soundManager.updateVolumes();
-                    break;
-                case SFX_VOLUME:
-                    if (action == Action.LEFT) {
-                        gameSettings.setSfxVolume(Math.max(gameSettings.getSfxVolume()-0.1f, 0));
-                    } else if (action == Action.RIGHT) {
-                        gameSettings.setSfxVolume(Math.min(gameSettings.getSfxVolume()+0.1f, 1));
-                    }
-                    soundManager.setSFXVolume(gameSettings.getSfxVolume());
-                    soundManager.updateVolumes();
-                    break;
-                default:
-                    break;
+            WidgetType type = currentWidget.getWidgetType();
+            if (type == WidgetType.PLAY) {
+                if (action == Action.SELECT) {
+                    SpriteLoader spriteLoader = game.getSpriteLoader();
+                    game.setState(new GameState(new SceneManager(), spriteLoader, game.getSoundManager()));
+                }
+            } else if (type == WidgetType.CONFIG) {
+                if (action == Action.SELECT) {
+                    SpriteLoader spriteLoader = game.getSpriteLoader();
+                    game.setState(new SettingsMenuState(new SettingsMenu(), spriteLoader, game.getSoundManager()));
+                }
+            } else if (type == WidgetType.CREDITS) {
+                game.setState(new CreditsState(new Credits(), game.getSpriteLoader(), game.getSoundManager()));
+            } else if (type == WidgetType.EXIT) {
+                if (action == Action.SELECT) {
+                    game.setState(null);
+                }
+            } else if (type == WidgetType.MASTER_VOLUME) {
+                if (action == Action.LEFT) {
+                    gameSettings.setMasterVolume(Math.max(gameSettings.getMasterVolume()-0.1f, 0));
+                } else if (action == Action.RIGHT) {
+                    gameSettings.setMasterVolume(Math.min(gameSettings.getMasterVolume()+0.1f, 1));
+                }
+                soundManager.setMasterVolume(gameSettings.getMasterVolume());
+                soundManager.updateVolumes();
+            } else if (type == WidgetType.MUSIC_VOLUME) {
+                if (action == Action.LEFT) {
+                    gameSettings.setMusicVolume(Math.max(gameSettings.getMusicVolume()-0.1f, 0));
+                } else if (action == Action.RIGHT) {
+                    gameSettings.setMusicVolume(Math.min(gameSettings.getMusicVolume()+0.1f, 1));
+                }
+                soundManager.setMusicVolume(gameSettings.getMusicVolume());
+                soundManager.updateVolumes();
+            } else {
+                if (action == Action.LEFT) {
+                    gameSettings.setSfxVolume(Math.max(gameSettings.getSfxVolume()-0.1f, 0));
+                } else if (action == Action.RIGHT) {
+                    gameSettings.setSfxVolume(Math.min(gameSettings.getSfxVolume()+0.1f, 1));
+                }
+                soundManager.setSFXVolume(gameSettings.getSfxVolume());
+                soundManager.updateVolumes();
             }
         }
     }
