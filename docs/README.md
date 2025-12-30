@@ -251,7 +251,9 @@ We needed a centralized way to handle audio resources and playback while also hi
 
 #### The Pattern
 
-We implemented a **Manager** pattern (specifically a `SoundManager`) combined with a `SoundLoader`. The `SoundManager` acts as a facade for audio operations, abstracting the underlying Java Sound API.
+We implemented a **Sound Manager** component that follows the **Facade** design pattern. The `SoundManager` provides a simplified interface for audio operations, abstracting the underlying Java Sound API and centralizing sound playback and volume control.
+
+Additionally, the abstract `SoundManager` class defines shared behavior that is extended by `GameSoundManager`, following the *Template Method* pattern.
 
 #### Implementation
 
@@ -267,7 +269,7 @@ Benefits:
 - Allows for easy volume control and sound toggling.
 
 Liabilities:
-- Adds another manager class to the system.
+- Introduces an additional abstraction layer, which slightly increases system complexity.
 
 ### Physics Engine
 
