@@ -15,7 +15,7 @@ public class ControllerTest {
         Object model = new Object();
         Controller<Object> controller = new Controller<Object>(model) {
             @Override
-            public void update(Game game, List<Action> actions) throws IOException {}
+            public void update(com.ldtsfeup2526.bobTheDestructor.Game game, List<Action> actions, double deltaTime) throws IOException {}
         };
         assertEquals(model, controller.getModel());
     }
