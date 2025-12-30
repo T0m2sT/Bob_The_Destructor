@@ -12,6 +12,7 @@ public class LogoViewer {
 
     public LogoViewer(SpriteLoader spriteLoader) throws IOException {
         this.sprite = spriteLoader.get("");
+        this.sprite.center();
     }
 
     public void draw(Position position, GUI gui) {
