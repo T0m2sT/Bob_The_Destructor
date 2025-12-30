@@ -6,9 +6,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MineralStateTest {
     @Test
     void testEnumValues() {
-        assertNotNull(MineralState.SELECTED);
-        assertNotNull(MineralState.UNSELECTED);
-        assertNotNull(MineralState.DESTROYED);
-        assertNotNull(MineralState.CLEANUP);
+        assertEquals(4, MineralState.values().length);
+        assertEquals(MineralState.SELECTED, MineralState.valueOf("SELECTED"));
+        assertEquals(MineralState.UNSELECTED, MineralState.valueOf("UNSELECTED"));
+        assertEquals(MineralState.DESTROYED, MineralState.valueOf("DESTROYED"));
+        assertEquals(MineralState.CLEANUP, MineralState.valueOf("CLEANUP"));
     }
 }
