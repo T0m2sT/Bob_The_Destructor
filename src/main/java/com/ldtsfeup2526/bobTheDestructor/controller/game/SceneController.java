@@ -5,6 +5,7 @@ import com.ldtsfeup2526.bobTheDestructor.controller.Controller;
 import com.ldtsfeup2526.bobTheDestructor.controller.input.Action;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.Player.PlayerModel;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.Player.PlayerState;
+import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralModel;
 import com.ldtsfeup2526.bobTheDestructor.model.game.elements.game.MineralState;
 import com.ldtsfeup2526.bobTheDestructor.model.game.physics.Collider;
 import com.ldtsfeup2526.bobTheDestructor.model.game.physics.CollisionChecker;
@@ -23,7 +24,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-public class SceneController extends Controller<SceneManager> implements PickaxeHitEventListener {
+public class SceneController extends Controller<SceneManager> implements PickaxeHitEventListener, MineralBreakEventListener {
     private final PlayerController playerController;
     private final SceneBuilder sceneBuilder;
     private final SoundManager soundManager;
@@ -35,7 +36,7 @@ public class SceneController extends Controller<SceneManager> implements Pickaxe
         this.playerController = new PlayerController(getModel().getScene().getPlayerModel(), soundManager);
         this.soundManager = soundManager;
         getModel().getScene().getPlayerModel().addPickaxeHitEventListener(this);
-
+        addListenersToMinerals();
     }
 
     @Override
@@ -87,7 +88,18 @@ public class SceneController extends Controller<SceneManager> implements Pickaxe
                 return;
             }
             getModel().setScene(sceneBuilder.createScene(path, getModel().getScene().getPlayerModel()));
+            addListenersToMinerals();
         }
     }
 
+    @Override
+    public void onMineralBreak(MineralModel mineralModel) {
+        mineralModel.setState(MineralState.CLEANUP);
+    }
+
+    public void addListenersToMinerals() {
+        for (MineralModel mineralModel : getModel().getScene().getMineralModels()) {
+            mineralModel.addMineralBreakEventListener(this);
+        }
+    }
 }
