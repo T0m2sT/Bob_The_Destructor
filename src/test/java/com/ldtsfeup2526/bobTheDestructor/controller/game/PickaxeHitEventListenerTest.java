@@ -3,10 +3,10 @@ package com.ldtsfeup2526.bobTheDestructor.controller.game;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class PlayerMiningListenerTest {
+public class PickaxeHitEventListenerTest {
     @Test
     void testInterface() {
-        PlayerMiningListener listener = playerModel -> {};
+        PickaxeHitEventListener listener = playerModel -> {};
         assertNotNull(listener);
     }
 }
