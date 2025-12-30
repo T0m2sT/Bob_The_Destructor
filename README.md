@@ -20,6 +20,7 @@ For a more detailed version of this description, click [here](./docs/README.md).
     <img src="docs/mockups/player.png">
     <img src="docs/mockups/player_walk.gif">
     <img src="docs/mockups/player_swim.gif">
+    <img src="docs/mockups/player_mine.gif">
 </p>
 
 <h3 align="center">
