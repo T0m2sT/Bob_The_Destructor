@@ -11,7 +11,7 @@ public class LogoViewer {
     private final Sprite sprite;
 
     public LogoViewer(SpriteLoader spriteLoader) throws IOException {
-        this.sprite = spriteLoader.get("");
+        this.sprite = spriteLoader.get("logo.png");
         this.sprite.center();
     }
 
