@@ -510,10 +510,16 @@ Liabilities:
 
 ### Viewers Calling Model Methods
 
-This is a significant code smell because it violates the MVC principle: some models contain logic that triggers actions based on specific animation frames (the player mining when the animation reaches the “hit pickaxe” frame). Ideally, controllers should handle these interactions, possibly by being passed down from the state to the viewers, so that models remain purely passive. However, refactoring the hierarchy at this stage of development would be extremely complex.
+This is a significant code smell because it violates the **MVC** principle: some models contain logic that triggers actions based on specific animation frames (the player mining when the animation reaches the “hit pickaxe” frame). Ideally, controllers should handle these interactions, possibly by being passed down from the state to the viewers, so that models remain purely passive. However, refactoring the hierarchy at this stage of development would be extremely complex.
 In this case, the smell is acceptable: the implementation is clear, manageable, and uses an observer-like approach where the model notifies its listeners (the controllers) for that specific action.
 
 This code smell has only two occurrences, one in [`PlayerViewer`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/view/game/PlayerViewer.java) and the other in [`MineralViewer`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/view/game/MineralViewer.java)
+
+### Switch Statements
+
+In [`WidgetController`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/controller/menu/WidgetController.java) we are using a somewhat long switch statement to determine each widget type behaviour. We tried to solve this problem with a **Command** Pattern, however because the widget types are stored in the Model, this would violate the **MVC** principle.
+
+Additionally, we used switch statements to for handling inputs in the [`ActionParser`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/controller/input/ActionParser.java), but each case only did basic calls.
 
 ## Testing
 
