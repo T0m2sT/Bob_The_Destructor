@@ -6,6 +6,20 @@ Bob starts in the first cave, and his goal is to descend through five caves whil
 
 This project was developed by Aléxis Ramos, Pedro Tomás Teixeira, Rafael Pinho e Silva for LDTS 2025/26.
 
+## Controls
+
+`W` / `space` / `arrow up` - Jump
+
+`A` / `arrow left` - Move Left
+
+`D` / `arrow right` - Move Right
+
+`Shift` - Mine
+
+`Esc` - Returns to Main Menu or quits the game
+
+`Enter` - Presses the selected menu button
+
 ## Implemented features
 
 * **Sprite Loader** - A class that parses and renders PNGs onto the GUI's screen.
