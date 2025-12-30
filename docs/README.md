@@ -307,6 +307,8 @@ Additionally, the abstract `SoundManager` class defines shared behavior that is 
 - Sound Manager: [`sounds/SoundManager.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/sounds/SoundManager.java) defines the interface for playing music and SFX, and controlling volume. [`sounds/GameSoundManager.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/sounds/GameSoundManager.java) implements this logic.
 - Usage: The `Game` class initializes the `SoundManager`, which is then passed to states and controllers. For example, `PlayerController` uses it to play jump or walk sounds.
 
+<img src="images/soundManager.png">
+
 #### Consequences
 
 Benefits:
@@ -464,6 +466,8 @@ We implemented the **State** pattern for the player logic. The `PlayerModel` del
 - Concrete States: `IdleState`, `WalkingState`, `JumpingState`, `FallingState`, `MiningState` implement specific behaviors.
 - Context: `PlayerModel` holds the current state and forwards requests to it.
 
+<img src="images/playerState.png">
+
 #### Consequences
 
 Benefits:
@@ -541,6 +545,8 @@ We lightly used a **Facade** pattern (specifically in `SceneManager`). This clas
 
 - Manager Class: [`model/game/scene/SceneManager.java`](../src/main/java/com/ldtsfeup2526/bobTheDestructor/model/game/scene/SceneManager.java) handles the list of cave paths, the current scene, and global stats like total minerals collected.
 - Usage: `GameState` holds a reference to `SceneManager` and delegates scene-related operations to it. `SceneController` updates the `SceneManager` based on game events, such as, player reaching the bottom of the cave.
+
+<img src="images/sceneManager.png">
 
 #### Consequences
 
