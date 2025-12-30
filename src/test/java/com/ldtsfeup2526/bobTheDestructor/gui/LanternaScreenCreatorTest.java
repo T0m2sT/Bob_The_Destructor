@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -41,7 +42,7 @@ public class LanternaScreenCreatorTest {
         assertEquals(screen, result);
         verify(factory).setInitialTerminalSize(new TerminalSize(100, 50));
         verify(factory).setForceAWTOverSwing(true);
-        verify(factory).setTerminalEmulatorFontConfiguration(any());
+        verify(factory).setTerminalEmulatorFontConfiguration(argThat(Objects::nonNull));
         verify(terminalFrame).setTitle("Test Title");
         verify(component).addKeyListener(keyListener);
     }
