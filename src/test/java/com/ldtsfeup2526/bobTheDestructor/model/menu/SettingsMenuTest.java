@@ -19,31 +19,16 @@ public class SettingsMenuTest {
     }
 
     @Test
-    void testCreateButtons() {
-        List<Button> buttons = settingsMenu.getButtons();
-        assertEquals(1, buttons.size());
-        assertEquals(ButtonType.VOLUME, buttons.get(0).getButtonType());
-        assertEquals(ButtonState.SELECTED, buttons.get(0).getButtonState());
-    }
-
-    @Test
-    void testGetSoundPlayer() {
-        assertNotNull(settingsMenu.getSoundPlayer());
+    void testCreateWidgets() {
+        List<Widget> widgets = settingsMenu.getWidgets();
+        assertEquals(3, widgets.size());
+        assertEquals(WidgetType.MASTER_VOLUME, widgets.get(0).getWidgetType());
+        assertEquals(WidgetState.SELECTED, widgets.get(0).getWidgetState());
     }
 
     @Test
     void testMoveDown() {
         settingsMenu.moveDown();
-        assertEquals(ButtonState.SELECTED, settingsMenu.getButtons().get(0).getButtonState());
-    }
-
-    @Test
-    void testCreateSoundPlayerException() {
-        try (var mockedSoundLoader = mockConstruction(com.ldtsfeup2526.bobTheDestructor.sounds.SoundLoader.class, (mock, context) -> {
-            when(mock.loadSound(any(), any())).thenThrow(new RuntimeException("Test"));
-        })) {
-            SettingsMenu menu = new SettingsMenu();
-            assertNull(menu.getSoundPlayer().getSound());
-        }
+        assertEquals(WidgetType.MUSIC_VOLUME, settingsMenu.getCurrentWidget().getWidgetType());
     }
 }
