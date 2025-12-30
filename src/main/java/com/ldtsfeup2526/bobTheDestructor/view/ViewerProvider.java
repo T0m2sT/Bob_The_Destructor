@@ -4,10 +4,7 @@ import com.ldtsfeup2526.bobTheDestructor.view.game.MineralViewer;
 import com.ldtsfeup2526.bobTheDestructor.view.game.OverlayViewer;
 import com.ldtsfeup2526.bobTheDestructor.view.game.PlayerViewer;
 import com.ldtsfeup2526.bobTheDestructor.view.game.SceneViewer;
-import com.ldtsfeup2526.bobTheDestructor.view.menu.ButtonViewer;
-import com.ldtsfeup2526.bobTheDestructor.view.menu.SliderViewer;
-import com.ldtsfeup2526.bobTheDestructor.view.menu.TitleViewer;
-import com.ldtsfeup2526.bobTheDestructor.view.menu.WallpaperViewer;
+import com.ldtsfeup2526.bobTheDestructor.view.menu.*;
 import com.ldtsfeup2526.bobTheDestructor.view.sprite.SpriteLoader;
 
 import java.io.IOException;
@@ -21,6 +18,7 @@ public class ViewerProvider {
     private final SceneViewer sceneViewer;
     private final MineralViewer mineralViewer;
     private final OverlayViewer overlayViewer;
+    private final LogoViewer logoViewer;
 
     public ViewerProvider(SpriteLoader spriteLoader) throws IOException {
         this.titleViewer = new TitleViewer(spriteLoader);
@@ -31,6 +29,7 @@ public class ViewerProvider {
         this.mineralViewer = new MineralViewer(spriteLoader);
         this.overlayViewer = new OverlayViewer(spriteLoader);
         this.sliderViewer = new SliderViewer(spriteLoader);
+        this.logoViewer = new LogoViewer(spriteLoader);
     }
 
     public PlayerViewer getPlayerViewer() {
@@ -63,5 +62,9 @@ public class ViewerProvider {
 
     public TitleViewer getTitleViewer() {
         return titleViewer;
+    }
+
+    public LogoViewer getLogoViewer() {
+        return logoViewer;
     }
 }
