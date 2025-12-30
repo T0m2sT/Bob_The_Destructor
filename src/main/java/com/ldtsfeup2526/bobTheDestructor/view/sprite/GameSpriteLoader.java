@@ -18,8 +18,7 @@ public class GameSpriteLoader implements SpriteLoader{
         }
 
         URL resource = getClass().getClassLoader().getResource(spriteFilePath);
-        if (resource == null) return null;
-        BufferedImage image = ImageIO.read(resource);
+        BufferedImage image = ImageIO.read(Objects.requireNonNull(resource));
 
         Sprite sprite = new Sprite(image);
         spriteMap.put(spriteFilePath, sprite);
@@ -32,8 +31,7 @@ public class GameSpriteLoader implements SpriteLoader{
         }
 
         URL resource = getClass().getClassLoader().getResource(spriteFilePath);
-        if (resource == null) return null;
-        BufferedImage image = ImageIO.read(resource);
+        BufferedImage image = ImageIO.read(Objects.requireNonNull(resource));
 
         Sprite sprite = new Sprite(image);
         spriteMap.put(spriteFilePath, sprite);

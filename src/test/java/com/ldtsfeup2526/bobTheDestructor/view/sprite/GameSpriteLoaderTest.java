@@ -9,15 +9,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class GameSpriteLoaderTest {
     @Test
-    void testGetSpriteNotFound() throws IOException {
+    void testGetSpriteNotFound() {
         GameSpriteLoader loader = new GameSpriteLoader();
-        assertNull(loader.get("non-existent.png"));
+        assertThrows(NullPointerException.class, () -> {
+        loader.get("non-existent.png");
+    });
     }
 
     @Test
-    void testGetBufferedImageNotFound() throws IOException {
+    void testGetBufferedImageNotFound() {
         GameSpriteLoader loader = new GameSpriteLoader();
-        assertNull(loader.getBufferedImage("non-existent.png"));
+        assertThrows(NullPointerException.class, () -> {
+        loader.getBufferedImage("non-existent.png");
+    });
     }
 
     @Test

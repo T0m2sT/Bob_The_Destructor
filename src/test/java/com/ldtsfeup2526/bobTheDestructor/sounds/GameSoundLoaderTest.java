@@ -9,8 +9,9 @@ public class GameSoundLoaderTest {
     @Test
     void testGetInvalidPath() {
         GameSoundLoader loader = new GameSoundLoader();
-        Clip clip = loader.get("invalid/path.wav");
-        assertNull(clip);
+        assertThrows(NullPointerException.class, () -> {
+        loader.get("invalid/path.wav");
+    });
     }
     @Test
     void testGetInvalidAudioFile() {

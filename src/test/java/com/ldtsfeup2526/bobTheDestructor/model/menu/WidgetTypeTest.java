@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class WidgetTypeTest {
     @Test
     void testEnumValues() {
-        assertEquals(7, WidgetType.values().length);
+        assertEquals(8, WidgetType.values().length);
         assertNotNull(WidgetType.valueOf("PLAY"));
         assertNotNull(WidgetType.valueOf("CONFIG"));
         assertNotNull(WidgetType.valueOf("CREDITS"));
@@ -14,5 +14,6 @@ public class WidgetTypeTest {
         assertNotNull(WidgetType.valueOf("MASTER_VOLUME"));
         assertNotNull(WidgetType.valueOf("MUSIC_VOLUME"));
         assertNotNull(WidgetType.valueOf("SFX_VOLUME"));
+        assertNotNull(WidgetType.valueOf("NONE"));
     }
 }

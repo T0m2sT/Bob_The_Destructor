@@ -78,6 +78,8 @@ public class WidgetController extends Controller<Menu> {
                     soundManager.setSFXVolume(gameSettings.getSfxVolume());
                     soundManager.updateVolumes();
                     break;
+                default:
+                    break;
             }
         }
     }

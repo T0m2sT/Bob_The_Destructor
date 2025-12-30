@@ -367,4 +367,11 @@ public class WidgetControllerTest {
         controller.update(game, List.of(Action.SELECT), 0.1);
         verify(game, never()).setState(any());
     }
+
+    @Test
+    void testUpdateDefaultCase() throws IOException {
+        when(currentWidget.getWidgetType()).thenReturn(WidgetType.NONE);
+        controller.update(game, List.of(Action.SELECT), 0.1);
+        verify(game, never()).setState(any());
+    }
 }

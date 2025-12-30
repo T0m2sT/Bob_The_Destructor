@@ -8,4 +8,5 @@ public enum WidgetType {
     MASTER_VOLUME,
     MUSIC_VOLUME,
     SFX_VOLUME,
+    NONE
 }
