@@ -10,7 +10,7 @@ Bob starts in the first cave, and his goal is to descend through five caves whil
 
 For a more detailed version of this description, click [here](./docs/README.md).
 
-## Screenshots And Mockups
+## SMockups
 
 <h3 align="center">
   Main Character Design
@@ -36,6 +36,32 @@ For a more detailed version of this description, click [here](./docs/README.md).
 
 <p align="center">
     <img src="docs/mockups/game_mockup.gif">
+</p>
+
+## Game ScreenShots
+
+<p align="center">
+    <img src="docs/ingame/MainMenu.gif">
+</p>
+
+<p align="center">
+    <img src="docs/ingame/Gameplay1.gif">
+</p>
+
+<p align="center">
+    <img src="docs/ingame/Gameplay2.gif">
+</p>
+
+<p align="center">
+    <img src="docs/ingame/Gameplay3.gif">
+</p>
+
+<p align="center">
+    <img src="docs/ingame/Gameplay4.gif">
+</p>
+
+<p align="center">
+    <img src="docs/ingame/EndScreen.jpg">
 </p>
 
 ## General Structure
