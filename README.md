@@ -13,7 +13,7 @@ Bob starts in the first cave, and his goal is to descend through five caves whil
 
 For a more detailed version of this description, click [here](./docs/README.md).
 
-## SMockups
+## Mockups
 
 <h3 align="center">
   Main Character Design
