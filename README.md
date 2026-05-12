@@ -13,6 +13,8 @@ Bob starts in the first cave, and his goal is to descend through five caves whil
 
 For a more detailed version of this description, click [here](./docs/README.md).
 
+Grade: 19.1 
+
 ## Mockups
 
 <h3 align="center">
