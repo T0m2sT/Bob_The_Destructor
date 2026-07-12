@@ -1,4 +1,4 @@
-# LDTS_T04_G04 - BOB, THE DESTRUCTOR  
+# LDTS_T04_G04 - BOB, THE DESTRUCTOR
 
 <p align="center">
     <img src="docs/mockups/logo.png">
@@ -13,7 +13,9 @@ Bob starts in the first cave, and his goal is to descend through five caves whil
 
 For a more detailed version of this description, click [here](./docs/README.md).
 
-Grade: 19.1 
+![Grade](https://img.shields.io/badge/Grade-19.1%2F20-1E90FF?style=for-the-badge&labelColor=21262d)
+![Course](https://img.shields.io/badge/Course-LDTS-1E90FF?style=for-the-badge&labelColor=21262d)
+![Semester](https://img.shields.io/badge/Semester-2025%2F26-1E90FF?style=for-the-badge&labelColor=21262d)
 
 ## Mockups
 
